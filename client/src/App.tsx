@@ -46,7 +46,7 @@ export default function App() {
             <Route path="/cities" element={<CitiesPage />} />
             <Route path="/sign-in" element={<SignInPage />} />
             <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/organizer-dashboard" element={<OrganizerDashboardPage />} />
+            <Route path="/organizer-dashboard/*" element={<OrganizerDashboardPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/careers" element={<CareersPage />} />
             <Route path="/press" element={<PressPage />} />
