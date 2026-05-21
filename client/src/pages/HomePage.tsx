@@ -245,41 +245,77 @@ export default function Index() {
       </section>
 
       {/* App Promotion */}
-      <section className="py-16 px-4 max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+      <section className="bg-gradient-to-br from-slate-100 to-blue-50 py-16 px-4">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
           <div>
-            <p className="text-teal-400 font-semibold text-sm uppercase tracking-widest mb-4">
+            <p className="text-purple-700 font-semibold text-sm uppercase tracking-widest mb-4">
               WADU MOBILE
             </p>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 leading-tight">
               Your Events, In Your Pocket
             </h2>
-            <p className="text-xl text-gray-400 mb-8">
+            <p className="text-lg text-slate-600 mb-8">
               Discover, book, and manage your event tickets anytime, anywhere.
               Get the app for seamless access.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button className="bg-black border border-gray-700 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-900 transition flex items-center justify-center gap-2">
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M17.05 13.5c-.91 0-1.64.75-1.64 1.67s.73 1.67 1.64 1.67 1.64-.75 1.64-1.67-.73-1.67-1.64-1.67zm-7-7h4V2h-4v4.5zM6.05 13.5c-.91 0-1.64.75-1.64 1.67s.73 1.67 1.64 1.67 1.64-.75 1.64-1.67-.73-1.67-1.64-1.67z" />
+            <div className="flex flex-col sm:flex-row gap-3 mb-4">
+              <button className="bg-black text-white px-5 py-3 rounded-xl font-semibold hover:bg-gray-900 transition flex items-center justify-center gap-3 min-w-[160px]">
+                <svg className="w-6 h-6 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
                 </svg>
-                Download on the App Store
+                <span className="text-left">
+                  <span className="block text-[10px] leading-none opacity-80">Download on the</span>
+                  <span className="block text-sm font-bold">App Store</span>
+                </span>
               </button>
-              <button className="bg-black border border-gray-700 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-900 transition flex items-center justify-center gap-2">
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M3 13.5v8.25A1.5 1.5 0 004.5 23h15A1.5 1.5 0 0021 21.75V13.5M1 5.5A1.5 1.5 0 012.5 4h19A1.5 1.5 0 0123 5.5v2H1v-2z" />
+              <button className="bg-black text-white px-5 py-3 rounded-xl font-semibold hover:bg-gray-900 transition flex items-center justify-center gap-3 min-w-[160px]">
+                <svg className="w-6 h-6 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M3.18 23.76c.3.17.65.19.98.07l12.47-7.15-2.63-2.63-10.82 9.71zm-1.7-20.1C1.18 4.04 1 4.54 1 5.11v13.78c0 .57.18 1.07.48 1.45l.08.07 7.72-7.72v-.18L1.56 4.79l-.08.87zm16.18 9.18l-2.64-1.52-2.95 2.95 2.95 2.95 2.66-1.54c.76-.44.76-1.4-.02-1.84zM4.16.55L16.63 7.7 14 10.33 3.18.62A1.1 1.1 0 014.16.55z" />
                 </svg>
-                GET IT ON Google Play
+                <span className="text-left">
+                  <span className="block text-[10px] leading-none opacity-80">GET IT ON</span>
+                  <span className="block text-sm font-bold">Google Play</span>
+                </span>
               </button>
             </div>
-            <p className="text-gray-500 text-sm mt-4">
-              4.9-star rating on App Store & Google Play
+            <p className="text-slate-500 text-sm">
+              4.9-star rating on App Store &amp; Google Play
             </p>
           </div>
-          <div className="hidden md:flex justify-center">
-            <div className="bg-gradient-to-b from-purple-600 to-pink-600 rounded-3xl p-1 w-64">
-              <div className="bg-slate-950 rounded-3xl p-4 h-96 flex flex-col items-center justify-center">
-                <p className="text-gray-400">Mobile App Preview</p>
+
+          <div className="flex justify-center">
+            <div className="relative">
+              <div className="bg-slate-900 rounded-[2.5rem] p-2 shadow-2xl w-56 border-4 border-slate-800">
+                <div className="bg-slate-950 rounded-[2rem] overflow-hidden">
+                  <div className="bg-slate-900 px-4 pt-4 pb-2 flex items-center justify-between">
+                    <span className="text-white font-bold text-sm">WADU</span>
+                    <span className="text-slate-400 text-xs">🔔</span>
+                  </div>
+                  <div className="px-4 pb-2">
+                    <p className="text-slate-400 text-xs font-semibold mb-2">Upcoming</p>
+                    <div className="h-20 bg-gradient-to-br from-purple-600 to-pink-600 rounded-xl mb-2 flex items-end p-2">
+                      <p className="text-white text-[10px] font-semibold">Your Events In Your Pocket</p>
+                    </div>
+                    {[
+                      { title: "AfroNation Nairobi", time: "Dec 1 • 5:00 PM", color: "from-purple-500 to-pink-500" },
+                      { title: "EA Tech Summit", time: "Oct 20 • 9:00 AM", color: "from-orange-500 to-red-500" },
+                      { title: "Lamu Festival", time: "Nov 15 • 10:00 AM", color: "from-teal-500 to-green-500" },
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-center gap-2 mb-1.5">
+                        <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${item.color} flex-shrink-0`} />
+                        <div>
+                          <p className="text-white text-[9px] font-semibold leading-tight">{item.title}</p>
+                          <p className="text-slate-400 text-[8px]">{item.time}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="border-t border-slate-800 px-4 py-2 flex justify-around">
+                    {["Home", "Events", "Notifs", "Settings"].map((t) => (
+                      <span key={t} className="text-slate-500 text-[8px]">{t}</span>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -287,16 +323,16 @@ export default function Index() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 px-4 max-w-7xl mx-auto text-center">
-        <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+      <section className="bg-gradient-to-r from-purple-700 to-purple-500 py-16 px-4 text-center">
+        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
           Ready to Host Your Next Event?
         </h2>
-        <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
+        <p className="text-purple-100 text-lg mb-8 max-w-xl mx-auto">
           Simplify ticketing, engage attendees, and grow your event with WADU.
         </p>
         <Link
           to="/post-event"
-          className="inline-block bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-lg font-semibold hover:from-purple-700 hover:to-pink-700 transition text-lg"
+          className="inline-block bg-white text-purple-700 px-10 py-4 rounded-xl font-bold hover:bg-purple-50 transition text-lg shadow-lg"
         >
           Start Selling Tickets
         </Link>

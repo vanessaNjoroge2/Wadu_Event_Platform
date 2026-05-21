@@ -11,7 +11,20 @@ import ExplorePage from "./pages/ExplorePage";
 import EventDetailPage from "./pages/EventDetailPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import CreateEventPage from "./pages/CreateEventPage";
-import { PlaceholderPage } from "./pages/PlaceholderPage";
+import CategoriesPage from "./pages/CategoriesPage";
+import CitiesPage from "./pages/CitiesPage";
+import SignInPage from "./pages/SignInPage";
+import DashboardPage from "./pages/DashboardPage";
+import {
+  AboutPage,
+  CareersPage,
+  PressPage,
+  BlogPage,
+  HelpPage,
+  ContactPage,
+  TermsPage,
+  PrivacyPage,
+} from "./pages/FooterPages";
 
 const queryClient = new QueryClient();
 
@@ -28,42 +41,18 @@ export default function App() {
             <Route path="/event/:id" element={<EventDetailPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/post-event" element={<CreateEventPage />} />
-            <Route
-              path="/categories"
-              element={
-                <PlaceholderPage
-                  title="Browse Categories"
-                  description="Coming soon: All event categories and curated collections."
-                />
-              }
-            />
-            <Route
-              path="/cities"
-              element={
-                <PlaceholderPage
-                  title="Browse by Cities"
-                  description="Coming soon: Events by location."
-                />
-              }
-            />
-            <Route
-              path="/sign-in"
-              element={
-                <PlaceholderPage
-                  title="Sign In"
-                  description="Coming soon: User authentication."
-                />
-              }
-            />
-            <Route
-              path="/dashboard"
-              element={
-                <PlaceholderPage
-                  title="Organizer Dashboard"
-                  description="Coming soon: Manage your events and analytics."
-                />
-              }
-            />
+            <Route path="/categories" element={<CategoriesPage />} />
+            <Route path="/cities" element={<CitiesPage />} />
+            <Route path="/sign-in" element={<SignInPage />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/careers" element={<CareersPage />} />
+            <Route path="/press" element={<PressPage />} />
+            <Route path="/blog" element={<BlogPage />} />
+            <Route path="/help" element={<HelpPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/terms" element={<TermsPage />} />
+            <Route path="/privacy" element={<PrivacyPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
