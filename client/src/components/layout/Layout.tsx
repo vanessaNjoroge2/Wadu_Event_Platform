@@ -15,32 +15,31 @@ export function Layout({ children, showHero = false }: LayoutProps) {
 
       {/* Hero Section */}
       {showHero && (
-        <div className="relative overflow-hidden py-20 md:py-32 px-4">
-          {/* Full-width autoplay video background */}
+        <div
+          className="relative overflow-hidden py-20 md:py-32 px-4"
+          style={{ background: "linear-gradient(135deg, #2d0060 0%, #0d0535 40%, #001845 100%)" }}
+        >
+
+          {/* Self-hosted autoplay video background */}
           <video
             autoPlay
             muted
             loop
             playsInline
-            className="absolute inset-0 w-full h-full object-cover -z-20"
-            poster="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1920&q=80"
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ zIndex: 0 }}
           >
-            <source
-              src="https://assets.mixkit.co/videos/preview/mixkit-crowd-at-a-concert-with-a-man-on-stage-2993-large.mp4"
-              type="video/mp4"
-            />
+            <source src="/hero-video.mp4" type="video/mp4" />
           </video>
 
-          {/* Dark gradient overlay so text stays readable */}
-          <div className="absolute inset-0 -z-10 bg-gradient-to-b from-slate-950/75 via-blue-950/65 to-slate-950/90" />
+          {/* Semi-transparent overlay — dark enough to read text, light enough to see video */}
+          <div
+            className="absolute inset-0"
+            style={{ zIndex: 1, background: "linear-gradient(to bottom, rgba(10,0,30,0.25), rgba(10,0,30,0.20), rgba(5,0,20,0.45))" }}
+          />
 
-          {/* Subtle colour bloom on top of video */}
-          <div className="absolute inset-0 -z-10 pointer-events-none">
-            <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/15 rounded-full blur-3xl" />
-            <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-pink-600/15 rounded-full blur-3xl" />
-          </div>
-
-          <div className="max-w-7xl mx-auto text-center relative">
+          {/* Content sits above video + overlay */}
+          <div className="max-w-7xl mx-auto text-center relative" style={{ zIndex: 2 }}>
             <p className="text-purple-400 font-semibold text-sm uppercase tracking-widest mb-4">
               THE WORLD'S EVENTS, ONE PLATFORM
             </p>

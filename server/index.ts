@@ -1,6 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
+import path from "path";
 import { handleDemo } from "./routes/demo";
 import eventsRouter from "./routes/events";
 import authRouter from "./routes/auth";
@@ -8,6 +9,9 @@ import { errorHandler } from "./middleware/errorHandler";
 
 export function createServer() {
   const app = express();
+
+  // Serve static files from client/public (videos, images, etc.)
+  app.use(express.static(path.resolve(process.cwd(), "client/public")));
 
   // Middleware
   app.use(cors());
