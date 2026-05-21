@@ -15,6 +15,7 @@ import CategoriesPage from "./pages/CategoriesPage";
 import CitiesPage from "./pages/CitiesPage";
 import SignInPage from "./pages/SignInPage";
 import DashboardPage from "./pages/DashboardPage";
+import OrganizerDashboardPage from "./pages/OrganizerDashboardPage";
 import {
   AboutPage,
   CareersPage,
@@ -45,6 +46,7 @@ export default function App() {
             <Route path="/cities" element={<CitiesPage />} />
             <Route path="/sign-in" element={<SignInPage />} />
             <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/organizer-dashboard" element={<OrganizerDashboardPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/careers" element={<CareersPage />} />
             <Route path="/press" element={<PressPage />} />
