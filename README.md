@@ -13,7 +13,7 @@ A premium, globally scalable event ticketing platform built with React 18, Tailw
 
 ### Installation
 
-Clone or open the project folder, then run:
+Clone the repository, navigate to the project directory, and install dependencies:
 
 ```bash
 npm install
@@ -25,78 +25,77 @@ npm install
 npm run dev
 ```
 
-Open your browser and go to: http://localhost:8080
+Open your browser and navigate to: **http://localhost:5000**
 
-The server runs on a single port with both Vite dev server and Express middleware.
+The development server uses a unified Vite server with Express middleware mounted directly.
 
 ### Build for Production
 
+To package and run the platform in a production-optimized state:
+
 ```bash
+# Compile client and server bundles
 npm run build
+
+# Start production server (listens on port 3000 by default)
 npm run start
 ```
+
+Open your browser and navigate to: **http://localhost:3000**
 
 ---
 
 ## 📄 Pages & Routes
 
-| Page                | Route       | Description                                                |
-| ------------------- | ----------- | ---------------------------------------------------------- |
-| Homepage            | /           | Hero, trending events, categories, how it works, app promo |
-| Event Listing       | /explore    | Browse and filter all events with search                   |
-| Single Event        | /event/:id  | Event details and ticket purchasing                        |
-| Checkout            | /checkout   | 3-step ticket booking and payment flow                     |
-| Create Event        | /post-event | Event creation form for organizers                         |
-| Categories          | /categories | Browse by event category (coming soon)                     |
-| Cities              | /cities     | Events by location (coming soon)                           |
-| Sign In             | /sign-in    | User authentication (coming soon)                          |
-| Organizer Dashboard | /dashboard  | Coming soon                                                |
+The platform is fully implemented with strict adherence to the WADU brand identity system:
+
+| Page                | Route       | Description                                                          |
+| ------------------- | ----------- | -------------------------------------------------------------------- |
+| **Homepage**        | `/`         | Dynamic hero, autoplay background video, trending grids, and CTAs    |
+| **Event Listing**   | `/explore`  | Multi-category search, filters, and dynamic event cards grid         |
+| **Single Event**    | `/event/:id`| Comprehensive event detail, schedules, and ticket quantity selectors |
+| **Checkout**        | `/checkout` | 3-step ticket booking, billing info, and simulated payment flow     |
+| **Categories**      | `/categories`| Clean category listing grid with brand navy/purple aesthetics        |
+| **Cities**          | `/cities`   | Dynamic location showcase maps and location event listings           |
+| **Sign In / Auth**  | `/sign-in`  | Role-based authentication interface (Organizer vs. Attendee)          |
+| **Organizer Dashboard** | `/organizer-dashboard` | Full control center: metrics overview, sales charts, and transaction audits |
+| **My Events**       | `/organizer-dashboard/events` | Organizer's active, draft, and sold-out event listings |
+| **Create Event**    | `/post-event` | Multi-step event creation form rendering inside the dashboard menu  |
+| **Attendees Audit** | `/organizer-dashboard/attendees` | Live QR check-in tracker and attendance registration log |
+| **Sales Analytics** | `/organizer-dashboard/analytics` | Traffic breakdowns, daily revenue scales, and channel analysis |
+| **Earnings & Payouts** | `/organizer-dashboard/payouts` | Wallet payouts, Safaricom M-Pesa setup, and NCBA bank transfer audits |
+| **Profile Settings**| `/organizer-dashboard/settings` | Branding log upload, profile settings, and email alerts configuration |
+| **Help & Support**  | `/help`     | Help Center FAQ center rendering inside the dashboard menu shell    |
 
 ---
 
-## 🎨 Design System
+## 🎨 WADU Brand Identity System
 
-### Colors
+### Color Palette
 
-| Token     | Hex     | Usage                     |
-| --------- | ------- | ------------------------- |
-| Purple    | #6C4DFF | Primary CTA, accents      |
-| Teal      | #00C2A8 | Secondary highlights      |
-| Navy      | #0A1F44 | Headers, dark backgrounds |
-| Charcoal  | #0F172A | Dark mode base            |
-| Off-white | #F9FAFB | Light backgrounds         |
+Strictly enforced color guidelines throughout all user interfaces:
 
-### Typography
+*   **Primary Accent (`#0A1F44`):** Solid Deep Royal Blue used for Navbars, headers, and major action buttons.
+*   **CTA Accent (`#6C4DFF`):** Electric Purple highlights, active navigation tabs, selected states, and banners.
+*   **Secondary Interactive (`#00C2A8`):** Vibrant Teal applied to all hover transitions, glow states, active focuses, and success badges.
+*   **Background (`#F9FAFB`):** Sleek off-white background with spacious section padding (`py-24 md:py-32`) to ensure generous breathing room.
+*   **Dark Mode (`#0F172A`):** Beautiful Charcoal base when dark mode is toggled.
 
-- Font: Inter (Google Fonts)
-- H1: 56–72px Bold
-- H2: 36–48px Bold
-- H3: 24–28px Bold
-- Body: 16–18px Regular
-
-### Spacing & Layout
-
-- Mobile-first responsive design
-- Generous white space throughout
-- Max-width container: 1280px
-- Tailwind CSS utility-first styling
+### Spacing & Spacers
+- All major layout sections feature increased margins and `py-24`/`py-32` padding variables to avoid cramped designs and achieve WADU's luxurious spacious aesthetic.
 
 ---
 
 ## 🛠 Tech Stack
 
-- **Framework:** React 18 with TypeScript
-- **Build Tool:** Vite
-- **Routing:** React Router 6
-- **Styling:** Tailwind CSS with dark mode
-- **Animations:** Framer Motion
-- **UI Components:** Radix UI
-- **Icons:** Lucide React
-- **Forms:** React Hook Form + Zod validation
-- **State Management:** TanStack React Query
-- **Backend:** Express.js
+- **Frontend:** React 18 with TypeScript, React Router 6, Tailwind CSS
+- **Animations:** Framer Motion (micro-animations, smooth transition effects)
+- **UI Foundations:** Radix UI primitives, Lucide React icons
+- **Form State:** React Hook Form + Zod validation schemas
+- **Queries:** TanStack React Query (server state synchronization)
+- **Server:** Express.js (middleware, API routing, SSR bundling)
+- **Compiling:** Vite, Rollup, SWC
 - **Testing:** Vitest
-- **Font:** Inter via Google Fonts
 
 ---
 
@@ -104,161 +103,53 @@ npm run start
 
 ```
 client/
-├── pages/
-│   ├── Index.tsx              # Homepage
-│   ├── Explore.tsx            # Event listing
-│   ├── EventDetail.tsx        # Single event
-│   ├── Checkout.tsx           # Checkout flow
-│   ├── CreateEvent.tsx        # Event creation
-│   ├── PlaceholderPage.tsx    # Coming soon pages
-│   └── NotFound.tsx           # 404 page
-├── components/
-│   ├── Layout.tsx             # Navbar + Footer wrapper
-│   └── ui/                    # Radix UI component library
-├── lib/
-│   └── utils.ts               # Utility functions
-├── hooks/
-│   ├── use-mobile.tsx         # Mobile detection
-│   └── use-toast.ts           # Toast notifications
-├── App.tsx                    # Route configuration
-├── global.css                 # Global styles & theme
-└── vite-env.d.ts             # Vite environment types
-
+├── public/                    # Public assets (JPG event thumbnails, loops, favicon, robots.txt)
+└── src/
+    ├── components/            # Reusable UI components (EventCard, Checkout steps)
+    │   ├── layout/            # Layout shells (Layout, Navbar, Footer, DarkModeToggle)
+    │   └── ui/                # Radix primitive components
+    ├── pages/                 # Full pages (HomePage, ExplorePage, OrganizerDashboardPage, etc.)
+    ├── styles/                # global.css (design tokens, colors system)
+    ├── App.tsx                # Client Routing configuration
+    └── main.tsx               # Client entry point
 server/
-├── index.ts                   # Express server setup
-├── routes/
-│   └── demo.ts                # Example API route
-└── node-build.ts              # Build configuration
-
-shared/
-└── api.ts                     # Shared TypeScript types
-
-public/
-├── favicon.ico                # WADU favicon
-└── robots.txt                 # SEO robots file
+├── index.ts                   # Express server core configuration
+├── node-build.ts              # Production startup and static assets server
+├── routes/                    # API routes (events, auth, etc.)
+├── middleware/                # Error handling and validation middlewares
+└── utils/                     # Server utility helpers
+shared/                        # Shared TypeScript validation schemas and interfaces
+netlify/                       # Serverless Netlify edge functions config
 ```
 
 ---
 
-## ✅ Key Features
+## 🧪 Testing & Diagnostics
 
-- **Full-height hero section** with dark overlay
-- **Responsive grid layouts** for desktop, tablet, mobile
-- **Dark mode toggle** with localStorage persistence
-- **Smooth Framer Motion animations** throughout
-- **3-step checkout flow** with form validation
-- **Event filtering and search** on listing page
-- **Trending events showcase** on homepage
-- **Category browsing** with icon-based cards
-- **Mobile-optimized navigation** with hamburger menu
-- **How It Works split view** for attendees & organizers
-- **App promotion section** with store badges
-- **Skeleton loading states** for better UX
-- **Toast notifications** via Sonner
-- **Accessible form components** from Radix UI
-- **Type-safe API communication** with shared types
-
----
-
-## 📋 Environment Variables
-
-Create a `.env` file in the project root:
-
-```
-PING_MESSAGE=Hello from WADU API!
-```
-
----
-
-## 🧪 Testing
+Verify system type safety, code formatting, and run test suites:
 
 ```bash
-npm run test              # Run tests with Vitest
-npm run typecheck         # Check TypeScript types
-npm run format.fix        # Format code with Prettier
+# Run unit tests
+npm run test
+
+# Validate type safety
+npm run typecheck
+
+# Format codebase
+npm run format.fix
 ```
 
 ---
 
-## 🚀 Deployment
+## 🔌 API Endpoints
 
-### Netlify
-
-The project is pre-configured for Netlify deployment:
-
-```bash
-npm run build
-# Deploy the dist/ folder to Netlify
-```
-
-### Other Platforms
-
-- Build: `npm run build`
-- Start: `npm run start`
-- Output directory: `dist/spa` (client), `dist/server` (server)
+- `GET /api/ping` - Server health diagnostic
+- `GET /api/demo` - API functionality demo
+- `GET /api/events` - Fetch public event listings
+- `POST /api/auth/sign-in` - Client role authentication mock
 
 ---
 
-## 📝 Available Scripts
-
-```bash
-npm run dev              # Start development server (port 8080)
-npm run build            # Build client and server
-npm run build:client     # Build client only
-npm run build:server     # Build server only
-npm run start            # Start production server
-npm run test             # Run tests
-npm run typecheck        # Type check with TypeScript
-npm run format.fix       # Format code with Prettier
-```
-
----
-
-## 🎯 Development Workflow
-
-1. Create a new branch for your feature
-2. Make changes in `client/pages` or `client/components`
-3. Test locally with `npm run dev`
-4. Run type checking: `npm run typecheck`
-5. Format code: `npm run format.fix`
-6. Push and create a pull request
-
----
-
-## 🔌 API Routes
-
-- `GET /api/ping` - Health check endpoint
-- `GET /api/demo` - Demo endpoint example
-
-API endpoints are prefixed with `/api/` and handled by Express middleware during development.
-
----
-
-## 📞 Support & Contact
-
-**Client:** WADU Global  
-**Agency:** WitzCG  
-**Email:** info@witzcg.com  
-**Phone:** +254 768 622 525  
-**Location:** Westlands, Nairobi, Kenya
-
----
-
-## 📚 Documentation
-
-- [React Documentation](https://react.dev)
-- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
-- [Tailwind CSS Docs](https://tailwindcss.com/docs)
-- [Framer Motion Docs](https://www.framer.com/motion/)
-- [React Router Docs](https://reactrouter.com/)
-- [Radix UI Docs](https://www.radix-ui.com/docs/primitives/overview/introduction)
-
----
-
-## ✨ License
-
-WADU Global 2025 — All Rights Reserved
-
----
-
-**Last Updated:** May 21, 2026
+**Last Updated:** May 23, 2026  
+**Branding Agency:** WitzCG  
+**Client:** WADU Global

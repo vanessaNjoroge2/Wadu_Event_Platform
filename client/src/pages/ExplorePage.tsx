@@ -1,7 +1,7 @@
 import { Layout } from "@/components/Layout";
-import { Search, MapPin, Calendar, ArrowRight } from "lucide-react";
+import { Search, MapPin, Calendar } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { EventCard } from "@/components/events/EventCard";
 
 export default function Explore() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -14,7 +14,6 @@ export default function Explore() {
       location: "Nairobi, Kenya",
       date: "Fri, Dec 1, 2025 • 5:00 PM",
       price: "From KES 3,500",
-      gradient: "from-purple-600 to-pink-600",
       status: "ON SALE",
     },
     {
@@ -24,7 +23,6 @@ export default function Explore() {
       location: "Kigali, Rwanda",
       date: "Mon, Oct 20, 2025 • 9:00 AM",
       price: "From KES 2,000",
-      gradient: "from-orange-500 to-red-500",
       status: "ON SALE",
     },
     {
@@ -34,7 +32,6 @@ export default function Explore() {
       location: "Lamu, Kenya",
       date: "Sat, Nov 15, 2025 • 10:00 AM",
       price: "From KES 1,200",
-      gradient: "from-teal-500 to-green-500",
       status: "ON SALE",
     },
     {
@@ -44,7 +41,6 @@ export default function Explore() {
       location: "Nairobi, Kenya",
       date: "Sun, Nov 26, 2025 • 12:00 PM",
       price: "From KES 1,500",
-      gradient: "from-red-500 to-pink-600",
       status: "LAST 47 TICKETS",
     },
     {
@@ -54,7 +50,6 @@ export default function Explore() {
       location: "Nairobi, Kenya",
       date: "Oct 15-18, 2024",
       price: "From KES 500",
-      gradient: "from-blue-600 to-purple-600",
       status: "ON SALE",
     },
     {
@@ -64,7 +59,6 @@ export default function Explore() {
       location: "Mombasa, Kenya",
       date: "Fri, Dec 1, 2024 • 10:00 AM",
       price: "From KES 1,800",
-      gradient: "from-yellow-600 to-orange-500",
       status: "ON SALE",
     },
   ];
@@ -78,42 +72,49 @@ export default function Explore() {
     "Festivals",
   ];
 
+  const filteredEvents = selectedCategory
+    ? events.filter(
+        (event) =>
+          event.category.toLowerCase() === selectedCategory.toLowerCase()
+      )
+    : events;
+
   return (
     <Layout>
       {/* Search & Filter Section */}
-      <section className="bg-slate-900/50 border-b border-slate-800 py-8 px-4">
+      <section className="bg-white dark:bg-slate-900/40 border-b border-slate-200 dark:border-slate-800 py-12 px-4 transition-all duration-300">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl font-bold text-white mb-8">Find Events</h1>
+          <h1 className="text-4xl font-extrabold text-wadu-navy dark:text-white mb-8">Find Events</h1>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={20} />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-wadu-teal" size={20} />
               <input
                 type="text"
                 placeholder="Search events..."
-                className="w-full bg-slate-800 border border-slate-700 rounded-lg py-3 pl-12 pr-4 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500"
+                className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg py-3.5 pl-12 pr-4 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-medium"
               />
             </div>
             <div className="relative">
-              <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={20} />
+              <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-wadu-teal" size={20} />
               <input
                 type="text"
                 placeholder="Nairobi, KE"
-                className="w-full bg-slate-800 border border-slate-700 rounded-lg py-3 pl-12 pr-4 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500"
+                className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg py-3.5 pl-12 pr-4 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-medium"
               />
             </div>
             <div className="relative">
-              <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={20} />
+              <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-wadu-teal" size={20} />
               <input
                 type="text"
                 placeholder="Date"
-                className="w-full bg-slate-800 border border-slate-700 rounded-lg py-3 pl-12 pr-4 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500"
+                className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg py-3.5 pl-12 pr-4 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-medium"
               />
             </div>
           </div>
 
           {/* Category Filter Chips */}
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2.5">
             {categories.map((category) => (
               <button
                 key={category}
@@ -122,10 +123,10 @@ export default function Explore() {
                     selectedCategory === category ? null : category
                   )
                 }
-                className={`px-4 py-2 rounded-full font-semibold transition ${
+                className={`px-5 py-2.5 rounded-full font-bold text-sm transition duration-200 ${
                   selectedCategory === category
-                    ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white"
-                    : "bg-slate-800 text-gray-300 hover:bg-slate-700"
+                    ? "bg-wadu-purple text-white shadow-sm"
+                    : "bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:border-wadu-teal dark:hover:border-wadu-teal hover:text-wadu-teal"
                 }`}
               >
                 {category}
@@ -136,49 +137,28 @@ export default function Explore() {
       </section>
 
       {/* Events Grid */}
-      <section className="py-12 px-4 max-w-7xl mx-auto">
-        <p className="text-gray-400 mb-8">Showing 1,240 events</p>
+      <section className="py-24 px-4 max-w-7xl mx-auto">
+        <p className="text-slate-500 dark:text-slate-400 mb-8 font-semibold">
+          Showing {filteredEvents.length} events
+        </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {events.map((event) => (
-            <Link
-              key={event.id}
-              to={`/event/${event.id}`}
-              className="group bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl overflow-hidden border border-slate-700 hover:border-purple-500 transition hover:shadow-lg hover:shadow-purple-500/10"
+        {filteredEvents.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredEvents.map((event) => (
+              <EventCard key={event.id} event={event} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-24 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl">
+            <p className="text-slate-500 dark:text-slate-400 font-semibold text-lg">No events found in this category.</p>
+            <button
+              onClick={() => setSelectedCategory(null)}
+              className="mt-4 bg-wadu-navy border border-wadu-navy/10 text-white px-6 py-2.5 rounded-lg font-bold hover:bg-wadu-teal hover:text-wadu-navy hover:border-wadu-teal transition duration-200"
             >
-              <div className={`h-48 bg-gradient-to-br ${event.gradient}`} />
-              <div className="p-6">
-                <div className="flex items-start justify-between mb-3">
-                  <span className="text-xs font-semibold text-purple-400 uppercase tracking-widest">
-                    {event.category}
-                  </span>
-                  <span className="text-xs font-semibold text-orange-300 bg-orange-500/20 px-3 py-1 rounded-full">
-                    {event.status}
-                  </span>
-                </div>
-                <h3 className="text-lg font-bold text-white mb-3 group-hover:text-purple-300 transition line-clamp-2">
-                  {event.title}
-                </h3>
-                <div className="space-y-2 text-sm text-gray-400 mb-4">
-                  <p className="flex items-center gap-2">
-                    <MapPin size={16} />
-                    {event.location}
-                  </p>
-                  <p className="flex items-center gap-2">
-                    <Calendar size={16} />
-                    {event.date}
-                  </p>
-                </div>
-                <div className="flex items-center justify-between pt-4 border-t border-slate-700">
-                  <p className="font-bold text-white">{event.price}</p>
-                  <button className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-lg font-semibold hover:from-purple-700 hover:to-pink-700 transition text-sm flex items-center gap-2">
-                    Book <ArrowRight size={16} />
-                  </button>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
+              Clear Filter
+            </button>
+          </div>
+        )}
       </section>
     </Layout>
   );

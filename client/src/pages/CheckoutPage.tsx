@@ -16,7 +16,6 @@ export default function Checkout() {
     title: "AfroNation Nairobi 2025",
     date: "Aug 15-17, 2025",
     location: "Uhuru Gardens, Nairobi",
-    image: "bg-gradient-to-br from-purple-600 to-pink-600",
   };
 
   const handleSelectTickets = () => {
@@ -47,11 +46,11 @@ export default function Checkout() {
 
   return (
     <Layout>
-      <div className="max-w-4xl mx-auto px-4 py-8">
+      <div className="max-w-4xl mx-auto px-4 py-12">
         {/* Back Button */}
         <Link
           to="/explore"
-          className="inline-flex items-center gap-2 text-gray-400 hover:text-white mb-8 transition"
+          className="inline-flex items-center gap-2 text-slate-500 dark:text-slate-400 hover:text-wadu-teal dark:hover:text-wadu-teal mb-8 font-bold transition duration-200"
         >
           <ArrowLeft size={18} />
           Back to Events
@@ -63,17 +62,17 @@ export default function Checkout() {
             {/* Step 1 */}
             <div className="flex flex-col items-center">
               <div
-                className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg mb-2 transition duration-300 ${
+                className={`w-12 h-12 rounded-full flex items-center justify-center font-extrabold text-lg mb-2 transition duration-300 ${
                   step >= 1
-                    ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg shadow-purple-500/20"
-                    : "bg-slate-800 text-gray-500"
+                    ? "bg-wadu-purple text-white shadow-sm"
+                    : "bg-slate-200 dark:bg-slate-800 text-slate-450 dark:text-gray-500"
                 }`}
               >
                 {step > 1 ? <Check size={20} /> : "1"}
               </div>
               <span
-                className={`text-sm font-semibold ${
-                  step >= 1 ? "text-white" : "text-gray-500"
+                className={`text-sm font-bold ${
+                  step >= 1 ? "text-wadu-navy dark:text-white" : "text-slate-400 dark:text-gray-500"
                 }`}
               >
                 Tickets
@@ -84,25 +83,25 @@ export default function Checkout() {
             <div
               className={`flex-1 h-1 mx-4 mb-8 transition duration-300 ${
                 step >= 2
-                  ? "bg-gradient-to-r from-purple-600 to-pink-600"
-                  : "bg-slate-800"
+                  ? "bg-wadu-purple"
+                  : "bg-slate-200 dark:bg-slate-800"
               }`}
             />
 
             {/* Step 2 */}
             <div className="flex flex-col items-center">
               <div
-                className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg mb-2 transition duration-300 ${
+                className={`w-12 h-12 rounded-full flex items-center justify-center font-extrabold text-lg mb-2 transition duration-300 ${
                   step >= 2
-                    ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg shadow-purple-500/20"
-                    : "bg-slate-800 text-gray-500"
+                    ? "bg-wadu-purple text-white shadow-sm"
+                    : "bg-slate-200 dark:bg-slate-800 text-slate-450 dark:text-gray-500"
                 }`}
               >
                 {step > 2 ? <Check size={20} /> : "2"}
               </div>
               <span
-                className={`text-sm font-semibold ${
-                  step >= 2 ? "text-white" : "text-gray-500"
+                className={`text-sm font-bold ${
+                  step >= 2 ? "text-wadu-navy dark:text-white" : "text-slate-400 dark:text-gray-500"
                 }`}
               >
                 Details
@@ -113,25 +112,25 @@ export default function Checkout() {
             <div
               className={`flex-1 h-1 mx-4 mb-8 transition duration-300 ${
                 step >= 3
-                  ? "bg-gradient-to-r from-purple-600 to-pink-600"
-                  : "bg-slate-800"
+                  ? "bg-wadu-purple"
+                  : "bg-slate-200 dark:bg-slate-800"
               }`}
             />
 
             {/* Step 3 */}
             <div className="flex flex-col items-center">
               <div
-                className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg mb-2 transition duration-300 ${
+                className={`w-12 h-12 rounded-full flex items-center justify-center font-extrabold text-lg mb-2 transition duration-300 ${
                   step >= 3
-                    ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg shadow-purple-500/20"
-                    : "bg-slate-800 text-gray-500"
+                    ? "bg-wadu-purple text-white shadow-sm"
+                    : "bg-slate-200 dark:bg-slate-800 text-slate-450 dark:text-gray-500"
                 }`}
               >
-                3
+                {step > 2 ? <Check size={20} /> : "3"}
               </div>
               <span
-                className={`text-sm font-semibold ${
-                  step >= 3 ? "text-white" : "text-gray-500"
+                className={`text-sm font-bold ${
+                  step >= 3 ? "text-wadu-navy dark:text-white" : "text-slate-400 dark:text-gray-500"
                 }`}
               >
                 Payment
@@ -141,7 +140,7 @@ export default function Checkout() {
         </div>
 
         {/* Content */}
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-12">
           <div className="md:col-span-2">
             {step === 1 && <OrderReview onContinue={handleSelectTickets} />}
             {step === 2 && <PersonalDetails onContinue={handleFillAttendees} />}
@@ -149,43 +148,43 @@ export default function Checkout() {
           </div>
 
           {/* Order Summary Sidebar */}
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 h-fit sticky top-24 shadow-xl">
-            <h3 className="text-lg font-bold text-white mb-6">Order Summary</h3>
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 h-fit sticky top-24 shadow-md transition-all duration-300">
+            <h3 className="text-lg font-bold text-wadu-navy dark:text-white mb-6">Order Summary</h3>
 
-            <div className="space-y-4 mb-6 border-b border-slate-800 pb-6">
+            <div className="space-y-4 mb-6 border-b border-slate-100 dark:border-slate-800 pb-6">
               <div>
-                <p className="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Event</p>
-                <h4 className="text-white font-semibold text-base">{mockEvent.title}</h4>
+                <p className="text-slate-450 dark:text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Event</p>
+                <h4 className="text-wadu-navy dark:text-white font-bold text-base">{mockEvent.title}</h4>
               </div>
               <div>
-                <p className="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Date & Time</p>
-                <p className="text-white text-sm font-medium">{mockEvent.date}</p>
+                <p className="text-slate-450 dark:text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Date & Time</p>
+                <p className="text-slate-700 dark:text-slate-350 text-sm font-semibold">{mockEvent.date}</p>
               </div>
               <div>
-                <p className="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Location</p>
-                <p className="text-white text-sm font-medium">{mockEvent.location}</p>
+                <p className="text-slate-450 dark:text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Location</p>
+                <p className="text-slate-700 dark:text-slate-350 text-sm font-semibold">{mockEvent.location}</p>
               </div>
             </div>
 
-            <div className="space-y-3 text-sm mb-6">
-              <div className="flex justify-between text-gray-400 font-medium">
+            <div className="space-y-3 text-sm mb-6 font-semibold">
+              <div className="flex justify-between text-slate-500 dark:text-slate-450">
                 <span>2x General Admission</span>
-                <span className="text-white font-semibold">KES 5,000</span>
+                <span className="text-wadu-navy dark:text-white font-bold">KES 5,000</span>
               </div>
-              <div className="flex justify-between text-gray-400 font-medium">
+              <div className="flex justify-between text-slate-500 dark:text-slate-450">
                 <span>Service Fee</span>
-                <span className="text-white font-semibold">KES 500</span>
+                <span className="text-wadu-navy dark:text-white font-bold">KES 500</span>
               </div>
-              <div className="flex justify-between text-white font-bold border-t border-slate-800 pt-3 text-base">
+              <div className="flex justify-between text-wadu-navy dark:text-white font-extrabold border-t border-slate-100 dark:border-slate-800 pt-3 text-base">
                 <span>Total</span>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">
+                <span className="text-wadu-purple font-extrabold">
                   KES 5,500
                 </span>
               </div>
             </div>
 
-            <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-3.5 text-center">
-              <p className="text-blue-300 text-xs font-semibold">
+            <div className="bg-wadu-teal/5 border border-wadu-teal/20 rounded-xl p-4 text-center">
+              <p className="text-wadu-teal text-xs font-bold">
                 ✓ 100% Buyer Guarantee. Your tickets are secure.
               </p>
             </div>

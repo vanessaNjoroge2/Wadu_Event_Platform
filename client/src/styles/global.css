@@ -11,85 +11,90 @@
    * tailwind.config.ts expects the following color variables to be expressed as HSL values.
   */
   :root {
-    /* Dark theme - Primary */
-    --background: 220 13% 9%;
-    --foreground: 210 40% 98%;
+    /* WADU Light theme - Background Off-white #F9FAFB */
+    --background: 210 20% 98%;
+    --foreground: 222 47% 11%; /* Charcoal #0F172A */
 
-    --card: 222 14% 18%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
 
-    --popover: 220 13% 9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
 
-    /* Primary Purple */
-    --primary: 270 80% 56%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary: Deep Royal Blue #0A1F44 */
+    --primary: 218 74% 15%;
+    --primary-foreground: 0 0% 100%;
 
-    /* Secondary Teal */
-    --secondary: 180 60% 50%;
-    --secondary-foreground: 210 40% 98%;
+    /* Secondary Accent: Vibrant Teal #00C2A8 */
+    --secondary: 172 100% 38%;
+    --secondary-foreground: 218 74% 15%;
 
-    --muted: 220 14% 30%;
-    --muted-foreground: 210 20% 65%;
+    /* Accent: Electric Purple #6C4DFF */
+    --accent: 251 100% 65%;
+    --accent-foreground: 0 0% 100%;
 
-    --accent: 270 80% 56%;
-    --accent-foreground: 210 40% 98%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 220 14% 25%;
-    --input: 220 14% 18%;
-    --ring: 270 80% 56%;
+    --border: 220 13% 91%;
+    --input: 220 13% 95%;
+    --ring: 172 100% 38%; /* Teal ring on focus */
 
     --radius: 0.5rem;
 
-    --sidebar-background: 220 13% 9%;
+    --sidebar-background: 218 74% 15%;
     --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 270 80% 56%;
+    --sidebar-primary: 251 100% 65%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 220 14% 30%;
     --sidebar-accent-foreground: 210 40% 98%;
     --sidebar-border: 220 14% 25%;
-    --sidebar-ring: 270 80% 56%;
+    --sidebar-ring: 172 100% 38%;
   }
 
   .dark {
-    --background: 220 13% 9%;
-    --foreground: 210 40% 98%;
+    /* WADU Dark theme - Background Charcoal #0F172A */
+    --background: 222 47% 11%;
+    --foreground: 210 20% 98%;
 
-    --card: 222 14% 18%;
-    --card-foreground: 210 40% 98%;
+    --card: 222 47% 13%;
+    --card-foreground: 210 20% 98%;
 
-    --popover: 220 13% 9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 20% 98%;
 
-    --primary: 270 80% 56%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary: Deep Royal Blue #0A1F44 */
+    --primary: 218 74% 15%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 180 60% 50%;
-    --secondary-foreground: 210 40% 98%;
+    /* Secondary Accent: Vibrant Teal #00C2A8 */
+    --secondary: 172 100% 38%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 220 14% 30%;
-    --muted-foreground: 210 20% 65%;
+    /* Accent: Electric Purple #6C4DFF */
+    --accent: 251 100% 65%;
+    --accent-foreground: 0 0% 100%;
 
-    --accent: 270 80% 56%;
-    --accent-foreground: 210 40% 98%;
+    --muted: 222 14% 18%;
+    --muted-foreground: 210 10% 70%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 220 14% 25%;
-    --input: 220 14% 18%;
-    --ring: 270 80% 56%;
-    --sidebar-background: 220 13% 9%;
+    --border: 222 14% 20%;
+    --input: 222 14% 18%;
+    --ring: 172 100% 38%;
+    --sidebar-background: 222 47% 11%;
     --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 270 80% 56%;
+    --sidebar-primary: 251 100% 65%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 220 14% 30%;
     --sidebar-accent-foreground: 210 40% 98%;
     --sidebar-border: 220 14% 25%;
-    --sidebar-ring: 270 80% 56%;
+    --sidebar-ring: 172 100% 38%;
   }
 }
 

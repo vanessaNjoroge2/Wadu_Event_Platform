@@ -41,7 +41,7 @@ export default function App() {
             <Route path="/explore" element={<ExplorePage />} />
             <Route path="/event/:id" element={<EventDetailPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
-            <Route path="/post-event" element={<CreateEventPage />} />
+            <Route path="/post-event" element={<OrganizerDashboardPage />} />
             <Route path="/categories" element={<CategoriesPage />} />
             <Route path="/cities" element={<CitiesPage />} />
             <Route path="/sign-in" element={<SignInPage />} />
@@ -51,7 +51,7 @@ export default function App() {
             <Route path="/careers" element={<CareersPage />} />
             <Route path="/press" element={<PressPage />} />
             <Route path="/blog" element={<BlogPage />} />
-            <Route path="/help" element={<HelpPage />} />
+            <Route path="/help" element={<OrganizerDashboardPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/terms" element={<TermsPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />

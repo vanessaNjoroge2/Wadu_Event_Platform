@@ -17,18 +17,18 @@ export function PersonalDetails({ onContinue }: PersonalDetailsProps) {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-white mb-2">
+        <h2 className="text-2xl font-bold text-wadu-navy dark:text-white mb-2">
           Step 2 of 3: Attendee Details
         </h2>
-        <p className="text-gray-400 text-sm">
+        <p className="text-slate-500 dark:text-slate-400 text-sm">
           Provide your information to receive tickets.
         </p>
       </div>
 
-      <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 flex items-start gap-3">
-        <span className="text-blue-400 text-lg">ℹ️</span>
+      <div className="bg-wadu-teal/5 border border-wadu-teal/20 rounded-xl p-4 flex items-start gap-3">
+        <span className="text-wadu-teal text-lg leading-none">ℹ️</span>
         <div>
-          <p className="text-blue-300 font-semibold text-sm">
+          <p className="text-wadu-teal font-bold text-sm">
             Sign in to access saved details and complete your purchase faster.
           </p>
         </div>
@@ -37,13 +37,13 @@ export function PersonalDetails({ onContinue }: PersonalDetailsProps) {
       <div className="space-y-4">
         {fields.map((field) => (
           <div key={field.label}>
-            <label className="block text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">
+            <label className="block text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
               {field.label}
             </label>
             <input
               type={field.type}
               placeholder={field.placeholder}
-              className="w-full bg-slate-900 border border-slate-800 rounded-xl py-3.5 px-4 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 font-medium transition duration-200"
+              className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl py-3.5 px-4 text-slate-800 dark:text-white placeholder-slate-450 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal font-medium transition duration-200"
             />
           </div>
         ))}
@@ -51,7 +51,7 @@ export function PersonalDetails({ onContinue }: PersonalDetailsProps) {
 
       {/* Ticket Delivery */}
       <div>
-        <h4 className="text-white font-semibold text-sm mb-3">
+        <h4 className="text-wadu-navy dark:text-white font-bold text-sm mb-3">
           Ticket Delivery Method
         </h4>
         <div className="flex gap-3">
@@ -60,10 +60,10 @@ export function PersonalDetails({ onContinue }: PersonalDetailsProps) {
               key={option}
               type="button"
               onClick={() => setDeliveryMethod(option)}
-              className={`flex-1 px-4 py-3 rounded-xl font-bold text-sm transition duration-300 ${
+              className={`flex-1 px-4 py-3 rounded-xl font-bold text-sm transition duration-200 ${
                 deliveryMethod === option
-                  ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md shadow-purple-500/10"
-                  : "bg-slate-900 text-gray-400 hover:text-white border border-slate-800 hover:bg-slate-850"
+                  ? "bg-wadu-purple text-white shadow-sm border border-wadu-purple"
+                  : "bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:text-wadu-teal hover:border-wadu-teal border border-slate-200 dark:border-slate-800"
               }`}
             >
               {option}
@@ -77,19 +77,19 @@ export function PersonalDetails({ onContinue }: PersonalDetailsProps) {
         <label className="flex items-start gap-3 cursor-pointer group">
           <input
             type="checkbox"
-            className="w-5 h-5 rounded border-slate-800 bg-slate-900 text-purple-600 focus:ring-purple-500 focus:ring-offset-slate-950 mt-0.5"
+            className="w-5 h-5 rounded border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-wadu-purple focus:ring-wadu-purple focus:ring-offset-slate-950 mt-0.5"
           />
-          <span className="text-gray-400 group-hover:text-gray-300 transition text-sm">
+          <span className="text-slate-500 dark:text-slate-400 group-hover:text-wadu-teal transition text-sm font-medium">
             Subscribe to our mailing list for updates and exclusive offers.
           </span>
         </label>
         <label className="flex items-start gap-3 cursor-pointer group">
           <input
             type="checkbox"
-            className="w-5 h-5 rounded border-slate-800 bg-slate-900 text-purple-600 focus:ring-purple-500 focus:ring-offset-slate-950 mt-0.5"
+            className="w-5 h-5 rounded border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-wadu-purple focus:ring-wadu-purple focus:ring-offset-slate-950 mt-0.5"
             defaultChecked
           />
-          <span className="text-gray-400 group-hover:text-gray-300 transition text-sm">
+          <span className="text-slate-500 dark:text-slate-400 group-hover:text-wadu-teal transition text-sm font-medium">
             I agree to the terms and conditions and privacy policy.
           </span>
         </label>
@@ -98,11 +98,11 @@ export function PersonalDetails({ onContinue }: PersonalDetailsProps) {
       <div className="pt-2">
         <button
           onClick={onContinue}
-          className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-4 rounded-xl font-bold tracking-wide transition shadow-lg shadow-purple-500/20 hover:shadow-purple-500/30"
+          className="w-full bg-wadu-navy border border-wadu-navy/15 hover:bg-wadu-teal hover:text-wadu-navy hover:border-wadu-teal text-white py-4 rounded-xl font-bold tracking-wide transition duration-200 shadow-sm"
         >
           Continue to Payment
         </button>
-        <p className="text-gray-500 text-xs text-center mt-4">
+        <p className="text-slate-450 dark:text-slate-500 text-xs text-center mt-4 font-semibold">
           You are checking out as a guest. You can create an account later.
         </p>
       </div>

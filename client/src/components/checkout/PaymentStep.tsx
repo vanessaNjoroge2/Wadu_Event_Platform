@@ -18,16 +18,16 @@ export function PaymentStep({ onPlaceOrder }: PaymentStepProps) {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-white mb-2">
+        <h2 className="text-2xl font-bold text-wadu-navy dark:text-white mb-2">
           Step 3 of 3: Payment
         </h2>
-        <p className="text-gray-400 text-sm">
+        <p className="text-slate-500 dark:text-slate-400 text-sm">
           Select a payment method and finalize your booking.
         </p>
       </div>
 
       <div>
-        <h4 className="text-white font-semibold text-sm mb-3">
+        <h4 className="text-wadu-navy dark:text-white font-bold text-sm mb-3">
           Select Payment Method
         </h4>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -36,10 +36,10 @@ export function PaymentStep({ onPlaceOrder }: PaymentStepProps) {
               key={method.id}
               type="button"
               onClick={() => setPaymentMethod(method.id)}
-              className={`py-3.5 rounded-xl font-bold text-sm transition duration-300 ${
+              className={`py-3.5 rounded-xl font-bold text-sm transition duration-200 ${
                 paymentMethod === method.id
-                  ? "bg-gradient-to-r from-teal-500 to-cyan-500 text-slate-950 shadow-md shadow-cyan-500/10"
-                  : "bg-slate-900 text-gray-400 hover:text-white border border-slate-800 hover:bg-slate-850"
+                  ? "bg-wadu-purple text-white border border-wadu-purple shadow-sm"
+                  : "bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:text-wadu-teal hover:border-wadu-teal border border-slate-200 dark:border-slate-800"
               }`}
             >
               {method.label}
@@ -49,78 +49,78 @@ export function PaymentStep({ onPlaceOrder }: PaymentStepProps) {
       </div>
 
       {paymentMethod === "Card" && (
-        <div className="space-y-4 bg-slate-900/40 border border-slate-800 p-5 rounded-2xl animate-fade-in">
+        <div className="space-y-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl">
           <div>
-            <label className="block text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">
+            <label className="block text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
               Card Number
             </label>
             <input
               type="text"
               placeholder="0000 0000 0000 0000"
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl py-3.5 px-4 text-white placeholder-gray-600 focus:outline-none focus:border-purple-500 font-medium transition"
+              className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl py-3.5 px-4 text-slate-800 dark:text-white placeholder-slate-450 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal font-medium transition duration-200"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">
+              <label className="block text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
                 Expiry Date
               </label>
               <input
                 type="text"
                 placeholder="MM / YY"
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl py-3.5 px-4 text-white placeholder-gray-600 focus:outline-none focus:border-purple-500 font-medium transition"
+                className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl py-3.5 px-4 text-slate-800 dark:text-white placeholder-slate-450 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal font-medium transition duration-200"
               />
             </div>
             <div>
-              <label className="block text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">
+              <label className="block text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
                 CVV
               </label>
               <input
                 type="password"
                 placeholder="•••"
                 maxLength={4}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl py-3.5 px-4 text-white placeholder-gray-600 focus:outline-none focus:border-purple-500 font-medium transition"
+                className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl py-3.5 px-4 text-slate-800 dark:text-white placeholder-slate-450 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal font-medium transition duration-200"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">
+            <label className="block text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
               Cardholder Name
             </label>
             <input
               type="text"
               placeholder="Name on card"
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl py-3.5 px-4 text-white placeholder-gray-600 focus:outline-none focus:border-purple-500 font-medium transition"
+              className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl py-3.5 px-4 text-slate-800 dark:text-white placeholder-slate-450 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal font-medium transition duration-200"
             />
           </div>
 
           <div>
-            <label className="block text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">
+            <label className="block text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
               Billing Country
             </label>
             <input
               type="text"
               placeholder="e.g. Kenya"
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl py-3.5 px-4 text-white placeholder-gray-600 focus:outline-none focus:border-purple-500 font-medium transition"
+              className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl py-3.5 px-4 text-slate-800 dark:text-white placeholder-slate-450 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal font-medium transition duration-200"
             />
           </div>
         </div>
       )}
 
       {paymentMethod === "M-Pesa" && (
-        <div className="space-y-4 bg-slate-900/40 border border-slate-800 p-5 rounded-2xl animate-fade-in">
+        <div className="space-y-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl">
           <div>
-            <label className="block text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">
+            <label className="block text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
               M-Pesa Mobile Number
             </label>
             <input
               type="tel"
               placeholder="e.g. +254 700 000000"
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl py-3.5 px-4 text-white placeholder-gray-600 focus:outline-none focus:border-purple-500 font-medium transition"
+              className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl py-3.5 px-4 text-slate-800 dark:text-white placeholder-slate-450 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal font-medium transition duration-200"
             />
-            <p className="text-gray-500 text-xs mt-2">
+            <p className="text-slate-500 dark:text-slate-400 text-xs mt-2 font-semibold">
               You will receive an STK Push prompt on your phone to enter your M-Pesa PIN.
             </p>
           </div>
@@ -128,20 +128,20 @@ export function PaymentStep({ onPlaceOrder }: PaymentStepProps) {
       )}
 
       {paymentMethod === "PayPal" && (
-        <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-2xl text-center">
-          <p className="text-gray-400 text-sm">
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl text-center">
+          <p className="text-slate-500 dark:text-slate-400 text-sm font-semibold">
             Clicking the button below will securely open the PayPal login window to complete your purchase.
           </p>
         </div>
       )}
 
       {paymentMethod === "Bank" && (
-        <div className="space-y-4 bg-slate-900/40 border border-slate-800 p-5 rounded-2xl">
+        <div className="space-y-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl">
           <div>
-            <label className="block text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">
+            <label className="block text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
               Select Your Bank
             </label>
-            <select className="w-full bg-slate-950 border border-slate-800 rounded-xl py-3.5 px-4 text-white focus:outline-none focus:border-purple-500 font-medium transition">
+            <select className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl py-3.5 px-4 text-slate-800 dark:text-white focus:outline-none focus:border-wadu-teal transition duration-200 font-semibold">
               <option value="kcb">KCB Bank</option>
               <option value="equity">Equity Bank</option>
               <option value="coop">Co-operative Bank</option>
@@ -153,7 +153,7 @@ export function PaymentStep({ onPlaceOrder }: PaymentStepProps) {
 
       <button
         onClick={onPlaceOrder}
-        className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-4 rounded-xl font-bold tracking-wide transition shadow-lg shadow-purple-500/20 hover:shadow-purple-500/30 flex items-center justify-center gap-2"
+        className="w-full bg-wadu-navy border border-wadu-navy/15 hover:bg-wadu-teal hover:text-wadu-navy hover:border-wadu-teal text-white py-4 rounded-xl font-bold tracking-wide transition duration-200 shadow-sm flex items-center justify-center gap-2"
       >
         <Lock size={18} />
         Place Order

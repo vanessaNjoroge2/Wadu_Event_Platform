@@ -7,84 +7,72 @@ const cities = [
     name: "Nairobi",
     country: "Kenya",
     count: "420 events",
-    gradient: "from-purple-600 to-pink-600",
     emoji: "🇰🇪",
   },
   {
     name: "Lagos",
     country: "Nigeria",
     count: "310 events",
-    gradient: "from-green-500 to-teal-500",
     emoji: "🇳🇬",
   },
   {
     name: "Cape Town",
     country: "South Africa",
     count: "280 events",
-    gradient: "from-orange-500 to-red-500",
     emoji: "🇿🇦",
   },
   {
     name: "Accra",
     country: "Ghana",
     count: "195 events",
-    gradient: "from-yellow-500 to-orange-500",
     emoji: "🇬🇭",
   },
   {
     name: "Kigali",
     country: "Rwanda",
     count: "175 events",
-    gradient: "from-blue-500 to-cyan-500",
     emoji: "🇷🇼",
   },
   {
     name: "Dar es Salaam",
     country: "Tanzania",
     count: "160 events",
-    gradient: "from-teal-500 to-green-600",
     emoji: "🇹🇿",
   },
   {
     name: "Addis Ababa",
     country: "Ethiopia",
     count: "140 events",
-    gradient: "from-red-500 to-pink-600",
     emoji: "🇪🇹",
   },
   {
     name: "Kampala",
     country: "Uganda",
     count: "120 events",
-    gradient: "from-indigo-500 to-purple-600",
     emoji: "🇺🇬",
   },
   {
     name: "Mombasa",
     country: "Kenya",
     count: "110 events",
-    gradient: "from-pink-500 to-rose-600",
     emoji: "🇰🇪",
   },
   {
     name: "Dakar",
     country: "Senegal",
     count: "95 events",
-    gradient: "from-cyan-500 to-blue-600",
     emoji: "🇸🇳",
   },
   {
     name: "Johannesburg",
     country: "South Africa",
     count: "88 events",
-    gradient: "from-fuchsia-500 to-purple-600",
     emoji: "🇿🇦",
   },
   {
     name: "Abidjan",
     country: "Côte d'Ivoire",
     count: "72 events",
-    gradient: "from-amber-500 to-yellow-600",
     emoji: "🇨🇮",
   },
 ];
@@ -94,27 +82,27 @@ const regions = ["All", "East Africa", "West Africa", "Southern Africa", "North 
 export default function CitiesPage() {
   return (
     <Layout>
-      <section className="py-16 px-4 max-w-7xl mx-auto">
-        <div className="mb-12">
-          <p className="text-teal-400 font-semibold text-sm uppercase tracking-widest mb-3">
+      <section className="py-24 px-4 max-w-7xl mx-auto">
+        <div className="mb-16">
+          <p className="text-wadu-teal font-extrabold text-sm uppercase tracking-widest mb-3">
             Browse by Location
           </p>
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-wadu-navy dark:text-white mb-4">
             Events Near You
           </h1>
-          <p className="text-gray-400 text-lg max-w-2xl">
+          <p className="text-slate-500 dark:text-slate-400 text-lg max-w-2xl leading-relaxed">
             Discover live events happening in cities across Africa and beyond.
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-2 mb-10">
+        <div className="flex flex-wrap gap-2.5 mb-12">
           {regions.map((r) => (
             <button
               key={r}
-              className={`px-4 py-2 rounded-full text-sm font-semibold transition ${
+              className={`px-5 py-2.5 rounded-full text-sm font-bold transition duration-200 ${
                 r === "All"
-                  ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white"
-                  : "bg-slate-800 text-gray-300 hover:bg-slate-700"
+                  ? "bg-wadu-purple text-white shadow-sm border border-wadu-purple"
+                  : "bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-655 dark:text-slate-300 hover:border-wadu-teal dark:hover:border-wadu-teal hover:text-wadu-teal"
               }`}
             >
               {r}
@@ -122,26 +110,31 @@ export default function CitiesPage() {
           ))}
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {cities.map((city, i) => (
             <Link
               key={i}
               to="/explore"
-              className="group relative rounded-2xl overflow-hidden border border-slate-700 hover:border-purple-500 transition hover:shadow-lg hover:shadow-purple-500/10"
+              className="group relative rounded-2xl overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-wadu-teal dark:hover:border-wadu-teal transition-all duration-300 hover:shadow-lg hover:shadow-wadu-teal/5"
             >
-              <div
-                className={`h-28 bg-gradient-to-br ${city.gradient} flex items-end p-4`}
-              >
-                <span className="text-3xl">{city.emoji}</span>
+              <div className="h-28 relative overflow-hidden bg-slate-100 dark:bg-slate-950">
+                <img
+                  src={`/image ${((i) % 10) + 6}.jpg`}
+                  alt={city.name}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent flex items-end p-4">
+                  <span className="text-3xl z-10">{city.emoji}</span>
+                </div>
               </div>
-              <div className="bg-slate-800/80 p-4">
-                <h3 className="text-white font-bold group-hover:text-purple-300 transition">
+              <div className="p-5 bg-white dark:bg-slate-900 transition-colors duration-300">
+                <h3 className="text-wadu-navy dark:text-white font-bold group-hover:text-wadu-teal transition duration-200">
                   {city.name}
                 </h3>
-                <p className="text-gray-400 text-xs flex items-center gap-1 mt-1">
-                  <MapPin size={12} /> {city.country}
+                <p className="text-slate-500 dark:text-slate-400 text-xs flex items-center gap-1 mt-1 font-medium">
+                  <MapPin size={12} className="text-wadu-teal" /> {city.country}
                 </p>
-                <p className="text-purple-400 text-xs font-semibold mt-1">
+                <p className="text-wadu-purple text-xs font-bold mt-2">
                   {city.count}
                 </p>
               </div>
@@ -150,17 +143,17 @@ export default function CitiesPage() {
         </div>
       </section>
 
-      <section className="py-12 px-4 max-w-7xl mx-auto border-t border-slate-800">
+      <section className="py-16 px-4 max-w-7xl mx-auto border-t border-slate-200 dark:border-slate-800 transition-colors duration-300">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-white mb-3">
+          <h2 className="text-2xl font-bold text-wadu-navy dark:text-white mb-3">
             Don't see your city?
           </h2>
-          <p className="text-gray-400 mb-6">
+          <p className="text-slate-500 dark:text-slate-400 mb-6 font-semibold">
             We're expanding every day. Search for events in any location.
           </p>
           <Link
             to="/explore"
-            className="inline-block bg-gradient-to-r from-teal-500 to-cyan-500 text-white px-8 py-3 rounded-xl font-semibold hover:from-teal-600 hover:to-cyan-600 transition"
+            className="inline-block bg-wadu-navy border border-wadu-navy/15 text-white px-8 py-3.5 rounded-xl font-bold hover:bg-wadu-teal hover:text-wadu-navy hover:border-wadu-teal transition duration-200 shadow-sm"
           >
             Search All Locations
           </Link>

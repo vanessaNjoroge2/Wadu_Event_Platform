@@ -1,5 +1,7 @@
 import { useState, useMemo } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { CreateEventForm } from "./CreateEventPage";
+import { HelpPageContent } from "./FooterPages";
 import {
   LayoutDashboard,
   CalendarDays,
@@ -323,6 +325,8 @@ export default function OrganizerDashboardPage() {
     if (currentPath === "/organizer-dashboard/analytics") return "Analytics";
     if (currentPath === "/organizer-dashboard/payouts") return "Payouts";
     if (currentPath === "/organizer-dashboard/settings") return "Settings";
+    if (currentPath === "/post-event") return "Create Event";
+    if (currentPath === "/help") return "Help & FAQs";
     return "Dashboard";
   };
 
@@ -1516,6 +1520,14 @@ export default function OrganizerDashboardPage() {
               </div>
 
             </div>
+          )}
+
+          {currentPath === "/post-event" && (
+            <CreateEventForm />
+          )}
+
+          {currentPath === "/help" && (
+            <HelpPageContent />
           )}
 
         </div>

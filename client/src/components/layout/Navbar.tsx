@@ -36,17 +36,13 @@ export function Navbar() {
       }}
       animate={hidden ? "hidden" : "visible"}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className={`sticky top-0 z-50 border-b transition-all duration-300 ${
-        scrolled
-          ? "bg-white/85 dark:bg-wadu-dark/90 backdrop-blur-md border-slate-200/85 dark:border-slate-800/85 shadow-lg shadow-wadu-navy/5 dark:shadow-wadu-navy/10"
-          : "bg-white dark:bg-wadu-dark border-slate-200 dark:border-slate-800"
-      }`}
+      className="sticky top-0 z-50 border-b border-white/10 bg-[#0A1F44] text-white transition-all duration-300 shadow-md"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="text-2xl font-bold flex items-center gap-2">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-wadu-purple to-wadu-teal font-extrabold tracking-tight">
+          <Link to="/" className="text-2xl font-bold flex items-center gap-2 group">
+            <span className="text-white group-hover:text-wadu-teal font-extrabold tracking-tight transition duration-200">
               WADU
             </span>
           </Link>
@@ -55,37 +51,37 @@ export function Navbar() {
           <div className="hidden md:flex items-center gap-8">
             <Link
               to="/explore"
-              className="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition text-sm font-semibold"
+              className="text-slate-200 hover:text-wadu-teal transition text-sm font-semibold duration-200"
             >
               Explore
             </Link>
             <Link
               to="/categories"
-              className="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition text-sm font-semibold"
+              className="text-slate-200 hover:text-wadu-teal transition text-sm font-semibold duration-200"
             >
               Categories
             </Link>
             <Link
               to="/cities"
-              className="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition text-sm font-semibold"
+              className="text-slate-200 hover:text-wadu-teal transition text-sm font-semibold duration-200"
             >
               Cities
             </Link>
             <Link
               to="/dashboard"
-              className="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition text-sm font-semibold flex items-center gap-1"
+              className="text-slate-200 hover:text-wadu-teal transition text-sm font-semibold flex items-center gap-1 duration-200"
             >
               My Dashboard
             </Link>
             <Link
               to="/sign-in"
-              className="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition text-sm font-semibold"
+              className="text-slate-200 hover:text-wadu-teal transition text-sm font-semibold duration-200"
             >
               Sign In
             </Link>
             <Link
               to="/post-event"
-              className="bg-wadu-purple hover:bg-[#5a3de0] text-white px-5 py-2.5 rounded-xl font-bold text-xs transition shadow-md shadow-wadu-purple/10 flex items-center gap-1.5"
+              className="bg-wadu-purple hover:bg-wadu-teal hover:text-wadu-navy text-white px-5 py-2.5 rounded-xl font-bold text-xs transition shadow-md flex items-center gap-1.5 duration-200"
             >
               Post Event
             </Link>
@@ -96,7 +92,7 @@ export function Navbar() {
           <div className="flex items-center gap-2 md:hidden">
             <DarkModeToggle />
             <button
-              className="text-slate-800 dark:text-white p-2"
+              className="text-white hover:text-wadu-teal p-2 transition duration-200"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle menu"
             >
@@ -107,40 +103,40 @@ export function Navbar() {
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <div className="md:hidden pb-4 border-t border-slate-200 dark:border-slate-800 space-y-1">
+          <div className="md:hidden pb-4 border-t border-white/10 space-y-1 bg-[#0A1F44] px-2">
             <Link
               to="/explore"
-              className="block text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white py-2.5 text-sm font-medium"
+              className="block text-slate-200 hover:text-wadu-teal py-2.5 text-sm font-medium transition duration-200"
             >
               Explore
             </Link>
             <Link
               to="/categories"
-              className="block text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white py-2.5 text-sm font-medium"
+              className="block text-slate-200 hover:text-wadu-teal py-2.5 text-sm font-medium transition duration-200"
             >
               Categories
             </Link>
             <Link
               to="/cities"
-              className="block text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white py-2.5 text-sm font-medium"
+              className="block text-slate-200 hover:text-wadu-teal py-2.5 text-sm font-medium transition duration-200"
             >
               Cities
             </Link>
             <Link
               to="/dashboard"
-              className="block text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white py-2.5 text-sm font-medium"
+              className="block text-slate-200 hover:text-wadu-teal py-2.5 text-sm font-medium transition duration-200"
             >
               My Dashboard
             </Link>
             <Link
               to="/sign-in"
-              className="block text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white py-2.5 text-sm font-medium"
+              className="block text-slate-200 hover:text-wadu-teal py-2.5 text-sm font-medium transition duration-200"
             >
               Sign In
             </Link>
             <Link
               to="/post-event"
-              className="block bg-wadu-purple hover:bg-[#5a3de0] text-white px-4 py-2.5 rounded-xl font-bold text-center mt-4 transition text-xs"
+              className="block bg-wadu-purple hover:bg-wadu-teal hover:text-wadu-navy text-white px-4 py-2.5 rounded-xl font-bold text-center mt-4 transition text-xs duration-200"
             >
               Post Event
             </Link>
