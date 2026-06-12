@@ -127,10 +127,6 @@ cd Wadu_Event_Platform
 - **Start Command**: `npm run start`
 - Set environment variables for production (`DATABASE_URL`, `JWT_SECRET`, `SMTP_USER`, etc.).
 
-
-## API Reference
-Please refer to [api-reference.md](file:///c:/Users/user/OneDrive - Mount Kenya University/Desktop/Projects/Wadu_Event_Platform/Wadu_Event_Platform/docs/api-reference.md) for full endpoint and request/response specifications.
-
 ## Contributing
 1. Create a feature branch: `git checkout -b feature/amazing-feature`
 2. Commit your changes: `git commit -m 'Add amazing feature'`
