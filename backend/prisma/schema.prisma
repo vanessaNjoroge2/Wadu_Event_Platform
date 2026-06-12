@@ -1,0 +1,142 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id               String   @id @default(cuid())
+  email            String   @unique
+  password         String
+  firstName        String
+  lastName         String
+  phone            String?
+  role             Role     @default(ATTENDEE)
+  isVerified       Boolean  @default(false)
+  verificationCode String?
+  verificationExpires DateTime?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  orders           Order[]
+  events           Event[]  @relation("OrganizerEvents")
+}
+
+enum Role {
+  ATTENDEE
+  ORGANIZER
+  ADMIN
+}
+
+model Event {
+  id          String        @id @default(cuid())
+  title       String
+  description String
+  category    String
+  location    String
+  city        String
+  country     String
+  venueName   String
+  address     String
+  startDate   DateTime
+  endDate     DateTime
+  startTime   String
+  endTime     String
+  imageUrl    String?
+  status      EventStatus   @default(DRAFT)
+  organizerId String
+  organizer   User          @relation("OrganizerEvents", fields: [organizerId], references: [id])
+  tickets     TicketType[]
+  orders      Order[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+enum EventStatus {
+  DRAFT
+  PUBLISHED
+  CANCELLED
+  COMPLETED
+}
+
+model TicketType {
+  id          String   @id @default(cuid())
+  eventId     String
+  event       Event    @relation(fields: [eventId], references: [id])
+  name        String   // "General Admission" | "VIP Access" | "VVIP Experience"
+  description String
+  price       Int      // in KES (smallest unit: cents equivalent)
+  quantity    Int
+  sold        Int      @default(0)
+  orderItems  OrderItem[]
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  userId          String?
+  event           Event       @relation(fields: [eventId], references: [id])
+  eventId         String
+  user            User?       @relation(fields: [userId], references: [id])
+  firstName       String
+  lastName        String
+  email           String
+  phone           String
+  deliveryMethod  DeliveryMethod @default(BOTH)
+  paymentMethod   PaymentMethod
+  paymentStatus   PaymentStatus  @default(PENDING)
+  paymentRef      String?
+  subtotal        Int
+  serviceFee      Int
+  total           Int
+  items           OrderItem[]
+  mpesaTransaction MpesaTransaction?
+  createdAt       DateTime    @default(now())
+}
+
+model MpesaTransaction {
+  id                String   @id @default(cuid())
+  orderId           String   @unique
+  order             Order    @relation(fields: [orderId], references: [id])
+  merchantRequestID String
+  checkoutRequestID String   @unique
+  resultCode        Int?
+  resultDesc        String?
+  amount            Int?
+  phoneNumber       String?
+  transactionId     String?
+  status            String   // PENDING, SUCCESS, FAILED
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model OrderItem {
+  id           String     @id @default(cuid())
+  orderId      String
+  order        Order      @relation(fields: [orderId], references: [id])
+  ticketTypeId String
+  ticketType   TicketType @relation(fields: [ticketTypeId], references: [id])
+  quantity     Int
+  unitPrice    Int
+}
+
+enum DeliveryMethod {
+  EMAIL
+  WHATSAPP
+  BOTH
+}
+
+enum PaymentMethod {
+  CARD
+  MPESA
+  PAYPAL
+  BANK
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}

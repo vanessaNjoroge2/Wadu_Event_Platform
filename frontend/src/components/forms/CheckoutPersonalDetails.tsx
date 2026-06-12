@@ -1,17 +1,48 @@
 import { useState } from "react";
 
 interface PersonalDetailsProps {
+  firstName: string;
+  setFirstName: (val: string) => void;
+  lastName: string;
+  setLastName: (val: string) => void;
+  email: string;
+  setEmail: (val: string) => void;
+  phone: string;
+  setPhone: (val: string) => void;
+  deliveryMethod: "EMAIL" | "WHATSAPP" | "BOTH";
+  setDeliveryMethod: (val: "EMAIL" | "WHATSAPP" | "BOTH") => void;
   onContinue: () => void;
 }
 
-export function PersonalDetails({ onContinue }: PersonalDetailsProps) {
-  const [deliveryMethod, setDeliveryMethod] = useState<"Email" | "WhatsApp" | "Both">("Both");
+export function PersonalDetails({
+  firstName,
+  setFirstName,
+  lastName,
+  setLastName,
+  email,
+  setEmail,
+  phone,
+  setPhone,
+  deliveryMethod,
+  setDeliveryMethod,
+  onContinue,
+}: PersonalDetailsProps) {
+  const [error, setError] = useState("");
+
+  const handleContinue = () => {
+    if (!firstName.trim() || !lastName.trim() || !email.trim() || !phone.trim()) {
+      setError("Please fill in all attendee details.");
+      return;
+    }
+    setError("");
+    onContinue();
+  };
 
   const fields = [
-    { label: "First Name", placeholder: "First Name", type: "text" },
-    { label: "Last Name", placeholder: "Last Name", type: "text" },
-    { label: "Email", placeholder: "your.email@example.com", type: "email" },
-    { label: "Phone", placeholder: "+254 Phone", type: "tel" },
+    { label: "First Name", placeholder: "First Name", type: "text", value: firstName, onChange: setFirstName },
+    { label: "Last Name", placeholder: "Last Name", type: "text", value: lastName, onChange: setLastName },
+    { label: "Email", placeholder: "your.email@example.com", type: "email", value: email, onChange: setEmail },
+    { label: "Phone", placeholder: "+254 Phone", type: "tel", value: phone, onChange: setPhone },
   ];
 
   return (
@@ -25,8 +56,14 @@ export function PersonalDetails({ onContinue }: PersonalDetailsProps) {
         </p>
       </div>
 
+      {error && (
+        <div className="bg-red-500/10 border border-red-500/20 text-red-500 text-sm font-semibold rounded-xl px-4 py-3">
+          {error}
+        </div>
+      )}
+
       <div className="bg-wadu-teal/5 border border-wadu-teal/20 rounded-xl p-4 flex items-start gap-3">
-        <span className="text-wadu-teal text-lg leading-none">ℹ️</span>
+        <span className="text-wadu-teal text-sm font-bold">[Info]</span>
         <div>
           <p className="text-wadu-teal font-bold text-sm">
             Sign in to access saved details and complete your purchase faster.
@@ -43,6 +80,8 @@ export function PersonalDetails({ onContinue }: PersonalDetailsProps) {
             <input
               type={field.type}
               placeholder={field.placeholder}
+              value={field.value}
+              onChange={(e) => field.onChange(e.target.value)}
               className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl py-3.5 px-4 text-slate-800 dark:text-white placeholder-slate-450 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal font-medium transition duration-200"
             />
           </div>
@@ -55,18 +94,22 @@ export function PersonalDetails({ onContinue }: PersonalDetailsProps) {
           Ticket Delivery Method
         </h4>
         <div className="flex gap-3">
-          {(["Email", "WhatsApp", "Both"] as const).map((option) => (
+          {([
+            { id: "EMAIL", label: "Email" },
+            { id: "WHATSAPP", label: "WhatsApp" },
+            { id: "BOTH", label: "Both" }
+          ] as const).map((option) => (
             <button
-              key={option}
+              key={option.id}
               type="button"
-              onClick={() => setDeliveryMethod(option)}
+              onClick={() => setDeliveryMethod(option.id)}
               className={`flex-1 px-4 py-3 rounded-xl font-bold text-sm transition duration-200 ${
-                deliveryMethod === option
+                deliveryMethod === option.id
                   ? "bg-wadu-purple text-white shadow-sm border border-wadu-purple"
                   : "bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:text-wadu-teal hover:border-wadu-teal border border-slate-200 dark:border-slate-800"
               }`}
             >
-              {option}
+              {option.label}
             </button>
           ))}
         </div>
@@ -97,7 +140,7 @@ export function PersonalDetails({ onContinue }: PersonalDetailsProps) {
 
       <div className="pt-2">
         <button
-          onClick={onContinue}
+          onClick={handleContinue}
           className="w-full bg-wadu-navy border border-wadu-navy/15 hover:bg-wadu-teal hover:text-wadu-navy hover:border-wadu-teal text-white py-4 rounded-xl font-bold tracking-wide transition duration-200 shadow-sm"
         >
           Continue to Payment

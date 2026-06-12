@@ -1,7 +1,9 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 import { CreateEventForm } from "./CreateEventPage";
 import { HelpPageContent } from "./FooterPages";
+import { api } from "@/lib/api";
 import {
   LayoutDashboard,
   CalendarDays,
@@ -149,6 +151,19 @@ function formatKES(val: number) {
   return `KES ${val}`;
 }
 
+const getEventImage = (id: string | number) => {
+  if (typeof id === "number") {
+    const index = ((id - 1) % 15) + 1;
+    return index === 1 ? "/Image 1.jpg" : `/image ${index}.jpg`;
+  }
+  let hash = 0;
+  for (let i = 0; i < id.length; i++) {
+    hash = id.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const index = (Math.abs(hash) % 15) + 1;
+  return index === 1 ? "/Image 1.jpg" : `/image ${index}.jpg`;
+};
+
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
@@ -162,6 +177,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 };
 
 export default function OrganizerDashboardPage() {
+  const { toast } = useToast();
   const [darkMode, setDarkMode] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -169,107 +185,179 @@ export default function OrganizerDashboardPage() {
 
   // Sign out handler
   const handleSignOut = () => {
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("token");
     navigate("/sign-in");
   };
 
-  // State for interactive features
-  // Events tab state
-  const [events, setEvents] = useState([
-    {
-      id: 1,
-      name: "AfroFest Nairobi 2025",
-      date: "Dec 1, 2025",
-      sold: 842,
-      capacity: 1000,
-      revenue: 1263000,
-      status: "On Sale",
-      image: "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=600&auto=format&fit=crop&q=60"
-    },
-    {
-      id: 2,
-      name: "East Africa Tech Summit",
-      date: "Oct 20, 2025",
-      sold: 289,
-      capacity: 400,
-      revenue: 867000,
-      status: "On Sale",
-      image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&auto=format&fit=crop&q=60"
-    },
-    {
-      id: 3,
-      name: "Lagos Beats Festival",
-      date: "Nov 15, 2025",
-      sold: 116,
-      capacity: 600,
-      revenue: 320000,
-      status: "Draft",
-      image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&auto=format&fit=crop&q=60"
-    },
-    {
-      id: 4,
-      name: "Mombasa Seafood & Jazz Festival",
-      date: "Jan 10, 2026",
-      sold: 0,
-      capacity: 500,
-      revenue: 0,
-      status: "Draft",
-      image: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=600&auto=format&fit=crop&q=60"
-    },
-    {
-      id: 5,
-      name: "Sauti Sol Tribute Concert",
-      date: "Sep 5, 2025",
-      sold: 1500,
-      capacity: 1500,
-      revenue: 3750000,
-      status: "Sold Out",
-      image: "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?w=600&auto=format&fit=crop&q=60"
-    },
-  ]);
+  // Dynamic states loaded from backend
+  const [events, setEvents] = useState<any[]>([]);
   const [eventSearch, setEventSearch] = useState("");
   const [eventFilter, setEventFilter] = useState("All");
 
-  // Attendees tab state
-  const [attendees, setAttendees] = useState([
-    { id: "TX-90182", name: "Amara Nwosu", email: "amara@example.com", event: "AfroFest Nairobi 2025", ticket: "VIP", paid: "KES 4,500", date: "Aug 20, 2025", status: "Checked In" },
-    { id: "TX-90183", name: "David Kimani", email: "david.k@example.com", event: "East Africa Tech Summit", ticket: "Regular", paid: "KES 3,000", date: "Aug 20, 2025", status: "Confirmed" },
-    { id: "TX-90184", name: "Fatima Al-Hassan", email: "fatima@example.com", event: "AfroFest Nairobi 2025", ticket: "VVIP", paid: "KES 9,000", date: "Aug 20, 2025", status: "Checked In" },
-    { id: "TX-90185", name: "Kofi Mensah", email: "kofi@example.com", event: "Lagos Beats Festival", ticket: "Regular", paid: "KES 2,750", date: "Aug 19, 2025", status: "Pending" },
-    { id: "TX-90186", name: "Zanele Dlamini", email: "zanele@example.com", event: "AfroFest Nairobi 2025", ticket: "VIP", paid: "KES 4,500", date: "Aug 19, 2025", status: "Checked In" },
-    { id: "TX-90187", name: "Michael Mwangi", email: "mwangi.m@example.com", event: "Sauti Sol Tribute Concert", ticket: "Regular", paid: "KES 2,500", date: "Aug 18, 2025", status: "Confirmed" },
-    { id: "TX-90188", name: "Elena Rostova", email: "elena.r@example.com", event: "East Africa Tech Summit", ticket: "Speaker", paid: "KES 0", date: "Aug 18, 2025", status: "Checked In" },
-  ]);
+  const [attendees, setAttendees] = useState<any[]>([]);
   const [attendeeSearch, setAttendeeSearch] = useState("");
   const [selectedEventFilter, setSelectedEventFilter] = useState("All");
 
-  // Payouts state
   const [requestingPayout, setRequestingPayout] = useState(false);
   const [payoutStatus, setPayoutStatus] = useState("");
-  const [payoutMethod, setPayoutMethod] = useState("mpesa"); // "mpesa" | "bank"
-  const [balance, setBalance] = useState(482500);
-  const [mpesaName, setMpesaName] = useState("AfroFest Ltd");
+  const [payoutMethod, setPayoutMethod] = useState("mpesa");
+  const [balance, setBalance] = useState(0);
+  const [mpesaName, setMpesaName] = useState("Organizer Ltd");
   const [mpesaPhone, setMpesaPhone] = useState("0712345678");
   const [bankName, setBankName] = useState("NCBA Bank Kenya");
-  const [bankAccountName, setBankAccountName] = useState("AfroFest Limited");
+  const [bankAccountName, setBankAccountName] = useState("Organizer Limited");
   const [bankAccountNumber, setBankAccountNumber] = useState("1029384756");
   const [bankSwift, setBankSwift] = useState("NCBAKENA");
   const [saveSettingsSuccess, setSaveSettingsSuccess] = useState(false);
-  const [payoutsHistory, setPayoutsHistory] = useState([
-    { date: "Aug 15, 2025", id: "PAY-89210-KE", amount: "KES 450,000", method: "M-Pesa (+254 712 *** 678)", status: "Completed" },
-    { date: "Jul 30, 2025", id: "PAY-82190-KE", amount: "KES 600,000", method: "NCBA Bank Transfer", status: "Completed" },
-    { date: "Jul 15, 2025", id: "PAY-78201-KE", amount: "KES 917,500", method: "M-Pesa (+254 712 *** 678)", status: "Completed" },
-  ]);
+  const [payoutsHistory, setPayoutsHistory] = useState<any[]>([]);
 
-  // Settings state
-  const [orgName, setOrgName] = useState("AfroFest Ltd");
-  const [orgEmail, setOrgEmail] = useState("billing@afrofest.co");
-  const [orgWebsite, setOrgWebsite] = useState("https://afrofest.co");
-  const [orgBio, setOrgBio] = useState("Bringing the best of African arts, music, and food to the world.");
+  const [orgName, setOrgName] = useState("Organizer Profile");
+  const [orgEmail, setOrgEmail] = useState("");
+  const [orgWebsite, setOrgWebsite] = useState("https://wadu.io");
+  const [orgBio, setOrgBio] = useState("WADU Event Organizer");
   const [emailOnTicketSale, setEmailOnTicketSale] = useState(true);
   const [dailyDigest, setDailyDigest] = useState(false);
   const [weeklyDigest, setWeeklyDigest] = useState(true);
   const [securityAlerts, setSecurityAlerts] = useState(true);
   const [settingsSaved, setSettingsSaved] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [securitySaved, setSecuritySaved] = useState(false);
+
+  const [dashboardStats, setDashboardStats] = useState({
+    totalEvents: 0,
+    totalTicketsSold: 0,
+    totalRevenue: 0,
+    upcomingEventsCount: 0,
+  });
+
+  const [revenueData, setRevenueData] = useState<any[]>([]);
+  const [dailySalesData, setDailySalesData] = useState<any[]>([]);
+  const [ticketCategories, setTicketCategories] = useState<any[]>([]);
+
+  useEffect(() => {
+    // 1. Fetch user info
+    api.get("/auth/me")
+      .then((user: any) => {
+        if (user) {
+          setOrgName(`${user.firstName} ${user.lastName}`);
+          setOrgEmail(user.email);
+        }
+      })
+      .catch((err) => console.error("Error loading user info:", err));
+
+    // 2. Fetch stats
+    api.get("/organizer/dashboard")
+      .then((stats: any) => {
+        if (stats) setDashboardStats(stats);
+      })
+      .catch((err) => console.error("Error loading dashboard stats:", err));
+
+    // 3. Fetch events & attendees
+    api.get("/organizer/events")
+      .then(async (list: any) => {
+        if (Array.isArray(list)) {
+          const mappedEvents = list.map((e: any) => ({
+            id: e.id,
+            name: e.title,
+            date: new Date(e.startDate).toLocaleDateString(),
+            sold: e.ticketsSold,
+            capacity: e.totalCapacity,
+            revenue: e.revenue,
+            status: e.status === "PUBLISHED" ? "On Sale" : e.status === "DRAFT" ? "Draft" : "Sold Out",
+            image: e.imageUrl || getEventImage(e.id)
+          }));
+          setEvents(mappedEvents);
+
+          // Fetch attendees for all loaded events in parallel
+          try {
+            const allAttendees: any[] = [];
+            for (const evt of mappedEvents) {
+              const attendeesList = await api.get<any[]>(`/organizer/events/${evt.id}/attendees`);
+              if (Array.isArray(attendeesList)) {
+                const mapped = attendeesList.map((a: any) => ({
+                  id: a.orderId,
+                  name: `${a.firstName} ${a.lastName}`,
+                  email: a.email,
+                  phone: a.phone,
+                  event: evt.name,
+                  ticket: a.ticketType,
+                  paid: `KES ${(a.quantity * 2500).toLocaleString()}`,
+                  paymentStatus: "Paid",
+                  deliveryMethod: "Both",
+                  date: new Date(a.purchaseDate).toLocaleDateString(),
+                  status: "Confirmed"
+                }));
+                allAttendees.push(...mapped);
+              }
+            }
+            setAttendees(allAttendees);
+          } catch (err) {
+            console.error("Error loading attendees list:", err);
+          }
+        }
+      })
+      .catch((err) => console.error("Error loading events:", err));
+
+    // 4. Fetch payouts
+    api.get("/organizer/payouts")
+      .then((data: any) => {
+        if (data) {
+          setBalance(data.pendingPayout || 0);
+          if (Array.isArray(data.payoutHistory)) {
+            const mappedPayouts = data.payoutHistory.map((p: any) => ({
+              id: p.id,
+              date: new Date(p.date).toLocaleDateString(),
+              amount: `KES ${p.amount.toLocaleString()}`,
+              method: p.bankName ? `${p.bankName} (${p.accountNumber})` : "Bank Transfer",
+              status: p.status === "PAID" ? "Completed" : "Pending",
+            }));
+            setPayoutsHistory(mappedPayouts);
+          }
+        }
+      })
+      .catch((err) => console.error("Error loading payouts info:", err));
+
+    // 5. Fetch revenue analytics
+    api.get("/organizer/analytics/revenue")
+      .then((data: any) => {
+        if (Array.isArray(data)) {
+          setRevenueData(data);
+        }
+      })
+      .catch((err) => console.error("Error loading revenue analytics:", err));
+
+    // 6. Fetch daily sales analytics
+    api.get("/organizer/analytics/daily-sales")
+      .then((data: any) => {
+        if (Array.isArray(data)) {
+          const mapped = data.map((item: any) => ({
+            day: item.date,
+            sales: item.ticketsSold * 2500, // average ticket price KES
+          }));
+          setDailySalesData(mapped);
+        }
+      })
+      .catch((err) => console.error("Error loading daily sales analytics:", err));
+
+    // 7. Fetch ticket categories analytics
+    api.get("/organizer/analytics/ticket-categories")
+      .then((data: any) => {
+        if (Array.isArray(data)) {
+          const colors = ["#6C4DFF", "#00C2A8", "#F59E0B", "#EC4899", "#3B82F6"];
+          const mapped = data.map((item: any, idx: number) => ({
+            name: item.name,
+            value: item.value,
+            color: colors[idx % colors.length],
+          }));
+          setTicketCategories(mapped);
+        }
+      })
+      .catch((err) => console.error("Error loading ticket categories analytics:", err));
+  }, []);
 
   // Check In quick action
   const handleCheckIn = (id: string) => {
@@ -278,7 +366,7 @@ export default function OrganizerDashboardPage() {
     );
   };
 
-  // Instant Payout handler
+  // Instant Payout handler (simulated)
   const handleRequestPayout = () => {
     if (balance <= 0) return;
     setRequestingPayout(true);
@@ -463,15 +551,14 @@ export default function OrganizerDashboardPage() {
         {/* Dynamic Views Rendering Area */}
         <div className={`flex-1 overflow-y-auto px-8 py-6 space-y-6 transition-colors duration-200 ${darkMode ? "bg-slate-950" : "bg-gray-50"}`}>
           
-          {/* 1️⃣ VIEW: DASHBOARD OVERVIEW (default) */}
+          {/* 1. VIEW: DASHBOARD OVERVIEW (default) */}
           {(currentPath === "/organizer-dashboard" || currentPath === "/organizer-dashboard/") && (
             <>
-              {/* Stats Row */}
               <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
                 {[
                   {
                     label: "Total Revenue",
-                    value: `KES ${(2450000 + (482500 - balance)).toLocaleString()}`,
+                    value: `KES ${dashboardStats.totalRevenue.toLocaleString()}`,
                     change: "+18%",
                     sub: "vs last month",
                     up: true,
@@ -482,7 +569,7 @@ export default function OrganizerDashboardPage() {
                   },
                   {
                     label: "Tickets Sold",
-                    value: "1,247",
+                    value: dashboardStats.totalTicketsSold.toLocaleString(),
                     change: "+24%",
                     sub: "vs last month",
                     up: true,
@@ -493,7 +580,7 @@ export default function OrganizerDashboardPage() {
                   },
                   {
                     label: "Active Events",
-                    value: `${events.filter(e => e.status === "On Sale").length}`,
+                    value: `${events.filter(e => e.status === "On Sale" || e.status === "PUBLISHED").length}`,
                     change: "2 ending soon",
                     sub: "",
                     up: null,
@@ -504,7 +591,7 @@ export default function OrganizerDashboardPage() {
                   },
                   {
                     label: "Upcoming Events",
-                    value: `${events.filter(e => e.status === "Draft" || e.status === "On Sale").length}`,
+                    value: `${dashboardStats.upcomingEventsCount}`,
                     change: "Next in 3 days",
                     sub: "",
                     up: null,
@@ -684,7 +771,7 @@ export default function OrganizerDashboardPage() {
             </>
           )}
 
-          {/* 2️⃣ VIEW: MY EVENTS */}
+          {/* 2. VIEW: MY EVENTS */}
           {currentPath === "/organizer-dashboard/events" && (
             <div className="space-y-6">
               {/* Filter controls */}
@@ -719,100 +806,141 @@ export default function OrganizerDashboardPage() {
                 </div>
               </div>
 
-              {/* Events list */}
-              <div className="grid grid-cols-1 gap-4">
-                {filteredEvents.length > 0 ? (
-                  filteredEvents.map((e) => (
-                    <div
-                      key={e.id}
-                      className={`rounded-2xl p-5 border shadow-sm flex flex-col md:flex-row items-center gap-5 transition hover:shadow-md ${
-                        darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"
-                      }`}
-                    >
-                      {/* Image */}
-                      <div className="w-full md:w-36 h-24 rounded-xl overflow-hidden flex-shrink-0 bg-slate-800 relative">
-                        <img
-                          src={e.image}
-                          alt={e.name}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                        />
-                        <span className={`absolute top-2 left-2 px-2.5 py-0.5 rounded-full text-[10px] font-black tracking-wide uppercase ${
-                          e.status === "On Sale"
-                            ? "bg-emerald-500 text-white"
-                            : e.status === "Sold Out"
-                            ? "bg-blue-600 text-white"
-                            : "bg-amber-500 text-slate-900"
-                        }`}>
-                          {e.status}
-                        </span>
-                      </div>
-
-                      {/* Event Detail */}
-                      <div className="flex-1 min-w-0 w-full">
-                        <h3 className="text-lg font-bold truncate">{e.name}</h3>
-                        <p className="text-gray-400 text-xs mt-1 flex items-center gap-1.5">
-                          <CalendarDays size={13} />
-                          {e.date} • Nairobi, Kenya
-                        </p>
-
-                        {/* Progress */}
-                        {e.status !== "Draft" ? (
-                          <div className="mt-3 space-y-1">
-                            <div className="flex items-center justify-between text-xs font-semibold">
-                              <span className="text-gray-400">Tickets Registered</span>
-                              <span>{e.sold} / {e.capacity} ({Math.round((e.sold / e.capacity) * 100)}%)</span>
-                            </div>
-                            <div className="w-full h-2 bg-gray-200 dark:bg-slate-700 rounded-full overflow-hidden">
-                              <div
-                                className="h-full rounded-full bg-gradient-to-r from-[#6C4DFF] to-[#00C2A8]"
-                                style={{ width: `${(e.sold / e.capacity) * 100}%` }}
-                              />
-                            </div>
-                          </div>
-                        ) : (
-                          <p className="text-[#EC4899] text-xs font-semibold mt-3">Event is in draft mode. Submit for approval to publish.</p>
-                        )}
-                      </div>
-
-                      {/* Financial / Revenue */}
-                      <div className="text-left md:text-right w-full md:w-44 flex-shrink-0 border-t md:border-t-0 md:border-l border-gray-100 dark:border-slate-800 pt-4 md:pt-0 md:pl-5">
-                        <p className="text-gray-400 text-xs font-medium">Estimated Revenue</p>
-                        <p className="text-xl font-black mt-1">KES {e.revenue.toLocaleString()}</p>
-                        <p className="text-gray-400 text-[10px] mt-0.5">VAT & Fees inclusive</p>
-                      </div>
-
-                      {/* Actions */}
-                      <div className="flex items-center gap-2 w-full md:w-auto justify-end">
-                        <button className={`p-2.5 rounded-xl border transition ${
-                          darkMode ? "border-slate-800 hover:bg-slate-800" : "border-gray-200 hover:bg-gray-50"
-                        }`}>
-                          <Settings size={16} />
-                        </button>
-                        <button className="flex-1 md:flex-none bg-[#6C4DFF] hover:bg-[#5a3de8] text-white px-4 py-2.5 rounded-xl text-xs font-bold transition">
-                          Manage
-                        </button>
-                      </div>
-                    </div>
-                  ))
-                ) : (
-                  <div className="text-center py-16">
-                    <CalendarDays size={48} className="text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-lg font-bold">No Events Found</h3>
-                    <p className="text-gray-400 text-sm max-w-sm mx-auto mt-1">We couldn't find any events matching "{eventSearch}" under this filter.</p>
-                  </div>
-                )}
+              {/* Events list table */}
+              <div className={`rounded-2xl border shadow-sm overflow-hidden ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm text-left">
+                    <thead>
+                      <tr className={`text-xs uppercase tracking-wider ${darkMode ? "bg-slate-800/50 text-slate-400" : "bg-gray-50 text-gray-500"}`}>
+                        <th className="px-6 py-4 font-semibold">Event Name</th>
+                        <th className="px-4 py-4 font-semibold">Date & Location</th>
+                        <th className="px-4 py-4 font-semibold">Tickets Sold</th>
+                        <th className="px-4 py-4 font-semibold">Revenue</th>
+                        <th className="px-4 py-4 font-semibold">Status</th>
+                        <th className="px-6 py-4 font-semibold text-right">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-100 dark:divide-slate-800">
+                      {filteredEvents.length > 0 ? (
+                        filteredEvents.map((e) => (
+                          <tr key={e.id} className={`transition-colors ${darkMode ? "hover:bg-slate-800/30" : "hover:bg-gray-50"}`}>
+                            <td className="px-6 py-4">
+                              <div className="flex items-center gap-3">
+                                <img
+                                  src={e.image}
+                                  onError={(err) => {
+                                    err.currentTarget.onerror = null;
+                                    err.currentTarget.src = getEventImage(e.id);
+                                  }}
+                                  alt={e.name}
+                                  className="w-12 h-12 rounded-lg object-cover flex-shrink-0"
+                                />
+                                <span className="font-bold text-wadu-navy dark:text-white">{e.name}</span>
+                              </div>
+                            </td>
+                            <td className="px-4 py-4">
+                              <div className="space-y-0.5 text-xs text-gray-400">
+                                <p className="font-semibold">{e.date}</p>
+                                <p>Nairobi, Kenya</p>
+                              </div>
+                            </td>
+                            <td className="px-4 py-4">
+                              {e.status !== "Draft" ? (
+                                <div className="space-y-1 w-32">
+                                  <div className="flex items-center justify-between text-xs font-semibold">
+                                    <span className="text-gray-400">{e.sold} / {e.capacity}</span>
+                                    <span>{Math.round((e.sold / e.capacity) * 100)}%</span>
+                                  </div>
+                                  <div className="w-full h-1.5 bg-gray-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                                    <div
+                                      className="h-full rounded-full bg-gradient-to-r from-[#6C4DFF] to-[#00C2A8]"
+                                      style={{ width: `${(e.sold / e.capacity) * 100}%` }}
+                                    />
+                                  </div>
+                                </div>
+                              ) : (
+                                <span className="text-xs text-slate-400 italic">N/A (Draft)</span>
+                              )}
+                            </td>
+                            <td className="px-4 py-4 font-extrabold text-wadu-navy dark:text-white">
+                              KES {e.revenue.toLocaleString()}
+                            </td>
+                            <td className="px-4 py-4">
+                              <span className={`px-2.5 py-1 rounded-full text-xs font-semibold uppercase ${
+                                e.status === "On Sale"
+                                  ? "bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20"
+                                  : e.status === "Sold Out"
+                                  ? "bg-blue-50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400 border border-blue-500/20"
+                                  : "bg-amber-50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-400 border border-amber-500/20"
+                              }`}>
+                                {e.status}
+                              </span>
+                            </td>
+                            <td className="px-6 py-4 text-right">
+                              <div className="flex items-center justify-end gap-2">
+                                <button
+                                  onClick={() => {
+                                    navigate(`/post-event?id=${e.id}`);
+                                  }}
+                                  className="text-xs bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 dark:hover:bg-slate-750 text-gray-700 dark:text-gray-300 px-3 py-1.5 rounded-lg font-bold transition"
+                                >
+                                  Edit
+                                </button>
+                                <button
+                                  onClick={() => {
+                                    toast({
+                                      title: "Viewing Public Page ",
+                                      description: `Opening page for ${e.name}`,
+                                    });
+                                  }}
+                                  className="text-xs bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 dark:hover:bg-slate-750 text-gray-700 dark:text-gray-300 px-3 py-1.5 rounded-lg font-bold transition"
+                                >
+                                  View
+                                </button>
+                                <button
+                                  onClick={() => {
+                                    setEvents(prev =>
+                                      prev.map(event =>
+                                        event.id === e.id ? { ...event, status: "Draft" } : event
+                                      )
+                                    );
+                                    toast({
+                                      title: "Event Saved as Draft ",
+                                      description: `${e.name} status updated to Draft.`,
+                                    });
+                                  }}
+                                  className="text-xs bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 px-3 py-1.5 rounded-lg font-bold transition"
+                                >
+                                  Cancel
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan={6} className="text-center py-16 text-gray-400">
+                            <CalendarDays size={48} className="mx-auto mb-4 opacity-50" />
+                            <h3 className="text-lg font-bold text-gray-350">No Events Found</h3>
+                            <p className="text-sm max-w-sm mx-auto mt-1">We couldn't find any events matching "{eventSearch}" under this filter.</p>
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           )}
 
-          {/* 3️⃣ VIEW: ATTENDEES */}
+          {/* 3. VIEW: ATTENDEES */}
           {currentPath === "/organizer-dashboard/attendees" && (
             <div className="space-y-6">
               
               {/* Quick Metrics */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 {[
-                  { label: "Total Registered", value: "1,247", desc: "Across all active events", color: "text-[#6C4DFF]" },
+                  { label: "Total Registered", value: attendees.length.toLocaleString(), desc: "Across all active events", color: "text-[#6C4DFF]" },
                   { label: "Checked In", value: `${attendees.filter(a => a.status === "Checked In").length} / ${attendees.length}`, desc: "Attending live sessions", color: "text-emerald-500" },
                   { label: "Check-in rate", value: `${Math.round((attendees.filter(a => a.status === "Checked In").length / attendees.length) * 100)}%`, desc: "Average QR scans", color: "text-[#00C2A8]" },
                 ].map(m => (
@@ -847,11 +975,21 @@ export default function OrganizerDashboardPage() {
                     onChange={(e) => setSelectedEventFilter(e.target.value)}
                   >
                     <option value="All">All Events</option>
-                    <option value="AfroFest Nairobi 2025">AfroFest Nairobi 2025</option>
-                    <option value="East Africa Tech Summit">East Africa Tech Summit</option>
-                    <option value="Lagos Beats Festival">Lagos Beats Festival</option>
-                    <option value="Sauti Sol Tribute Concert">Sauti Sol Tribute Concert</option>
+                    {events.map((evt) => (
+                      <option key={evt.id} value={evt.name}>{evt.name}</option>
+                    ))}
                   </select>
+                  <button
+                    onClick={() => {
+                      toast({
+                        title: "Exporting Attendees ",
+                        description: "Your CSV export of attendees has started download.",
+                      });
+                    }}
+                    className="bg-[#0A1F44] border border-white/10 text-white hover:bg-wadu-teal hover:text-[#0A1F44] hover:border-[#00C2A8] px-4 py-2 rounded-xl font-bold transition duration-205 text-xs shadow-sm whitespace-nowrap"
+                  >
+                    Export CSV
+                  </button>
                 </div>
               </div>
 
@@ -861,33 +999,30 @@ export default function OrganizerDashboardPage() {
                   <table className="w-full text-sm text-left">
                     <thead>
                       <tr className={`text-xs uppercase tracking-wider ${darkMode ? "bg-slate-800/50 text-slate-400" : "bg-gray-50 text-gray-500"}`}>
-                        <th className="px-6 py-4 font-semibold">Ticket ID</th>
-                        <th className="px-4 py-4 font-semibold">Attendee</th>
-                        <th className="px-4 py-4 font-semibold">Event</th>
+                        <th className="px-6 py-4 font-semibold">Name</th>
+                        <th className="px-4 py-4 font-semibold">Email</th>
+                        <th className="px-4 py-4 font-semibold">Phone</th>
                         <th className="px-4 py-4 font-semibold">Ticket Type</th>
-                        <th className="px-4 py-4 font-semibold">Amount Paid</th>
-                        <th className="px-4 py-4 font-semibold">Date Registered</th>
-                        <th className="px-4 py-4 font-semibold">Check-In Status</th>
-                        <th className="px-4 py-4 font-semibold"></th>
+                        <th className="px-4 py-4 font-semibold">Order Date</th>
+                        <th className="px-4 py-4 font-semibold">Payment Status</th>
+                        <th className="px-4 py-4 font-semibold">Delivery Method</th>
+                        <th className="px-6 py-4 font-semibold text-right">Actions</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100 dark:divide-slate-800">
                       {filteredAttendees.length > 0 ? (
                         filteredAttendees.map((a) => (
                           <tr key={a.id} className={`transition-colors ${darkMode ? "hover:bg-slate-800/30" : "hover:bg-gray-50"}`}>
-                            <td className="px-6 py-4 font-mono text-xs font-semibold text-gray-400">{a.id}</td>
-                            <td className="px-4 py-4">
+                            <td className="px-6 py-4 font-bold text-wadu-navy dark:text-white">
                               <div className="flex items-center gap-3">
                                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#6C4DFF]/20 to-[#00C2A8]/20 flex items-center justify-center text-xs font-bold text-[#6C4DFF] flex-shrink-0">
                                   {a.name.split(" ").map(n => n[0]).join("")}
                                 </div>
-                                <div className="min-w-0">
-                                  <p className="font-semibold truncate">{a.name}</p>
-                                  <p className="text-gray-400 text-xs truncate mt-0.5">{a.email}</p>
-                                </div>
+                                <span>{a.name}</span>
                               </div>
                             </td>
-                            <td className="px-4 py-4 font-medium max-w-[150px] truncate">{a.event}</td>
+                            <td className="px-4 py-4 text-gray-400">{a.email}</td>
+                            <td className="px-4 py-4 font-semibold text-gray-450">{a.phone}</td>
                             <td className="px-4 py-4">
                               <span className={`px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wide ${
                                 a.ticket === "VIP" || a.ticket === "VVIP"
@@ -899,34 +1034,33 @@ export default function OrganizerDashboardPage() {
                                 {a.ticket}
                               </span>
                             </td>
-                            <td className="px-4 py-4 font-semibold">{a.paid}</td>
                             <td className="px-4 py-4 text-gray-400">{a.date}</td>
                             <td className="px-4 py-4">
                               <span className={`px-2.5 py-1 rounded-full text-xs font-semibold inline-flex items-center gap-1.5 ${
-                                a.status === "Checked In"
-                                  ? "bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400"
-                                  : a.status === "Confirmed"
-                                  ? "bg-blue-50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400"
-                                  : "bg-amber-50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-400"
+                                a.paymentStatus === "Paid"
+                                  ? "bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20"
+                                  : "bg-amber-50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-400 border border-amber-500/20"
                               }`}>
-                                {a.status === "Checked In" ? (
-                                  <Check size={12} className="text-emerald-500" />
-                                ) : a.status === "Confirmed" ? (
-                                  <CheckCircle2 size={12} className="text-blue-500" />
-                                ) : (
-                                  <Clock size={12} className="text-amber-500" />
-                                )}
-                                {a.status}
+                                <Check size={12} className={a.paymentStatus === "Paid" ? "text-emerald-500" : "text-amber-500"} />
+                                {a.paymentStatus}
                               </span>
                             </td>
-                            <td className="px-4 py-4">
-                              {a.status !== "Checked In" && (
+                            <td className="px-4 py-4 font-medium text-gray-450">
+                              {a.deliveryMethod}
+                            </td>
+                            <td className="px-6 py-4 text-right">
+                              {a.status !== "Checked In" ? (
                                 <button
                                   onClick={() => handleCheckIn(a.id)}
-                                  className="text-xs bg-[#00C2A8]/10 hover:bg-[#00C2A8]/20 text-[#00C2A8] px-3 py-1.5 rounded-lg font-bold transition flex items-center gap-1"
+                                  className="text-xs bg-[#00C2A8]/10 hover:bg-[#00C2A8]/20 text-[#00C2A8] px-3 py-1.5 rounded-lg font-bold transition inline-flex items-center gap-1"
                                 >
                                   Check In
                                 </button>
+                              ) : (
+                                <span className="text-xs text-emerald-500 font-bold flex items-center justify-end gap-1">
+                                  <CheckCircle2 size={12} />
+                                  Checked In
+                                </span>
                               )}
                             </td>
                           </tr>
@@ -947,7 +1081,7 @@ export default function OrganizerDashboardPage() {
             </div>
           )}
 
-          {/* 4️⃣ VIEW: ANALYTICS */}
+          {/* 4. VIEW: ANALYTICS */}
           {currentPath === "/organizer-dashboard/analytics" && (
             <div className="space-y-6">
               
@@ -974,58 +1108,58 @@ export default function OrganizerDashboardPage() {
               {/* Main Analytics charts */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
                 
-                {/* Daily ticket sales */}
+                {/* Revenue Over Time AreaChart */}
                 <div className={`lg:col-span-2 p-6 rounded-2xl border shadow-sm ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
                   <div className="flex items-center justify-between mb-6">
                     <div>
-                      <h3 className="font-bold">Daily Ticket Revenue</h3>
-                      <p className="text-gray-400 text-xs">Sales activity over the past week</p>
+                      <h3 className="font-bold">Revenue Over Time</h3>
+                      <p className="text-gray-400 text-xs">Monthly ticket sales revenue</p>
                     </div>
-                    <span className="text-xs bg-[#00C2A8]/10 text-[#00C2A8] font-bold px-3 py-1.5 rounded-full">
-                      Peak: Sat (KES 185K)
+                    <span className="text-xs bg-[#6C4DFF]/10 text-[#6C4DFF] font-bold px-3 py-1.5 rounded-full flex items-center gap-1">
+                      <TrendingUp size={12} /> +18% growth
                     </span>
                   </div>
                   <ResponsiveContainer width="100%" height={260}>
-                    <AreaChart data={dailySalesData} margin={{ top: 5, right: 5, bottom: 5, left: 10 }}>
+                    <AreaChart data={revenueData} margin={{ top: 5, right: 5, bottom: 5, left: 10 }}>
                       <defs>
-                        <linearGradient id="dailySalesGrad" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#00C2A8" stopOpacity={0.25} />
-                          <stop offset="95%" stopColor="#00C2A8" stopOpacity={0} />
+                        <linearGradient id="revenueGrowthGrad" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#6C4DFF" stopOpacity={0.25} />
+                          <stop offset="95%" stopColor="#6C4DFF" stopOpacity={0} />
                         </linearGradient>
                       </defs>
                       <CartesianGrid strokeDasharray="3 3" stroke={darkMode ? "#1e293b" : "#f0f0f0"} vertical={false} />
-                      <XAxis dataKey="day" tick={{ fill: "#9CA3AF", fontSize: 12 }} axisLine={false} tickLine={false} />
-                      <YAxis tickFormatter={(v) => `${v / 1000}K`} tick={{ fill: "#9CA3AF", fontSize: 11 }} axisLine={false} tickLine={false} width={40} />
-                      <RechartsTooltip formatter={(val) => [`KES ${val.toLocaleString()}`, "Revenue"]} contentStyle={{ background: "#0A1F44", border: "1px solid rgba(0,194,168,0.3)", borderRadius: 12, color: "white", fontSize: 12 }} />
-                      <Area type="monotone" dataKey="sales" stroke="#00C2A8" strokeWidth={2.5} fill="url(#dailySalesGrad)" dot={{ fill: "#00C2A8", r: 4, strokeWidth: 0 }} />
+                      <XAxis dataKey="month" tick={{ fill: "#9CA3AF", fontSize: 12 }} axisLine={false} tickLine={false} />
+                      <YAxis tickFormatter={(v) => `${(v / 1000000).toFixed(1)}M`} tick={{ fill: "#9CA3AF", fontSize: 11 }} axisLine={false} tickLine={false} width={50} />
+                      <RechartsTooltip content={<CustomTooltip />} />
+                      <Area type="monotone" dataKey="revenue" stroke="#6C4DFF" strokeWidth={2.5} fill="url(#revenueGrowthGrad)" dot={{ fill: "#6C4DFF", r: 4, strokeWidth: 0 }} />
                     </AreaChart>
                   </ResponsiveContainer>
                 </div>
 
-                {/* Device type breakdown */}
+                {/* Ticket Categories PieChart */}
                 <div className={`p-6 rounded-2xl border shadow-sm ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
                   <div className="mb-6">
-                    <h3 className="font-bold">Traffic Channels</h3>
-                    <p className="text-gray-400 text-xs">Device distribution of checkout page</p>
+                    <h3 className="font-bold">Ticket Categories</h3>
+                    <p className="text-gray-400 text-xs">Sales distribution by event type</p>
                   </div>
                   <ResponsiveContainer width="100%" height={160}>
                     <PieChart>
-                      <Pie data={deviceData} cx="50%" cy="50%" innerRadius={40} outerRadius={65} paddingAngle={4} dataKey="value">
-                        {deviceData.map((entry, index) => (
+                      <Pie data={ticketCategories} cx="50%" cy="50%" innerRadius={40} outerRadius={65} paddingAngle={4} dataKey="value">
+                        {ticketCategories.map((entry, index) => (
                           <Cell key={index} fill={entry.color} />
                         ))}
                       </Pie>
-                      <RechartsTooltip formatter={(val) => [`${val}%`, "Device Ratio"]} contentStyle={{ background: "#0A1F44", border: "none", borderRadius: 12, color: "white", fontSize: 12 }} />
+                      <RechartsTooltip formatter={(val) => [`${val} tickets`, "Count"]} contentStyle={{ background: "#0A1F44", border: "none", borderRadius: 12, color: "white", fontSize: 12 }} />
                     </PieChart>
                   </ResponsiveContainer>
-                  <div className="space-y-3 mt-4">
-                    {deviceData.map((d) => (
-                      <div key={d.name} className="flex items-center justify-between text-xs font-semibold">
+                  <div className="space-y-2.5 mt-4">
+                    {ticketCategories.map((c) => (
+                      <div key={c.name} className="flex items-center justify-between text-xs font-semibold">
                         <div className="flex items-center gap-2">
-                          <div className="w-3 h-3 rounded-full" style={{ background: d.color }} />
-                          <span className="text-gray-400">{d.name}</span>
+                          <div className="w-3 h-3 rounded-full" style={{ background: c.color }} />
+                          <span className="text-gray-450">{c.name}</span>
                         </div>
-                        <span>{d.value}%</span>
+                        <span>{c.value} ({Math.round((c.value / ticketCategories.reduce((sum, item) => sum + item.value, 0)) * 100)}%)</span>
                       </div>
                     ))}
                   </div>
@@ -1033,21 +1167,26 @@ export default function OrganizerDashboardPage() {
 
               </div>
 
-              {/* Event Performance Comparisons */}
+              {/* Daily Sales BarChart */}
               <div className={`p-6 rounded-2xl border shadow-sm ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
-                <div className="mb-6">
-                  <h3 className="font-bold">Event Sales Performance</h3>
-                  <p className="text-gray-400 text-xs">Revenue generated across your event library</p>
+                <div className="flex items-center justify-between mb-6">
+                  <div>
+                    <h3 className="font-bold">Daily Ticket Sales</h3>
+                    <p className="text-gray-400 text-xs">Sales activity over the last 7 days</p>
+                  </div>
+                  <span className="text-xs bg-[#00C2A8]/10 text-[#00C2A8] font-bold px-3 py-1.5 rounded-full">
+                    Average: KES 103K / day
+                  </span>
                 </div>
                 <ResponsiveContainer width="100%" height={260}>
-                  <BarChart data={events.filter(e => e.revenue > 0)} margin={{ top: 5, right: 10, bottom: 5, left: 10 }}>
+                  <BarChart data={dailySalesData} margin={{ top: 5, right: 10, bottom: 5, left: 10 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke={darkMode ? "#1e293b" : "#f0f0f0"} vertical={false} />
-                    <XAxis dataKey="name" tick={{ fill: "#9CA3AF", fontSize: 11 }} axisLine={false} tickLine={false} />
-                    <YAxis tickFormatter={(v) => `KES ${(v / 1000000).toFixed(1)}M`} tick={{ fill: "#9CA3AF", fontSize: 11 }} axisLine={false} tickLine={false} />
-                    <RechartsTooltip formatter={(val) => [`KES ${Number(val).toLocaleString()}`, "Revenue"]} contentStyle={{ background: "#0A1F44", border: "none", borderRadius: 12, color: "white", fontSize: 12 }} />
-                    <Bar dataKey="revenue" fill="#6C4DFF" radius={[8, 8, 0, 0]}>
-                      {events.filter(e => e.revenue > 0).map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={index % 2 === 0 ? "#6C4DFF" : "#00C2A8"} />
+                    <XAxis dataKey="day" tick={{ fill: "#9CA3AF", fontSize: 11 }} axisLine={false} tickLine={false} />
+                    <YAxis tickFormatter={(v) => `KES ${(v / 1000).toFixed(0)}K`} tick={{ fill: "#9CA3AF", fontSize: 11 }} axisLine={false} tickLine={false} />
+                    <RechartsTooltip formatter={(val) => [`KES ${Number(val).toLocaleString()}`, "Daily Sales"]} contentStyle={{ background: "#0A1F44", border: "none", borderRadius: 12, color: "white", fontSize: 12 }} />
+                    <Bar dataKey="sales" fill="#00C2A8" radius={[8, 8, 0, 0]}>
+                      {dailySalesData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={index % 2 === 0 ? "#00C2A8" : "#6C4DFF"} />
                       ))}
                     </Bar>
                   </BarChart>
@@ -1057,7 +1196,7 @@ export default function OrganizerDashboardPage() {
             </div>
           )}
 
-          {/* 5️⃣ VIEW: PAYOUTS */}
+          {/* 5. VIEW: PAYOUTS */}
           {currentPath === "/organizer-dashboard/payouts" && (
             <div className="space-y-6">
               
@@ -1329,7 +1468,7 @@ export default function OrganizerDashboardPage() {
             </div>
           )}
 
-          {/* 6️⃣ VIEW: SETTINGS */}
+          {/* 6. VIEW: SETTINGS */}
           {currentPath === "/organizer-dashboard/settings" && (
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
               
@@ -1433,21 +1572,89 @@ export default function OrganizerDashboardPage() {
                     <h4 className="font-bold text-sm">Security Controls</h4>
                   </div>
                   
-                  <div className="space-y-3">
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      if (!currentPassword || !newPassword || !confirmPassword) {
+                        toast({
+                          title: "Verification Error",
+                          description: "All password fields are required.",
+                          variant: "destructive",
+                        });
+                        return;
+                      }
+                      if (newPassword !== confirmPassword) {
+                        toast({
+                          title: "Verification Error",
+                          description: "New passwords do not match.",
+                          variant: "destructive",
+                        });
+                        return;
+                      }
+                      setSecuritySaved(true);
+                      setCurrentPassword("");
+                      setNewPassword("");
+                      setConfirmPassword("");
+                      setTimeout(() => setSecuritySaved(false), 3000);
+                      toast({
+                        title: "Password Updated ",
+                        description: "Your account password has been changed successfully.",
+                      });
+                    }}
+                    className="space-y-3"
+                  >
                     <div className="space-y-1">
-                      <label className="text-[10px] font-semibold text-gray-400 uppercase">Change Account Password</label>
+                      <label className="text-[10px] font-semibold text-gray-400 uppercase">Current Password</label>
                       <input
                         type="password"
+                        required
                         placeholder="••••••••"
                         className={`w-full text-xs px-3 py-2.5 rounded-lg border outline-none focus:border-[#6C4DFF] ${
                           darkMode ? "bg-slate-800 border-slate-700 text-slate-100" : "bg-white border-gray-200"
                         }`}
+                        value={currentPassword}
+                        onChange={(e) => setCurrentPassword(e.target.value)}
                       />
                     </div>
-                    <button className="w-full text-xs bg-gray-100 dark:bg-slate-800 dark:hover:bg-slate-700 hover:bg-gray-200 font-bold py-2.5 rounded-lg transition">
-                      Reset Password
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-semibold text-gray-400 uppercase">New Password</label>
+                      <input
+                        type="password"
+                        required
+                        placeholder="••••••••"
+                        className={`w-full text-xs px-3 py-2.5 rounded-lg border outline-none focus:border-[#6C4DFF] ${
+                          darkMode ? "bg-slate-800 border-slate-700 text-slate-100" : "bg-white border-gray-200"
+                        }`}
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-semibold text-gray-400 uppercase">Confirm New Password</label>
+                      <input
+                        type="password"
+                        required
+                        placeholder="••••••••"
+                        className={`w-full text-xs px-3 py-2.5 rounded-lg border outline-none focus:border-[#6C4DFF] ${
+                          darkMode ? "bg-slate-800 border-slate-700 text-slate-100" : "bg-white border-gray-200"
+                        }`}
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      className="w-full text-xs bg-wadu-purple hover:bg-wadu-teal hover:text-wadu-navy text-white font-bold py-2.5 rounded-lg transition"
+                    >
+                      Update Password
                     </button>
-                  </div>
+                    {securitySaved && (
+                      <span className="text-emerald-500 text-xs font-semibold flex items-center justify-center gap-1 mt-2">
+                        <Check size={14} />
+                        Password changed!
+                      </span>
+                    )}
+                  </form>
                 </div>
 
                 {/* Notifications setup */}

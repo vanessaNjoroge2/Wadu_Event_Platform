@@ -112,6 +112,10 @@
     word-break: break-word;
   }
 
+  button, .btn, [role="button"], [type="button"], [type="submit"] {
+    white-space: nowrap;
+  }
+
   pre,
   code {
     overflow-x: auto;

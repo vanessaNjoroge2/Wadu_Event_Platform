@@ -1,6 +1,7 @@
 import { Layout } from "@/components/Layout";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { api } from "@/lib/api";
 import {
   Eye,
   EyeOff,
@@ -19,15 +20,82 @@ export default function SignInPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [tab, setTab] = useState<Tab>("signin");
   const [selectedRole, setSelectedRole] = useState<Role>("attendee");
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+    if (isLoggedIn) {
+      const role = (localStorage.getItem("userRole") || "attendee").toLowerCase();
+      if (role === "admin") {
+        navigate("/admin-dashboard", { replace: true });
+      } else if (role === "organizer") {
+        navigate("/organizer-dashboard", { replace: true });
+      } else {
+        navigate("/dashboard", { replace: true });
+      }
+    }
+  }, [navigate]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (selectedRole === "organizer") {
-      navigate("/organizer-dashboard");
-    } else {
-      navigate("/dashboard");
+    setError("");
+
+    if (!email || !password || (tab === "signup" && !fullName)) {
+      setError("Please fill in all required fields.");
+      return;
     }
+
+    if (tab === "signup") {
+      const names = fullName.trim().split(" ");
+      const firstName = names[0] || "";
+      const lastName = names.slice(1).join(" ") || "User";
+
+      api.post("/auth/register", {
+        firstName,
+        lastName,
+        email,
+        password,
+        role: selectedRole.toUpperCase(),
+      })
+        .then((data: any) => {
+          localStorage.setItem("verify_email", email);
+          navigate("/verify-email");
+        })
+        .catch((err: any) => {
+          setError(err.message || "Failed to register.");
+        });
+      return;
+    }
+
+    api.post("/auth/login", {
+      email,
+      password,
+    })
+      .then((data: any) => {
+        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("userRole", data.user.role);
+
+        if (data.user.role === "ADMIN") {
+          navigate("/admin-dashboard");
+        } else if (data.user.role === "ORGANIZER") {
+          navigate("/organizer-dashboard");
+        } else {
+          navigate("/dashboard");
+        }
+      })
+      .catch((err: any) => {
+        if (err.message && err.message.toLowerCase().includes("verify your email")) {
+          localStorage.setItem("verify_email", email);
+          navigate("/verify-email");
+        } else {
+          setError(err.message || "Invalid email or password.");
+        }
+      });
   };
 
   return (
@@ -59,18 +127,16 @@ export default function SignInPage() {
                 <button
                   type="button"
                   onClick={() => setSelectedRole("attendee")}
-                  className={`relative flex flex-col items-center gap-3 p-5 rounded-xl border-2 transition-all duration-200 ${
-                    selectedRole === "attendee"
+                  className={`relative flex flex-col items-center gap-3 p-5 rounded-xl border-2 transition-all duration-200 ${selectedRole === "attendee"
                       ? "border-wadu-purple bg-wadu-purple/5 dark:bg-wadu-purple/10 shadow-sm"
                       : "border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 hover:border-wadu-teal dark:hover:border-wadu-teal"
-                  }`}
+                    }`}
                 >
                   {selectedRole === "attendee" && (
                     <CheckCircle2 size={16} className="absolute top-2.5 right-2.5 text-wadu-purple" />
                   )}
-                  <div className={`w-11 h-11 rounded-xl flex items-center justify-center transition-colors duration-200 ${
-                    selectedRole === "attendee" ? "bg-wadu-purple text-white" : "bg-slate-100 dark:bg-slate-850 text-slate-500"
-                  }`}>
+                  <div className={`w-11 h-11 rounded-xl flex items-center justify-center transition-colors duration-200 ${selectedRole === "attendee" ? "bg-wadu-purple text-white" : "bg-slate-100 dark:bg-slate-850 text-slate-500"
+                    }`}>
                     <User size={20} />
                   </div>
                   <div className="text-center">
@@ -83,18 +149,16 @@ export default function SignInPage() {
                 <button
                   type="button"
                   onClick={() => setSelectedRole("organizer")}
-                  className={`relative flex flex-col items-center gap-3 p-5 rounded-xl border-2 transition-all duration-200 ${
-                    selectedRole === "organizer"
+                  className={`relative flex flex-col items-center gap-3 p-5 rounded-xl border-2 transition-all duration-200 ${selectedRole === "organizer"
                       ? "border-wadu-teal bg-wadu-teal/5 dark:bg-wadu-teal/10 shadow-sm"
                       : "border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 hover:border-wadu-teal dark:hover:border-wadu-teal"
-                  }`}
+                    }`}
                 >
                   {selectedRole === "organizer" && (
                     <CheckCircle2 size={16} className="absolute top-2.5 right-2.5 text-wadu-teal" />
                   )}
-                  <div className={`w-11 h-11 rounded-xl flex items-center justify-center transition-colors duration-200 ${
-                    selectedRole === "organizer" ? "bg-wadu-teal text-wadu-navy font-bold" : "bg-slate-100 dark:bg-slate-855 text-slate-500"
-                  }`}>
+                  <div className={`w-11 h-11 rounded-xl flex items-center justify-center transition-colors duration-200 ${selectedRole === "organizer" ? "bg-wadu-teal text-wadu-navy font-bold" : "bg-slate-100 dark:bg-slate-855 text-slate-500"
+                    }`}>
                     <Building2 size={20} />
                   </div>
                   <div className="text-center">
@@ -102,7 +166,7 @@ export default function SignInPage() {
                       <p className="text-wadu-navy dark:text-white font-bold text-sm">Organizer</p>
                       <span className="text-[10px] bg-wadu-teal/10 text-wadu-teal border border-wadu-teal/30 px-1.5 py-px rounded-full font-bold">Pro</span>
                     </div>
-                    <p className="text-slate-450 dark:text-slate-500 text-xs mt-1 font-semibold">Manage events & payouts</p>
+                    <p className="text-slate-455 dark:text-slate-500 text-xs mt-1 font-semibold">Manage events & payouts</p>
                   </div>
                 </button>
               </div>
@@ -117,35 +181,41 @@ export default function SignInPage() {
                 <button
                   type="button"
                   onClick={() => setTab("signin")}
-                  className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition duration-200 ${
-                    tab === "signin"
+                  className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition duration-200 ${tab === "signin"
                       ? "bg-wadu-purple text-white shadow-sm"
                       : "text-slate-500 dark:text-slate-400 hover:text-wadu-teal dark:hover:text-wadu-teal"
-                  }`}
+                    }`}
                 >
                   Sign In
                 </button>
                 <button
                   type="button"
                   onClick={() => setTab("signup")}
-                  className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition duration-200 ${
-                    tab === "signup"
+                  className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition duration-200 ${tab === "signup"
                       ? "bg-wadu-purple text-white shadow-sm"
                       : "text-slate-500 dark:text-slate-400 hover:text-wadu-teal dark:hover:text-wadu-teal"
-                  }`}
+                    }`}
                 >
                   Sign Up
                 </button>
               </div>
 
               <form className="space-y-5" onSubmit={handleSubmit}>
+                {error && (
+                  <div className="bg-red-500/10 border border-red-500/20 text-red-500 text-sm font-semibold rounded-xl px-4 py-3">
+                    {error}
+                  </div>
+                )}
+
                 {tab === "signup" && (
                   <div>
                     <label className="block text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">Full Name</label>
                     <input
                       type="text"
                       placeholder="Your name"
-                      className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-slate-850 dark:text-white placeholder-slate-450 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-medium"
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                      className="w-full bg-white dark:bg-slate-955 border border-slate-205 dark:border-slate-800 rounded-xl px-4 py-3 text-slate-805 dark:text-white placeholder-slate-450 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-medium"
                     />
                   </div>
                 )}
@@ -157,7 +227,9 @@ export default function SignInPage() {
                     <input
                       type="email"
                       placeholder="you@example.com"
-                      className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 pl-11 text-slate-850 dark:text-white placeholder-slate-450 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-medium"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full bg-white dark:bg-slate-955 border border-slate-205 dark:border-slate-800 rounded-xl px-4 py-3 pl-11 text-slate-805 dark:text-white placeholder-slate-450 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-medium"
                     />
                   </div>
                 </div>
@@ -166,7 +238,9 @@ export default function SignInPage() {
                   <div className="flex justify-between mb-2">
                     <label className="block text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">Password</label>
                     {tab === "signin" && (
-                      <Link to="#" className="text-wadu-purple text-xs font-bold hover:text-wadu-teal transition">Forgot password?</Link>
+                      <Link to="/forgot-password" className="text-xs text-wadu-teal hover:underline font-semibold">
+                        Forgot password?
+                      </Link>
                     )}
                   </div>
                   <div className="relative">
@@ -174,6 +248,8 @@ export default function SignInPage() {
                     <input
                       type={showPassword ? "text" : "password"}
                       placeholder="••••••••"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                       className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 pl-11 pr-11 text-slate-850 dark:text-white placeholder-slate-450 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-medium"
                     />
                     <button

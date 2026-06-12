@@ -1,13 +1,31 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { DarkModeToggle } from "@/components/common/DarkModeToggle";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const navigate = useNavigate();
+
+  const [isLoggedIn, setIsLoggedIn] = useState(() => localStorage.getItem("isLoggedIn") === "true");
+
+  const handleSignOut = () => {
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    navigate("/");
+  };
 
   const { scrollY } = useScroll();
 
@@ -73,18 +91,55 @@ export function Navbar() {
             >
               My Dashboard
             </Link>
-            <Link
-              to="/sign-in"
-              className="text-slate-200 hover:text-wadu-teal transition text-sm font-semibold duration-200"
-            >
-              Sign In
-            </Link>
-            <Link
-              to="/post-event"
-              className="bg-wadu-purple hover:bg-wadu-teal hover:text-wadu-navy text-white px-5 py-2.5 rounded-xl font-bold text-xs transition shadow-md flex items-center gap-1.5 duration-200"
-            >
-              Post Event
-            </Link>
+            {isLoggedIn ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="w-9 h-9 rounded-full bg-wadu-purple text-white text-sm font-bold flex items-center justify-center hover:ring-2 hover:ring-wadu-teal transition focus:outline-none">
+                    V
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="bg-[#0A1F44] border border-white/10 text-white rounded-xl shadow-lg mt-2 min-w-[160px] p-1.5 z-50">
+                  <DropdownMenuItem asChild>
+                    <Link
+                      to="/dashboard"
+                      className="block w-full px-3 py-2 text-sm font-bold rounded-lg text-slate-200 hover:text-wadu-teal hover:bg-white/10 transition cursor-pointer"
+                    >
+                      My Dashboard
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link
+                      to="/organizer-dashboard"
+                      className="block w-full px-3 py-2 text-sm font-bold rounded-lg text-slate-200 hover:text-wadu-teal hover:bg-white/10 transition cursor-pointer"
+                    >
+                      Organizer Dashboard
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator className="bg-white/10 my-1" />
+                  <DropdownMenuItem
+                    onClick={handleSignOut}
+                    className="block w-full text-left px-3 py-2 text-sm font-bold rounded-lg text-slate-200 hover:text-red-450 hover:bg-white/10 transition cursor-pointer"
+                  >
+                    Sign Out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Link
+                to="/sign-in"
+                className="text-slate-200 hover:text-wadu-teal transition text-sm font-semibold duration-200"
+              >
+                Sign In
+              </Link>
+            )}
+            {localStorage.getItem("userRole")?.toUpperCase() !== "ATTENDEE" && (
+              <Link
+                to="/post-event"
+                className="bg-wadu-purple hover:bg-wadu-teal hover:text-wadu-navy text-white px-5 py-2.5 rounded-xl font-bold text-xs transition shadow-md flex items-center gap-1.5 duration-200"
+              >
+                Post Event
+              </Link>
+            )}
             <DarkModeToggle />
           </div>
 
@@ -107,42 +162,72 @@ export function Navbar() {
             <Link
               to="/explore"
               className="block text-slate-200 hover:text-wadu-teal py-2.5 text-sm font-medium transition duration-200"
+              onClick={() => setMobileMenuOpen(false)}
             >
               Explore
             </Link>
             <Link
               to="/categories"
               className="block text-slate-200 hover:text-wadu-teal py-2.5 text-sm font-medium transition duration-200"
+              onClick={() => setMobileMenuOpen(false)}
             >
               Categories
             </Link>
             <Link
               to="/cities"
               className="block text-slate-200 hover:text-wadu-teal py-2.5 text-sm font-medium transition duration-200"
+              onClick={() => setMobileMenuOpen(false)}
             >
               Cities
             </Link>
             <Link
               to="/dashboard"
               className="block text-slate-200 hover:text-wadu-teal py-2.5 text-sm font-medium transition duration-200"
+              onClick={() => setMobileMenuOpen(false)}
             >
               My Dashboard
             </Link>
-            <Link
-              to="/sign-in"
-              className="block text-slate-200 hover:text-wadu-teal py-2.5 text-sm font-medium transition duration-200"
-            >
-              Sign In
-            </Link>
-            <Link
-              to="/post-event"
-              className="block bg-wadu-purple hover:bg-wadu-teal hover:text-wadu-navy text-white px-4 py-2.5 rounded-xl font-bold text-center mt-4 transition text-xs duration-200"
-            >
-              Post Event
-            </Link>
+            {isLoggedIn ? (
+              <>
+                <Link
+                  to="/organizer-dashboard"
+                  className="block text-slate-200 hover:text-wadu-teal py-2.5 text-sm font-medium transition duration-200"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Organizer Dashboard
+                </Link>
+                <button
+                  onClick={() => {
+                    handleSignOut();
+                    setMobileMenuOpen(false);
+                  }}
+                  className="block w-full text-left text-slate-202 hover:text-red-400 py-2.5 text-sm font-medium transition duration-200"
+                >
+                  Sign Out
+                </button>
+              </>
+            ) : (
+              <Link
+                to="/sign-in"
+                className="block text-slate-202 hover:text-wadu-teal py-2.5 text-sm font-medium transition duration-200"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Sign In
+              </Link>
+            )}
+            {localStorage.getItem("userRole")?.toUpperCase() !== "ATTENDEE" && (
+              <Link
+                to="/post-event"
+                className="block bg-wadu-purple hover:bg-wadu-teal hover:text-wadu-navy text-white px-4 py-2.5 rounded-xl font-bold text-center mt-4 transition text-xs duration-200"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Post Event
+              </Link>
+            )}
           </div>
         )}
       </div>
     </motion.nav>
   );
 }
+

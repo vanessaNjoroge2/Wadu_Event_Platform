@@ -1,155 +1,148 @@
-# WADU — Global Event Ticketing Platform
+# Wadu Event Platform
 
-A premium, globally scalable event ticketing platform built with React 18, Tailwind CSS, Framer Motion, and Express backend.
+## Overview
+Wadu Event Platform is a global event ticketing and management application. It enables organizers to create events, configure various ticket types (such as General Admission, VIP, VVIP) with prices and limits, and save drafts or publish events. Attendees can discover events, buy tickets, and pay via M-Pesa or Card. The system automatically delivers tickets via email and WhatsApp. It also features a fully-featured Admin Dashboard for managing users, system-wide analytics, and platform activities, along with role-based access control for Admins, Organizers, and Attendees.
 
----
+## Project Structure
+```
+Wadu_Event_Platform/
+├── backend/                  # Express server API (Node.js + TS + Prisma + Postgres)
+│   ├── src/                  # Source files (controllers, routes, services, middleware)
+│   ├── prisma/               # Prisma database schema and migrations
+│   ├── tsconfig.json         # Backend TypeScript configuration
+│   └── package.json          # Standalone backend dependencies & scripts
+├── frontend/                 # React SPA (Vite + TypeScript + Tailwind CSS)
+│   ├── src/                  # React client components, pages, context, and hooks
+│   ├── tsconfig.json         # Frontend TypeScript configuration
+│   └── package.json          # Standalone frontend dependencies & scripts
+├── docs/                     # Platform architecture and REST API reference
+│   ├── api-reference.md      # Detailed endpoints reference
+│   ├── architecture.md       # Architecture blueprints and workflow diagrams
+│   └── deployment.md         # Manual for Render and Vercel deployments
+└── README.md                 # Root level entry documentation
+```
 
-## 🚀 Getting Started
+## Tech Stack
 
-### Prerequisites
+| Frontend Stack | Backend Stack |
+| :--- | :--- |
+| **Framework**: React (Vite) | **Runtime**: Node.js |
+| **Language**: TypeScript | **Framework**: Express (v5) |
+| **Styling**: Tailwind CSS & Vanilla CSS | **ORM**: Prisma Client |
+| **State/Query**: TanStack React Query | **Database**: PostgreSQL |
+| **Router**: React Router DOM | **Authentication**: Stateless JWT + bcryptjs |
+| **Animation**: Framer Motion | **Validation**: Zod |
+| **UI Components**: Radix UI & Lucide Icons | **Email**: Nodemailer (SMTP) |
 
-- Node.js 18 or higher
-- npm 9 or higher
+## Prerequisites
+- **Node.js**: `v18.x` or later
+- **npm**: `v9.x` or later
+- **PostgreSQL**: `v14` or later (locally running instance or hosted link)
 
-### Installation
+## Environment Variables
 
-Clone the repository, navigate to the project directory, and install dependencies:
+### Backend Configuration (`backend/.env`)
 
+| Variable Name | Description | Example Value |
+| :--- | :--- | :--- |
+| `DATABASE_URL` | PostgreSQL database connection string | `postgresql://postgres:password@localhost:5432/wadu_db` |
+| `JWT_SECRET` | Super secret token key for JWT authentication | `my_jwt_super_secret_key_123` |
+| `JWT_EXPIRES_IN` | Token expiration duration | `7d` |
+| `PORT` | Local server listening port | `3001` |
+| `FRONTEND_URL` | Base URL of frontend application | `http://localhost:5000` |
+| `SMTP_HOST` | Host of SMTP email server | `smtp.gmail.com` |
+| `SMTP_PORT` | Port of SMTP email server | `587` |
+| `SMTP_USER` | Email username for Nodemailer | `your@email.com` |
+| `SMTP_PASS` | App password/SMTP password | `your_smtp_app_password` |
+| `SMTP_FROM` | Default sender header identity | `"WADU Tickets <no-reply@wadu.io>"` |
+
+### Frontend Configuration (`frontend/.env`)
+
+| Variable Name | Description | Example Value |
+| :--- | :--- | :--- |
+| `PORT` | Frontend dev server port | `5000` |
+| `VITE_API_URL` | Base URL of API endpoint proxy | `http://localhost:3001` |
+
+## Local Setup & Installation
+
+### 1. Clone the repository
 ```bash
-npm install
+git clone https://github.com/your-username/Wadu_Event_Platform.git
+cd Wadu_Event_Platform
 ```
 
-### Run Development Server
+### 2. Backend setup
+1. Navigate to the backend directory and install dependencies:
+   ```bash
+   cd backend
+   npm install
+   ```
+2. Copy the environment variables template and configure it:
+   ```bash
+   cp .env.example .env
+   ```
+   *(Ensure to update `DATABASE_URL` with your local PostgreSQL credentials in `.env`)*
+3. Run Prisma migrations to set up database tables:
+   ```bash
+   npx prisma migrate dev
+   ```
+4. Seed the database with default accounts and events:
+   ```bash
+   npx prisma db seed
+   ```
+5. Start the backend development server:
+   ```bash
+   npm run dev
+   ```
 
-```bash
-npm run dev
-```
+### 3. Frontend setup
+1. Open a new terminal session, navigate to the frontend directory and install dependencies:
+   ```bash
+   cd frontend
+   npm install
+   ```
+2. Copy the environment variables template:
+   ```bash
+   cp .env.example .env
+   ```
+3. Start the frontend development server:
+   ```bash
+   npm run dev
+   ```
+   *(Go to `http://localhost:5000` to interact with the application)*
 
-Open your browser and navigate to: **http://localhost:5000**
+## Deployment
 
-The development server uses a unified Vite server with Express middleware mounted directly.
+### Frontend (Vercel)
+- Deploy directly from the `frontend/` subdirectory.
+- **Framework Preset**: Vite
+- **Build Command**: `npm run build`
+- **Output Directory**: `dist`
+- Set `VITE_API_URL` in environment variables to point to your hosted backend URL.
 
-### Build for Production
+### Backend (Render)
+- Deploy a **Web Service** pointing to your repository.
+- **Root Directory**: `backend`
+- **Build Command**: `npm install && npx prisma generate && npx prisma migrate deploy && npm run build`
+- **Start Command**: `npm run start`
+- Set environment variables for production (`DATABASE_URL`, `JWT_SECRET`, `SMTP_USER`, etc.).
 
-To package and run the platform in a production-optimized state:
+## Seeded Accounts
 
-```bash
-# Compile client and server bundles
-npm run build
+| Role | Email | Password |
+| :--- | :--- | :--- |
+| **Admin** | `vanessawanjiru2023@gmail.com` | `password123` |
+| **Organizer** | `organizer@wadu.io` | `password123` |
+| **Attendee** | `attendee@wadu.io` | `password123` |
 
-# Start production server (listens on port 3000 by default)
-npm run start
-```
+## API Reference
+Please refer to [api-reference.md](file:///c:/Users/user/OneDrive - Mount Kenya University/Desktop/Projects/Wadu_Event_Platform/Wadu_Event_Platform/docs/api-reference.md) for full endpoint and request/response specifications.
 
-Open your browser and navigate to: **http://localhost:3000**
+## Contributing
+1. Create a feature branch: `git checkout -b feature/amazing-feature`
+2. Commit your changes: `git commit -m 'Add amazing feature'`
+3. Push to your branch: `git push origin feature/amazing-feature`
+4. Open a Pull Request for review.
 
----
-
-## 📄 Pages & Routes
-
-The platform is fully implemented with strict adherence to the WADU brand identity system:
-
-| Page                | Route       | Description                                                          |
-| ------------------- | ----------- | -------------------------------------------------------------------- |
-| **Homepage**        | `/`         | Dynamic hero, autoplay background video, trending grids, and CTAs    |
-| **Event Listing**   | `/explore`  | Multi-category search, filters, and dynamic event cards grid         |
-| **Single Event**    | `/event/:id`| Comprehensive event detail, schedules, and ticket quantity selectors |
-| **Checkout**        | `/checkout` | 3-step ticket booking, billing info, and simulated payment flow     |
-| **Categories**      | `/categories`| Clean category listing grid with brand navy/purple aesthetics        |
-| **Cities**          | `/cities`   | Dynamic location showcase maps and location event listings           |
-| **Sign In / Auth**  | `/sign-in`  | Role-based authentication interface (Organizer vs. Attendee)          |
-| **Organizer Dashboard** | `/organizer-dashboard` | Full control center: metrics overview, sales charts, and transaction audits |
-| **My Events**       | `/organizer-dashboard/events` | Organizer's active, draft, and sold-out event listings |
-| **Create Event**    | `/post-event` | Multi-step event creation form rendering inside the dashboard menu  |
-| **Attendees Audit** | `/organizer-dashboard/attendees` | Live QR check-in tracker and attendance registration log |
-| **Sales Analytics** | `/organizer-dashboard/analytics` | Traffic breakdowns, daily revenue scales, and channel analysis |
-| **Earnings & Payouts** | `/organizer-dashboard/payouts` | Wallet payouts, Safaricom M-Pesa setup, and NCBA bank transfer audits |
-| **Profile Settings**| `/organizer-dashboard/settings` | Branding log upload, profile settings, and email alerts configuration |
-| **Help & Support**  | `/help`     | Help Center FAQ center rendering inside the dashboard menu shell    |
-
----
-
-## 🎨 WADU Brand Identity System
-
-### Color Palette
-
-Strictly enforced color guidelines throughout all user interfaces:
-
-*   **Primary Accent (`#0A1F44`):** Solid Deep Royal Blue used for Navbars, headers, and major action buttons.
-*   **CTA Accent (`#6C4DFF`):** Electric Purple highlights, active navigation tabs, selected states, and banners.
-*   **Secondary Interactive (`#00C2A8`):** Vibrant Teal applied to all hover transitions, glow states, active focuses, and success badges.
-*   **Background (`#F9FAFB`):** Sleek off-white background with spacious section padding (`py-24 md:py-32`) to ensure generous breathing room.
-*   **Dark Mode (`#0F172A`):** Beautiful Charcoal base when dark mode is toggled.
-
-### Spacing & Spacers
-- All major layout sections feature increased margins and `py-24`/`py-32` padding variables to avoid cramped designs and achieve WADU's luxurious spacious aesthetic.
-
----
-
-## 🛠 Tech Stack
-
-- **Frontend:** React 18 with TypeScript, React Router 6, Tailwind CSS
-- **Animations:** Framer Motion (micro-animations, smooth transition effects)
-- **UI Foundations:** Radix UI primitives, Lucide React icons
-- **Form State:** React Hook Form + Zod validation schemas
-- **Queries:** TanStack React Query (server state synchronization)
-- **Server:** Express.js (middleware, API routing, SSR bundling)
-- **Compiling:** Vite, Rollup, SWC
-- **Testing:** Vitest
-
----
-
-## 📁 Project Structure
-
-```
-client/
-├── public/                    # Public assets (JPG event thumbnails, loops, favicon, robots.txt)
-└── src/
-    ├── components/            # Reusable UI components (EventCard, Checkout steps)
-    │   ├── layout/            # Layout shells (Layout, Navbar, Footer, DarkModeToggle)
-    │   └── ui/                # Radix primitive components
-    ├── pages/                 # Full pages (HomePage, ExplorePage, OrganizerDashboardPage, etc.)
-    ├── styles/                # global.css (design tokens, colors system)
-    ├── App.tsx                # Client Routing configuration
-    └── main.tsx               # Client entry point
-server/
-├── index.ts                   # Express server core configuration
-├── node-build.ts              # Production startup and static assets server
-├── routes/                    # API routes (events, auth, etc.)
-├── middleware/                # Error handling and validation middlewares
-└── utils/                     # Server utility helpers
-shared/                        # Shared TypeScript validation schemas and interfaces
-netlify/                       # Serverless Netlify edge functions config
-```
-
----
-
-## 🧪 Testing & Diagnostics
-
-Verify system type safety, code formatting, and run test suites:
-
-```bash
-# Run unit tests
-npm run test
-
-# Validate type safety
-npm run typecheck
-
-# Format codebase
-npm run format.fix
-```
-
----
-
-## 🔌 API Endpoints
-
-- `GET /api/ping` - Server health diagnostic
-- `GET /api/demo` - API functionality demo
-- `GET /api/events` - Fetch public event listings
-- `POST /api/auth/sign-in` - Client role authentication mock
-
----
-
-**Last Updated:** May 23, 2026  
-**Branding Agency:** WitzCG  
-**Client:** WADU Global
+## License
+Distributed under the MIT License. See LICENSE for more details.

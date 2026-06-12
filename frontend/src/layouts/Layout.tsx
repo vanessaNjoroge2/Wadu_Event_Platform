@@ -1,7 +1,8 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { Search } from "lucide-react";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
+import { useNavigate } from "react-router-dom";
 
 interface LayoutProps {
   children: ReactNode;
@@ -9,6 +10,16 @@ interface LayoutProps {
 }
 
 export function Layout({ children, showHero = false }: LayoutProps) {
+  const navigate = useNavigate();
+  const [query, setQuery] = useState("");
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (query.trim()) {
+      navigate(`/search?q=${encodeURIComponent(query.trim())}`);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-wadu-bg dark:bg-wadu-dark text-slate-800 dark:text-slate-100 flex flex-col transition-colors duration-300">
       <Navbar />
@@ -52,19 +63,27 @@ export function Layout({ children, showHero = false }: LayoutProps) {
               The global platform for unforgettable events.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-2xl mx-auto">
+            <form
+              onSubmit={handleSearchSubmit}
+              className="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-2xl mx-auto"
+            >
               <div className="relative w-full sm:flex-1">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                 <input
                   type="text"
                   placeholder="Search events, cities, venues..."
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
                   className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg py-3 pl-12 pr-4 text-white placeholder-gray-400 focus:outline-none focus:border-wadu-teal transition"
                 />
               </div>
-              <button className="bg-wadu-navy border border-wadu-navy hover:bg-wadu-teal hover:border-wadu-teal hover:text-wadu-navy text-white px-8 py-3 rounded-lg font-bold transition w-full sm:w-auto shadow-md">
+              <button
+                type="submit"
+                className="bg-wadu-navy border border-wadu-navy hover:bg-wadu-teal hover:border-wadu-teal hover:text-wadu-navy text-white px-8 py-3 rounded-lg font-bold transition w-full sm:w-auto shadow-md"
+              >
                 Search
               </button>
-            </div>
+            </form>
           </div>
         </div>
       )}
@@ -77,3 +96,4 @@ export function Layout({ children, showHero = false }: LayoutProps) {
     </div>
   );
 }
+

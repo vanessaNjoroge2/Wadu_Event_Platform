@@ -40,7 +40,7 @@ export function OrderReview({ onContinue }: OrderReviewProps) {
 
       {/* Error Alert (if no tickets selected) - placeholder for validation */}
       <div className="bg-red-500/5 border border-red-500/20 rounded-xl p-4 flex items-start gap-3">
-        <span className="text-red-400 text-lg leading-none">⚠️</span>
+        <span className="text-red-400 text-lg leading-none">!</span>
         <div>
           <p className="text-red-650 dark:text-red-400 font-bold text-sm">
             Please select at least one ticket to continue.

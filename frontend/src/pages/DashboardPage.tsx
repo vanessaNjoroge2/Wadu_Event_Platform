@@ -10,42 +10,63 @@ import {
   ArrowRight,
   Star,
 } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { useToast } from "@/hooks/use-toast";
 
-const upcomingTickets = [
-  {
-    id: 1,
-    title: "AfroNation Nairobi 2025",
-    date: "Fri, Dec 1, 2025 • 5:00 PM",
-    location: "Nairobi, Kenya",
-    seat: "Section A · Row 3 · Seat 12",
-    status: "Confirmed",
-  },
-  {
-    id: 2,
-    title: "East Africa Tech Summit",
-    date: "Mon, Oct 20, 2025 • 9:00 AM",
-    location: "Kigali, Rwanda",
-    seat: "General Admission",
-    status: "Confirmed",
-  },
-  {
-    id: 3,
-    title: "Lamu Cultural Festival",
-    date: "Sat, Nov 15, 2025 • 10:00 AM",
-    location: "Lamu, Kenya",
-    seat: "VIP Pass",
-    status: "Pending",
-  },
-];
-
-const stats = [
-  { label: "Tickets Purchased", value: "12", icon: Ticket, color: "text-wadu-purple" },
-  { label: "Events Attended", value: "8", icon: Star, color: "text-wadu-teal" },
-  { label: "Upcoming Events", value: "3", icon: Calendar, color: "text-wadu-purple" },
-  { label: "Events Hosted", value: "1", icon: TrendingUp, color: "text-wadu-teal" },
-];
+import { useState, useEffect } from "react";
+import { api } from "@/lib/api";
 
 export default function DashboardPage() {
+  const { toast } = useToast();
+  const [upcomingTickets, setUpcomingTickets] = useState<any[]>([]);
+  const [stats, setStats] = useState([
+    { label: "Tickets Purchased", value: "0", icon: Ticket, color: "text-wadu-purple" },
+    { label: "Events Attended", value: "0", icon: Star, color: "text-wadu-teal" },
+    { label: "Upcoming Events", value: "0", icon: Calendar, color: "text-wadu-purple" },
+  ]);
+
+  useEffect(() => {
+    api.get<any[]>("/orders")
+      .then((orders) => {
+        if (Array.isArray(orders)) {
+          const paidOrders = orders.filter(o => o.paymentStatus === "PAID");
+          const ticketsList: any[] = [];
+          let totalPurchased = 0;
+          const distinctEvents = new Set<string>();
+          const distinctUpcomingEvents = new Set<string>();
+          const now = new Date();
+
+          paidOrders.forEach(o => {
+            distinctEvents.add(o.eventId);
+            const isUpcoming = new Date(o.event.startDate) > now;
+            if (isUpcoming) {
+              distinctUpcomingEvents.add(o.eventId);
+            }
+
+            o.items.forEach((item: any) => {
+              totalPurchased += item.quantity;
+              ticketsList.push({
+                id: o.id,
+                title: o.event.title,
+                date: new Date(o.event.startDate).toLocaleString(),
+                location: o.event.location,
+                seat: item.ticketType.name,
+                status: "Confirmed",
+              });
+            });
+          });
+
+          setUpcomingTickets(ticketsList);
+          setStats([
+            { label: "Tickets Purchased", value: totalPurchased.toString(), icon: Ticket, color: "text-wadu-purple" },
+            { label: "Events Attended", value: distinctEvents.size.toString(), icon: Star, color: "text-wadu-teal" },
+            { label: "Upcoming Events", value: distinctUpcomingEvents.size.toString(), icon: Calendar, color: "text-wadu-purple" },
+          ]);
+        }
+      })
+      .catch((err) => console.error("Error loading dashboard data:", err));
+  }, []);
+
   return (
     <Layout>
       <div className="max-w-7xl mx-auto px-4 py-12">
@@ -59,13 +80,7 @@ export default function DashboardPage() {
               Welcome back! Here's what's coming up.
             </p>
           </div>
-          <Link
-            to="/post-event"
-            className="flex items-center gap-2 bg-wadu-purple text-white hover:bg-wadu-teal hover:text-wadu-navy px-6 py-3.5 rounded-xl font-bold transition duration-200 shadow-sm"
-          >
-            <Plus size={18} />
-            Post an Event
-          </Link>
+          {/* Removed Post an Event link since attendee accounts cannot host events */}
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
@@ -134,6 +149,50 @@ export default function DashboardPage() {
                           {ticket.status}
                         </span>
                       </div>
+
+                      <div className="flex justify-between items-center mt-4 pt-4 border-t border-slate-105 dark:border-slate-800">
+                        <span className="text-xs text-slate-400 font-bold">Ref: #WDU-2025-00{ticket.id}</span>
+                        
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <button className="bg-wadu-navy border border-wadu-navy/15 text-white hover:bg-wadu-teal hover:text-wadu-navy hover:border-wadu-teal px-4 py-2 rounded-xl font-bold transition duration-200 text-xs shadow-sm">
+                              View Ticket
+                            </button>
+                          </DialogTrigger>
+                          <DialogContent className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 max-w-sm rounded-2xl shadow-xl p-6 text-center">
+                            <DialogHeader>
+                              <DialogTitle className="text-wadu-navy dark:text-white font-extrabold text-xl mb-1 text-center">
+                                {ticket.title}
+                              </DialogTitle>
+                            </DialogHeader>
+                            <div className="space-y-4 my-6">
+                              <div className="text-slate-500 dark:text-slate-400 text-sm font-semibold space-y-1">
+                                <p> {ticket.date}</p>
+                                <p> {ticket.location}</p>
+                                <p> {ticket.seat}</p>
+                              </div>
+                              
+                              {/* QR Code Placeholder */}
+                              <div className="w-48 h-48 bg-slate-100 dark:bg-slate-800 border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-xl flex flex-col items-center justify-center mx-auto shadow-inner">
+                                <span className="text-slate-400 font-bold text-sm">QR Code</span>
+                                <span className="text-[10px] text-slate-400 mt-1">#WDU-2025-00{ticket.id}</span>
+                              </div>
+                            </div>
+                            
+                            <button
+                              onClick={() => {
+                                toast({
+                                  title: "Ticket downloaded ",
+                                  description: `Saved ticket for ${ticket.title} to your device.`,
+                                });
+                              }}
+                              className="w-full bg-wadu-purple text-white hover:bg-wadu-teal hover:text-wadu-navy py-3 rounded-xl font-bold text-sm transition duration-200 shadow-sm"
+                            >
+                              Download Ticket
+                            </button>
+                          </DialogContent>
+                        </Dialog>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -160,11 +219,7 @@ export default function DashboardPage() {
                   to: "/cities",
                   icon: MapPin,
                 },
-                {
-                  label: "Host an Event",
-                  to: "/post-event",
-                  icon: Plus,
-                },
+
               ].map((action, i) => {
                 const Icon = action.icon;
                 return (

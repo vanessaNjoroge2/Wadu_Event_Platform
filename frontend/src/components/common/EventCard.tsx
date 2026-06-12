@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { MapPin, Calendar, ArrowRight } from "lucide-react";
-import { Event } from "@/../../shared/types/event.types";
+import { Event } from "@shared/types/event.types";
 
 interface EventCardProps {
   event: Event;
@@ -8,8 +8,17 @@ interface EventCardProps {
 
 export function EventCard({ event }: EventCardProps) {
   // Map event ID to one of the provided images in the /public folder
-  const getEventImage = (id: number) => {
-    const index = ((id - 1) % 15) + 1;
+  const getEventImage = (id: string | number) => {
+    if (typeof id === "number") {
+      const index = ((id - 1) % 15) + 1;
+      return index === 1 ? "/Image 1.jpg" : `/image ${index}.jpg`;
+    }
+    // Calculate simple hash of the string id to deterministically map to 1-15
+    let hash = 0;
+    for (let i = 0; i < id.length; i++) {
+      hash = id.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const index = (Math.abs(hash) % 15) + 1;
     return index === 1 ? "/Image 1.jpg" : `/image ${index}.jpg`;
   };
 
@@ -20,7 +29,11 @@ export function EventCard({ event }: EventCardProps) {
     >
       <div className="h-48 relative overflow-hidden bg-slate-100 dark:bg-slate-950">
         <img
-          src={getEventImage(event.id)}
+          src={event.imageUrl || getEventImage(event.id)}
+          onError={(e) => {
+            e.currentTarget.onerror = null;
+            e.currentTarget.src = getEventImage(event.id);
+          }}
           alt={event.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />

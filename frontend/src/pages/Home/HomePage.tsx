@@ -1,5 +1,7 @@
 import { Layout } from "@/components/Layout";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { EventCard } from "@/components/events/EventCard";
 import {
   Music,
   Megaphone,
@@ -8,62 +10,54 @@ import {
   Users,
   Palette,
   Utensils,
+  Laptop,
   ArrowRight,
 } from "lucide-react";
 
 export default function Index() {
-  const categories = [
-    { icon: Music, label: "Concerts" },
-    { icon: Megaphone, label: "Conferences" },
-    { icon: Tent, label: "Festivals" },
-    { icon: Trophy, label: "Sports" },
-    { icon: Users, label: "Networking" },
-    { icon: Palette, label: "Exhibitions" },
-    { icon: Utensils, label: "Food & Drink" },
-  ];
+  const [trendingEvents, setTrendingEvents] = useState<any[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const trendingEvents = [
-    {
-      id: 1,
-      title: "AfroNation Nairobi 2025",
-      location: "Nairobi, Kenya",
-      date: "Fri, Dec 1, 2025 • 5:00 PM",
-      price: "From KES 3,500",
-      category: "MUSIC",
-      tag: "TRENDING",
-      image: "/Image 1.jpg",
-    },
-    {
-      id: 2,
-      title: "East Africa Tech Summit",
-      location: "Kigali, Rwanda",
-      date: "Mon, Oct 20, 2025 • 9:00 AM",
-      price: "From KES 2,000",
-      category: "TECH",
-      tag: "TRENDING",
-      image: "/image 2.jpg",
-    },
-    {
-      id: 3,
-      title: "Lamu Cultural Festival",
-      location: "Lamu, Kenya",
-      date: "Sat, Nov 15, 2025 • 10:00 AM",
-      price: "From KES 1,200",
-      category: "CULTURE",
-      tag: "TRENDING",
-      image: "/image 3.jpg",
-    },
-    {
-      id: 4,
-      title: "Nairobi Food Market",
-      location: "Nairobi, Kenya",
-      date: "Sun, Nov 26, 2025 • 12:00 PM",
-      price: "From KES 1,500",
-      category: "FOOD & DRINK",
-      tag: "TRENDING",
-      image: "/image 4.jpg",
-    },
-  ];
+  useEffect(() => {
+    // Fetch categories
+    fetch("/api/categories")
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.data) {
+          const mapped = json.data.map((cat: any) => {
+            const lowerName = cat.name.toLowerCase();
+            let icon = Music;
+            if (lowerName.includes("music") || lowerName.includes("concert")) icon = Music;
+            else if (lowerName.includes("tech") || lowerName.includes("laptop")) icon = Laptop;
+            else if (lowerName.includes("conference") || lowerName.includes("megaphone")) icon = Megaphone;
+            else if (lowerName.includes("culture") || lowerName.includes("art") || lowerName.includes("exhibit") || lowerName.includes("palette")) icon = Palette;
+            else if (lowerName.includes("sport") || lowerName.includes("trophy")) icon = Trophy;
+            else if (lowerName.includes("network") || lowerName.includes("user")) icon = Users;
+            else if (lowerName.includes("food") || lowerName.includes("drink") || lowerName.includes("utensil")) icon = Utensils;
+            else if (lowerName.includes("camp") || lowerName.includes("outdoor") || lowerName.includes("tent")) icon = Tent;
+            
+            return { icon, label: cat.name };
+          });
+          setCategories(mapped);
+        }
+      })
+      .catch((err) => console.error("Error loading categories:", err));
+
+    // Fetch events
+    fetch("/api/events?limit=3")
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.data && json.data.events) {
+          setTrendingEvents(json.data.events);
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error loading events:", err);
+        setLoading(false);
+      });
+  }, []);
 
   const stats = [
     { value: "10M+", label: "TICKETS SOLD" },
@@ -193,46 +187,17 @@ export default function Index() {
           </Link>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
-          {trendingEvents.map((event) => (
-            <Link
-              key={event.id}
-              to={`/event/${event.id}`}
-              className="group bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 hover:border-wadu-teal transition duration-300 shadow-sm hover:shadow-lg hover:shadow-wadu-teal/5"
-            >
-              <div className="h-48 relative overflow-hidden bg-slate-100 dark:bg-slate-950">
-                <img
-                  src={event.image}
-                  alt={event.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute top-4 right-4 flex gap-2 z-10">
-                  <span className="bg-wadu-purple text-white px-3 py-1 rounded-full text-xs font-bold shadow-sm">
-                    {event.category}
-                  </span>
-                  <span className="bg-wadu-navy text-wadu-teal border border-wadu-teal/30 px-3 py-1 rounded-full text-xs font-bold shadow-sm bg-opacity-95">
-                    {event.tag}
-                  </span>
-                </div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-lg font-bold text-wadu-navy dark:text-white mb-2 group-hover:text-wadu-teal transition duration-200">
-                  {event.title}
-                </h3>
-                <div className="space-y-2 text-sm text-slate-500 dark:text-slate-400 mb-4">
-                  <p>📍 {event.location}</p>
-                  <p>📅 {event.date}</p>
-                </div>
-                <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
-                  <p className="font-extrabold text-wadu-navy dark:text-white text-base">{event.price}</p>
-                  <button className="bg-wadu-navy border border-wadu-navy/15 text-white hover:bg-wadu-teal hover:text-wadu-navy hover:border-wadu-teal px-4 py-2 rounded-lg font-bold transition duration-200 text-sm">
-                    Get Ticket
-                  </button>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
+        {loading ? (
+          <div className="text-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-wadu-purple mx-auto"></div>
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {trendingEvents.map((event) => (
+              <EventCard key={event.id} event={event} />
+            ))}
+          </div>
+        )}
 
         <div className="text-center mt-12">
           <Link
@@ -289,7 +254,7 @@ export default function Index() {
                 <div className="bg-wadu-dark rounded-[2rem] overflow-hidden border border-white/5">
                   <div className="bg-[#0A1F44] px-4 pt-4 pb-2 flex items-center justify-between">
                     <span className="text-white font-extrabold text-sm">WADU</span>
-                    <span className="text-slate-300 text-xs">🔔</span>
+                    <span className="text-slate-300 text-xs">[Alerts]</span>
                   </div>
                   <div className="px-4 pb-2">
                     <p className="text-slate-400 text-xs font-semibold mb-2">Upcoming</p>
@@ -297,13 +262,13 @@ export default function Index() {
                       <p className="text-white text-[10px] font-bold">Your Events In Your Pocket</p>
                     </div>
                     {[
-                      { title: "AfroNation Nairobi", time: "Dec 1 • 5:00 PM" },
-                      { title: "EA Tech Summit", time: "Oct 20 • 9:00 AM" },
-                      { title: "Lamu Festival", time: "Nov 15 • 10:00 AM" },
+                      { title: "AfroNation Nairobi", time: "Dec 1 - 5:00 PM" },
+                      { title: "EA Tech Summit", time: "Oct 20 - 9:00 AM" },
+                      { title: "Lamu Festival", time: "Nov 15 - 10:00 AM" },
                     ].map((item, i) => (
                       <div key={i} className="flex items-center gap-2 mb-1.5">
                         <div className="w-8 h-8 rounded-lg bg-wadu-navy flex items-center justify-center text-xs font-bold text-wadu-teal flex-shrink-0">
-                          🎫
+                          TKT
                         </div>
                         <div>
                           <p className="text-white text-[9px] font-bold leading-tight">{item.title}</p>

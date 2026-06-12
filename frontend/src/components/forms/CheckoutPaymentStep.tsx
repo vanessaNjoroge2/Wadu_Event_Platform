@@ -2,21 +2,72 @@ import { useState } from "react";
 import { Lock } from "lucide-react";
 
 interface PaymentStepProps {
+  paymentMethod: "CARD" | "MPESA" | "PAYPAL" | "BANK";
+  setPaymentMethod: (val: "CARD" | "MPESA" | "PAYPAL" | "BANK") => void;
+  cardNumber: string;
+  setCardNumber: (val: string) => void;
+  expiry: string;
+  setExpiry: (val: string) => void;
+  cvv: string;
+  setCvv: (val: string) => void;
+  cardholderName: string;
+  setCardholderName: (val: string) => void;
+  billingCountry: string;
+  setBillingCountry: (val: string) => void;
+  mpesaPhone: string;
+  setMpesaPhone: (val: string) => void;
   onPlaceOrder: () => void;
 }
 
-export function PaymentStep({ onPlaceOrder }: PaymentStepProps) {
-  const [paymentMethod, setPaymentMethod] = useState<"Card" | "M-Pesa" | "PayPal" | "Bank">("Card");
+export function PaymentStep({
+  paymentMethod,
+  setPaymentMethod,
+  cardNumber,
+  setCardNumber,
+  expiry,
+  setExpiry,
+  cvv,
+  setCvv,
+  cardholderName,
+  setCardholderName,
+  billingCountry,
+  setBillingCountry,
+  mpesaPhone,
+  setMpesaPhone,
+  onPlaceOrder,
+}: PaymentStepProps) {
+  const [error, setError] = useState("");
+
+  const handlePlaceOrder = () => {
+    setError("");
+    if (paymentMethod === "CARD") {
+      if (!cardNumber.trim() || !expiry.trim() || !cvv.trim() || !cardholderName.trim() || !billingCountry.trim()) {
+        setError("Please fill in all credit card details.");
+        return;
+      }
+    } else if (paymentMethod === "MPESA") {
+      if (!mpesaPhone.trim()) {
+        setError("Please enter your M-Pesa mobile number.");
+        return;
+      }
+    }
+    onPlaceOrder();
+  };
 
   const paymentMethods = [
-    { id: "Card", label: "Card" },
-    { id: "M-Pesa", label: "M-Pesa" },
-    { id: "PayPal", label: "PayPal" },
-    { id: "Bank", label: "Bank" },
+    { id: "CARD", label: "Card" },
+    { id: "MPESA", label: "M-Pesa" },
+    { id: "PAYPAL", label: "PayPal" },
+    { id: "BANK", label: "Bank" },
   ] as const;
 
   return (
     <div className="space-y-6">
+      {error && (
+        <div className="bg-red-500/10 border border-red-500/20 text-red-500 text-sm font-semibold rounded-xl px-4 py-3">
+          {error}
+        </div>
+      )}
       <div>
         <h2 className="text-2xl font-bold text-wadu-navy dark:text-white mb-2">
           Step 3 of 3: Payment
@@ -48,7 +99,7 @@ export function PaymentStep({ onPlaceOrder }: PaymentStepProps) {
         </div>
       </div>
 
-      {paymentMethod === "Card" && (
+      {paymentMethod === "CARD" && (
         <div className="space-y-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl">
           <div>
             <label className="block text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
@@ -57,6 +108,8 @@ export function PaymentStep({ onPlaceOrder }: PaymentStepProps) {
             <input
               type="text"
               placeholder="0000 0000 0000 0000"
+              value={cardNumber}
+              onChange={(e) => setCardNumber(e.target.value)}
               className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl py-3.5 px-4 text-slate-800 dark:text-white placeholder-slate-450 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal font-medium transition duration-200"
             />
           </div>
@@ -69,6 +122,8 @@ export function PaymentStep({ onPlaceOrder }: PaymentStepProps) {
               <input
                 type="text"
                 placeholder="MM / YY"
+                value={expiry}
+                onChange={(e) => setExpiry(e.target.value)}
                 className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl py-3.5 px-4 text-slate-800 dark:text-white placeholder-slate-450 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal font-medium transition duration-200"
               />
             </div>
@@ -78,8 +133,10 @@ export function PaymentStep({ onPlaceOrder }: PaymentStepProps) {
               </label>
               <input
                 type="password"
-                placeholder="•••"
+                placeholder="---"
                 maxLength={4}
+                value={cvv}
+                onChange={(e) => setCvv(e.target.value)}
                 className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl py-3.5 px-4 text-slate-800 dark:text-white placeholder-slate-450 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal font-medium transition duration-200"
               />
             </div>
@@ -92,6 +149,8 @@ export function PaymentStep({ onPlaceOrder }: PaymentStepProps) {
             <input
               type="text"
               placeholder="Name on card"
+              value={cardholderName}
+              onChange={(e) => setCardholderName(e.target.value)}
               className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl py-3.5 px-4 text-slate-800 dark:text-white placeholder-slate-450 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal font-medium transition duration-200"
             />
           </div>
@@ -103,13 +162,15 @@ export function PaymentStep({ onPlaceOrder }: PaymentStepProps) {
             <input
               type="text"
               placeholder="e.g. Kenya"
+              value={billingCountry}
+              onChange={(e) => setBillingCountry(e.target.value)}
               className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl py-3.5 px-4 text-slate-800 dark:text-white placeholder-slate-450 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal font-medium transition duration-200"
             />
           </div>
         </div>
       )}
 
-      {paymentMethod === "M-Pesa" && (
+      {paymentMethod === "MPESA" && (
         <div className="space-y-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl">
           <div>
             <label className="block text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
@@ -118,6 +179,8 @@ export function PaymentStep({ onPlaceOrder }: PaymentStepProps) {
             <input
               type="tel"
               placeholder="e.g. +254 700 000000"
+              value={mpesaPhone}
+              onChange={(e) => setMpesaPhone(e.target.value)}
               className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl py-3.5 px-4 text-slate-800 dark:text-white placeholder-slate-450 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal font-medium transition duration-200"
             />
             <p className="text-slate-500 dark:text-slate-400 text-xs mt-2 font-semibold">
@@ -127,7 +190,7 @@ export function PaymentStep({ onPlaceOrder }: PaymentStepProps) {
         </div>
       )}
 
-      {paymentMethod === "PayPal" && (
+      {paymentMethod === "PAYPAL" && (
         <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl text-center">
           <p className="text-slate-500 dark:text-slate-400 text-sm font-semibold">
             Clicking the button below will securely open the PayPal login window to complete your purchase.
@@ -135,7 +198,7 @@ export function PaymentStep({ onPlaceOrder }: PaymentStepProps) {
         </div>
       )}
 
-      {paymentMethod === "Bank" && (
+      {paymentMethod === "BANK" && (
         <div className="space-y-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl">
           <div>
             <label className="block text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
@@ -152,7 +215,7 @@ export function PaymentStep({ onPlaceOrder }: PaymentStepProps) {
       )}
 
       <button
-        onClick={onPlaceOrder}
+        onClick={handlePlaceOrder}
         className="w-full bg-wadu-navy border border-wadu-navy/15 hover:bg-wadu-teal hover:text-wadu-navy hover:border-wadu-teal text-white py-4 rounded-xl font-bold tracking-wide transition duration-200 shadow-sm flex items-center justify-center gap-2"
       >
         <Lock size={18} />

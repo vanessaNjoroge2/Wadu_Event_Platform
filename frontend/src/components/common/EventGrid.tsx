@@ -1,5 +1,5 @@
 import { EventCard } from "./EventCard";
-import { Event } from "@/../../shared/types/event.types";
+import { Event } from "@shared/types/event.types";
 
 interface EventGridProps {
   events: Event[];
