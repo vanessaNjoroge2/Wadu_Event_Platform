@@ -137,5 +137,3 @@ Please refer to [api-reference.md](file:///c:/Users/user/OneDrive - Mount Kenya 
 3. Push to your branch: `git push origin feature/amazing-feature`
 4. Open a Pull Request for review.
 
-## License
-Distributed under the MIT License. See LICENSE for more details.
