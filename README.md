@@ -127,13 +127,6 @@ cd Wadu_Event_Platform
 - **Start Command**: `npm run start`
 - Set environment variables for production (`DATABASE_URL`, `JWT_SECRET`, `SMTP_USER`, etc.).
 
-## Seeded Accounts
-
-| Role | Email | Password |
-| :--- | :--- | :--- |
-| **Admin** | `vanessawanjiru2023@gmail.com` | `password123` |
-| **Organizer** | `organizer@wadu.io` | `password123` |
-| **Attendee** | `attendee@wadu.io` | `password123` |
 
 ## API Reference
 Please refer to [api-reference.md](file:///c:/Users/user/OneDrive - Mount Kenya University/Desktop/Projects/Wadu_Event_Platform/Wadu_Event_Platform/docs/api-reference.md) for full endpoint and request/response specifications.
