@@ -101,7 +101,7 @@ export default function VerifyEmailPage() {
             value={code}
             onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))}
             autoComplete="off"
-            className="w-full text-center bg-white dark:bg-slate-955 border border-slate-205 dark:border-slate-800 rounded-xl py-3.5 px-4 text-slate-805 dark:text-white placeholder-slate-450 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal font-extrabold text-2xl tracking-widest"
+            className="w-full text-center bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl py-3.5 px-4 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal font-extrabold text-2xl tracking-widest"
           />
 
           <button

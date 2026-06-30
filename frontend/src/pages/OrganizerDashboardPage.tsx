@@ -36,7 +36,8 @@ import {
   User,
   Lock,
   Shield,
-  ArrowUpRight
+  ArrowUpRight,
+  X
 } from "lucide-react";
 import {
   XAxis,
@@ -193,6 +194,7 @@ export default function OrganizerDashboardPage() {
 
   // Dynamic states loaded from backend
   const [events, setEvents] = useState<any[]>([]);
+  const [selectedEventDetails, setSelectedEventDetails] = useState<any | null>(null);
   const [eventSearch, setEventSearch] = useState("");
   const [eventFilter, setEventFilter] = useState("All");
 
@@ -267,7 +269,7 @@ export default function OrganizerDashboardPage() {
             sold: e.ticketsSold,
             capacity: e.totalCapacity,
             revenue: e.revenue,
-            status: e.status === "PUBLISHED" ? "On Sale" : e.status === "DRAFT" ? "Draft" : "Sold Out",
+            status: e.status === "PUBLISHED" ? "On Sale" : e.status === "DRAFT" ? "Draft" : e.status === "CANCELLED" ? "Cancelled" : "Sold Out",
             image: e.imageUrl || getEventImage(e.id)
           }));
           setEvents(mappedEvents);
@@ -289,7 +291,8 @@ export default function OrganizerDashboardPage() {
                   paymentStatus: "Paid",
                   deliveryMethod: "Both",
                   date: new Date(a.purchaseDate).toLocaleDateString(),
-                  status: "Confirmed"
+                  status: "Confirmed",
+                  quantity: Number(a.quantity || 1)
                 }));
                 allAttendees.push(...mapped);
               }
@@ -438,6 +441,42 @@ export default function OrganizerDashboardPage() {
       return matchesSearch && matchesEvent;
     });
   }, [attendees, attendeeSearch, selectedEventFilter]);
+
+  // Helper to calculate tickets sold by tier for the selected event
+  const getTicketTierBreakdown = (eventName: string) => {
+    const eventAttendees = attendees.filter(a => a.event === eventName);
+    
+    let vvvipCount = 0;
+    let vipCount = 0;
+    let regularCount = 0;
+    let otherCount = 0;
+
+    eventAttendees.forEach(a => {
+      const type = (a.ticket || "").toUpperCase();
+      const qty = Number(a.quantity || 1);
+      if (type === "VVIP" || type === "VVIP TICKET" || type === "VVIP PASS") {
+        vvvipCount += qty;
+      } else if (type === "VIP" || type === "VIP TICKET" || type === "VIP PASS") {
+        vipCount += qty;
+      } else if (type === "REGULAR" || type === "REGULAR TICKET" || type === "GENERAL" || type === "EARLY BIRD") {
+        regularCount += qty;
+      } else {
+        // Fallback checks
+        if (type.includes("VVIP")) vvvipCount += qty;
+        else if (type.includes("VIP")) vipCount += qty;
+        else if (type.includes("REGULAR") || type.includes("GENERAL") || type.includes("EARLY")) regularCount += qty;
+        else otherCount += qty;
+      }
+    });
+
+    return {
+      vvvip: vvvipCount,
+      vip: vipCount,
+      regular: regularCount,
+      other: otherCount,
+      total: vvvipCount + vipCount + regularCount + otherCount
+    };
+  };
 
   return (
     <div className={`flex h-screen overflow-hidden font-sans transition-colors duration-200 ${darkMode ? "dark bg-slate-950 text-slate-100" : "bg-gray-50 text-gray-800"}`}>
@@ -871,6 +910,8 @@ export default function OrganizerDashboardPage() {
                                   ? "bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20"
                                   : e.status === "Sold Out"
                                   ? "bg-blue-50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400 border border-blue-500/20"
+                                  : e.status === "Cancelled"
+                                  ? "bg-red-50 dark:bg-red-950/20 text-red-600 dark:text-red-400 border border-red-500/20"
                                   : "bg-amber-50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-400 border border-amber-500/20"
                               }`}>
                                 {e.status}
@@ -888,31 +929,41 @@ export default function OrganizerDashboardPage() {
                                 </button>
                                 <button
                                   onClick={() => {
-                                    toast({
-                                      title: "Viewing Public Page ",
-                                      description: `Opening page for ${e.name}`,
-                                    });
+                                    setSelectedEventDetails(e);
                                   }}
                                   className="text-xs bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 dark:hover:bg-slate-750 text-gray-700 dark:text-gray-300 px-3 py-1.5 rounded-lg font-bold transition"
                                 >
                                   View
                                 </button>
-                                <button
-                                  onClick={() => {
-                                    setEvents(prev =>
-                                      prev.map(event =>
-                                        event.id === e.id ? { ...event, status: "Draft" } : event
-                                      )
-                                    );
-                                    toast({
-                                      title: "Event Saved as Draft ",
-                                      description: `${e.name} status updated to Draft.`,
-                                    });
-                                  }}
-                                  className="text-xs bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 px-3 py-1.5 rounded-lg font-bold transition"
-                                >
-                                  Cancel
-                                </button>
+                                {e.status !== "Cancelled" && (
+                                  <button
+                                    onClick={async () => {
+                                      if (confirm(`Are you sure you want to cancel "${e.name}"?`)) {
+                                        try {
+                                          await api.delete(`/events/${e.id}`);
+                                          setEvents(prev =>
+                                            prev.map(event =>
+                                              event.id === e.id ? { ...event, status: "Cancelled" } : event
+                                            )
+                                          );
+                                          toast({
+                                            title: "Event Cancelled",
+                                            description: `${e.name} has been cancelled successfully.`,
+                                          });
+                                        } catch (err: any) {
+                                          toast({
+                                            title: "Cancellation Failed",
+                                            description: err.message || "Could not cancel event.",
+                                            variant: "destructive",
+                                          });
+                                        }
+                                      }
+                                    }}
+                                    className="text-xs bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 px-3 py-1.5 rounded-lg font-bold transition"
+                                  >
+                                    Cancel
+                                  </button>
+                                )}
                               </div>
                             </td>
                           </tr>
@@ -1739,6 +1790,138 @@ export default function OrganizerDashboardPage() {
 
         </div>
       </main>
+
+      {/* ── TICKETS BREAKDOWN MODAL ── */}
+      {selectedEventDetails && (() => {
+        const breakdown = getTicketTierBreakdown(selectedEventDetails.name);
+        return (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+            <div className={`w-full max-w-md rounded-2xl border p-6 shadow-2xl transform transition-all duration-300 scale-100 ${
+              darkMode ? "bg-slate-900 border-slate-800 text-white" : "bg-white border-gray-200 text-gray-800"
+            }`}>
+              {/* Header */}
+              <div className="flex items-center justify-between pb-4 border-b border-gray-150 dark:border-slate-800">
+                <div>
+                  <h3 className="text-lg font-black tracking-tight">Ticket Sales Breakdown</h3>
+                  <p className="text-xs text-gray-400 font-semibold truncate max-w-[280px] mt-0.5">{selectedEventDetails.name}</p>
+                </div>
+                <button
+                  onClick={() => setSelectedEventDetails(null)}
+                  className={`p-1.5 rounded-lg transition ${
+                    darkMode ? "hover:bg-slate-800 text-gray-400 hover:text-white" : "hover:bg-gray-100 text-gray-500 hover:text-gray-900"
+                  }`}
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              {/* Body */}
+              <div className="py-6 space-y-5">
+                {/* Total Stats */}
+                <div className="grid grid-cols-2 gap-4 bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-gray-100 dark:border-slate-800/40">
+                  <div>
+                    <p className="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Total Tickets Sold</p>
+                    <p className="text-2xl font-black mt-1 text-[#6C4DFF]">{breakdown.total}</p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Total Revenue</p>
+                    <p className="text-2xl font-black mt-1 text-[#00C2A8]">KES {selectedEventDetails.revenue.toLocaleString()}</p>
+                  </div>
+                </div>
+
+                {/* Progress bar and list */}
+                <div className="space-y-4">
+                  {/* VVIP */}
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between text-xs font-bold">
+                      <span className="flex items-center gap-1.5">
+                        <span className="w-2.5 h-2.5 rounded-full bg-purple-500" />
+                        VVIP Tickets
+                      </span>
+                      <span>{breakdown.vvvip} sold</span>
+                    </div>
+                    <div className="w-full h-2 bg-gray-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                      <div
+                        className="h-full rounded-full bg-purple-500 transition-all duration-500"
+                        style={{ width: `${breakdown.total > 0 ? (breakdown.vvvip / breakdown.total) * 100 : 0}%` }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* VIP */}
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between text-xs font-bold">
+                      <span className="flex items-center gap-1.5">
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#6C4DFF]" />
+                        VIP Tickets
+                      </span>
+                      <span>{breakdown.vip} sold</span>
+                    </div>
+                    <div className="w-full h-2 bg-gray-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                      <div
+                        className="h-full rounded-full bg-[#6C4DFF] transition-all duration-500"
+                        style={{ width: `${breakdown.total > 0 ? (breakdown.vip / breakdown.total) * 100 : 0}%` }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Regular */}
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between text-xs font-bold">
+                      <span className="flex items-center gap-1.5">
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#00C2A8]" />
+                        Regular Tickets
+                      </span>
+                      <span>{breakdown.regular} sold</span>
+                    </div>
+                    <div className="w-full h-2 bg-gray-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                      <div
+                        className="h-full rounded-full bg-[#00C2A8] transition-all duration-500"
+                        style={{ width: `${breakdown.total > 0 ? (breakdown.regular / breakdown.total) * 100 : 0}%` }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Other / Unclassified */}
+                  {breakdown.other > 0 && (
+                    <div className="space-y-1.5">
+                      <div className="flex items-center justify-between text-xs font-bold">
+                        <span className="flex items-center gap-1.5">
+                          <span className="w-2.5 h-2.5 rounded-full bg-slate-400" />
+                          Other Tickets
+                        </span>
+                        <span>{breakdown.other} sold</span>
+                      </div>
+                      <div className="w-full h-2 bg-gray-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                        <div
+                          className="h-full rounded-full bg-slate-400 transition-all duration-500"
+                          style={{ width: `${(breakdown.other / breakdown.total) * 100}%` }}
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Footer */}
+              <div className="pt-4 border-t border-gray-150 dark:border-slate-800 flex items-center justify-end gap-3">
+                <Link
+                  to={`/event/${selectedEventDetails.id}`}
+                  className="bg-[#0A1F44] border border-white/10 hover:bg-slate-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs transition duration-200"
+                >
+                  View Public Page
+                </Link>
+                <button
+                  onClick={() => setSelectedEventDetails(null)}
+                  className="bg-[#6C4DFF] hover:bg-[#5a3de8] text-white px-4 py-2.5 rounded-xl font-bold text-xs transition duration-200"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 }

@@ -67,7 +67,7 @@ export default function Checkout() {
     setPollMessage("Checking payment status on your device...");
 
     let attempts = 0;
-    const maxAttempts = 30; // 60 seconds
+    const maxAttempts = 90; // 180 seconds (3 minutes)
     const interval = setInterval(async () => {
       attempts++;
       try {
@@ -277,7 +277,14 @@ export default function Checkout() {
         {/* Content */}
         <div className="grid md:grid-cols-3 gap-12">
           <div className="md:col-span-2">
-            {step === 1 && <OrderReview onContinue={handleSelectTickets} />}
+            {step === 1 && (
+              <OrderReview
+                selectedTickets={selectedTickets}
+                prices={prices}
+                subtotal={subtotal}
+                onContinue={handleSelectTickets}
+              />
+            )}
             {step === 2 && (
               <PersonalDetails
                 firstName={firstName}

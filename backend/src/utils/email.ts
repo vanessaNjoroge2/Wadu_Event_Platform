@@ -42,6 +42,10 @@ export const sendTicketEmail = async (to: string, orderDetails: any) => {
     console.log(`Ticket email sent successfully to ${to}`);
   } catch (error) {
     console.error('Failed to send ticket email:', error);
+    if (env.NODE_ENV !== 'production') {
+      console.warn(`[Dev Fallback] Failed to send ticket email to ${to} due to SMTP issue. Continuing without throwing in development.`);
+      return;
+    }
     throw error;
   }
 };
@@ -72,6 +76,10 @@ export const sendVerificationEmail = async (to: string, code: string) => {
     console.log(`Verification email sent successfully to ${to}`);
   } catch (error) {
     console.error('Failed to send verification email:', error);
+    if (env.NODE_ENV !== 'production') {
+      console.warn(`[Dev Fallback] Failed to send verification email to ${to} due to SMTP issue. Continuing without throwing in development. Verification code: ${code}`);
+      return;
+    }
     throw error;
   }
 };

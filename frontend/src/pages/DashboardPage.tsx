@@ -9,6 +9,7 @@ import {
   Clock,
   ArrowRight,
   Star,
+  Trash2,
 } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
@@ -25,6 +26,24 @@ export default function DashboardPage() {
     { label: "Upcoming Events", value: "0", icon: Calendar, color: "text-wadu-purple" },
   ]);
 
+  const handleDeleteTicket = async (orderId: string) => {
+    try {
+      await api.delete(`/orders/${orderId}`);
+      setUpcomingTickets(prev => prev.filter(t => t.id !== orderId));
+      toast({
+        title: "Ticket deleted successfully",
+        description: "The past ticket has been removed from your dashboard.",
+      });
+    } catch (err: any) {
+      console.error(err);
+      toast({
+        title: "Failed to delete ticket",
+        description: err.message || "An error occurred while deleting the ticket.",
+        variant: "destructive",
+      });
+    }
+  };
+
   useEffect(() => {
     api.get<any[]>("/orders")
       .then((orders) => {
@@ -38,7 +57,10 @@ export default function DashboardPage() {
 
           paidOrders.forEach(o => {
             distinctEvents.add(o.eventId);
+            const eventEndDate = o.event.endDate ? new Date(o.event.endDate) : new Date(o.event.startDate);
             const isUpcoming = new Date(o.event.startDate) > now;
+            const isAttended = eventEndDate < now;
+
             if (isUpcoming) {
               distinctUpcomingEvents.add(o.eventId);
             }
@@ -51,7 +73,8 @@ export default function DashboardPage() {
                 date: new Date(o.event.startDate).toLocaleString(),
                 location: o.event.location,
                 seat: item.ticketType.name,
-                status: "Confirmed",
+                status: isAttended ? "Attended" : "Confirmed",
+                isAttended,
               });
             });
           });
@@ -143,6 +166,8 @@ export default function DashboardPage() {
                           className={`text-xs font-extrabold px-3 py-1 rounded-full flex-shrink-0 ${
                             ticket.status === "Confirmed"
                               ? "bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20"
+                              : ticket.status === "Attended"
+                              ? "bg-slate-500/10 text-slate-600 dark:text-slate-400 border border-slate-500/20"
                               : "bg-yellow-500/10 text-yellow-605 dark:text-yellow-400 border border-yellow-500/20"
                           }`}
                         >
@@ -153,45 +178,61 @@ export default function DashboardPage() {
                       <div className="flex justify-between items-center mt-4 pt-4 border-t border-slate-105 dark:border-slate-800">
                         <span className="text-xs text-slate-400 font-bold">Ref: #WDU-2025-00{ticket.id}</span>
                         
-                        <Dialog>
-                          <DialogTrigger asChild>
-                            <button className="bg-wadu-navy border border-wadu-navy/15 text-white hover:bg-wadu-teal hover:text-wadu-navy hover:border-wadu-teal px-4 py-2 rounded-xl font-bold transition duration-200 text-xs shadow-sm">
-                              View Ticket
+                        <div className="flex gap-2 items-center">
+                          {ticket.isAttended && (
+                            <button
+                              onClick={() => handleDeleteTicket(ticket.id)}
+                              className="text-red-500 hover:text-white border border-red-500/20 hover:bg-red-500 px-3 py-2 rounded-xl font-bold transition duration-200 text-xs shadow-sm flex items-center gap-1.5"
+                              title="Delete past ticket"
+                            >
+                              <Trash2 size={12} />
+                              Delete
                             </button>
-                          </DialogTrigger>
-                          <DialogContent className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 max-w-sm rounded-2xl shadow-xl p-6 text-center">
-                            <DialogHeader>
-                              <DialogTitle className="text-wadu-navy dark:text-white font-extrabold text-xl mb-1 text-center">
-                                {ticket.title}
-                              </DialogTitle>
-                            </DialogHeader>
-                            <div className="space-y-4 my-6">
-                              <div className="text-slate-500 dark:text-slate-400 text-sm font-semibold space-y-1">
-                                <p> {ticket.date}</p>
-                                <p> {ticket.location}</p>
-                                <p> {ticket.seat}</p>
+                          )}
+                          
+                          <Dialog>
+                            <DialogTrigger asChild>
+                              <button className="bg-wadu-navy border border-wadu-navy/15 text-white hover:bg-wadu-teal hover:text-wadu-navy hover:border-wadu-teal px-4 py-2 rounded-xl font-bold transition duration-200 text-xs shadow-sm">
+                                View Ticket
+                              </button>
+                            </DialogTrigger>
+                            <DialogContent className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 max-w-sm rounded-2xl shadow-xl p-6 text-center">
+                              <DialogHeader>
+                                <DialogTitle className="text-wadu-navy dark:text-white font-extrabold text-xl mb-1 text-center">
+                                  {ticket.title}
+                                </DialogTitle>
+                              </DialogHeader>
+                              <div className="space-y-4 my-6">
+                                <div className="text-slate-500 dark:text-slate-400 text-sm font-semibold space-y-1">
+                                  <p> {ticket.date}</p>
+                                  <p> {ticket.location}</p>
+                                  <p> {ticket.seat}</p>
+                                </div>
+                                
+                                {/* Real QR Code */}
+                                <div className="w-48 h-48 bg-white border border-slate-200 dark:border-slate-800 rounded-xl flex items-center justify-center mx-auto shadow-sm p-2">
+                                  <img
+                                    src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=WDU-TICKET-${ticket.id}`}
+                                    alt="Ticket QR Code"
+                                    className="w-full h-full object-contain"
+                                  />
+                                </div>
                               </div>
                               
-                              {/* QR Code Placeholder */}
-                              <div className="w-48 h-48 bg-slate-100 dark:bg-slate-800 border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-xl flex flex-col items-center justify-center mx-auto shadow-inner">
-                                <span className="text-slate-400 font-bold text-sm">QR Code</span>
-                                <span className="text-[10px] text-slate-400 mt-1">#WDU-2025-00{ticket.id}</span>
-                              </div>
-                            </div>
-                            
-                            <button
-                              onClick={() => {
-                                toast({
-                                  title: "Ticket downloaded ",
-                                  description: `Saved ticket for ${ticket.title} to your device.`,
-                                });
-                              }}
-                              className="w-full bg-wadu-purple text-white hover:bg-wadu-teal hover:text-wadu-navy py-3 rounded-xl font-bold text-sm transition duration-200 shadow-sm"
-                            >
-                              Download Ticket
-                            </button>
-                          </DialogContent>
-                        </Dialog>
+                              <button
+                                onClick={() => {
+                                  toast({
+                                    title: "Ticket downloaded ",
+                                    description: `Saved ticket for ${ticket.title} to your device.`,
+                                  });
+                                }}
+                                className="w-full bg-wadu-purple text-white hover:bg-wadu-teal hover:text-wadu-navy py-3 rounded-xl font-bold text-sm transition duration-200 shadow-sm"
+                              >
+                                Download Ticket
+                              </button>
+                            </DialogContent>
+                          </Dialog>
+                        </div>
                       </div>
                     </div>
                   </div>

@@ -163,4 +163,46 @@ export class OrdersService {
 
     return order;
   }
+
+  static async deleteOrder(id: string, userId: string) {
+    const order = await prisma.order.findUnique({
+      where: { id },
+      include: { event: true },
+    });
+
+    if (!order) {
+      const error = new Error('Order not found');
+      (error as any).status = 404;
+      throw error;
+    }
+
+    if (order.userId !== userId) {
+      const error = new Error('Unauthorized to delete this order');
+      (error as any).status = 403;
+      throw error;
+    }
+
+    const now = new Date();
+    const eventEndDate = order.event.endDate ? new Date(order.event.endDate) : new Date(order.event.startDate);
+
+    if (eventEndDate > now) {
+      const error = new Error('Cannot delete a ticket for an upcoming event.');
+      (error as any).status = 400;
+      throw error;
+    }
+
+    await prisma.$transaction([
+      prisma.mpesaTransaction.deleteMany({
+        where: { orderId: id },
+      }),
+      prisma.orderItem.deleteMany({
+        where: { orderId: id },
+      }),
+      prisma.order.delete({
+        where: { id },
+      }),
+    ]);
+
+    return { success: true };
+  }
 }

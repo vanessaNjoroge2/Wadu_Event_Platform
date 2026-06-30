@@ -286,7 +286,7 @@ async function main() {
   console.log('Seeding database completed successfully!');
   console.log('=== SEEDED CREDENTIALS ===');
   console.log('Admin Account: email = vanessawanjiru2023@gmail.com, password = password123, role = admin');
-  console.log('Organizer Account: email = organizer@wadu.io, password = password123, role = organizer');
+  console.log('Organizer Account: email = organizer@wadu.io, password = password123, role = organiser');
   console.log('Attendee Account: email = attendee@wadu.io, password = password123, role = attendee');
   console.log('==========================');
 }

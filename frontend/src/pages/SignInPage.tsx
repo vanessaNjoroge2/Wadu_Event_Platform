@@ -141,7 +141,7 @@ export default function SignInPage() {
                   </div>
                   <div className="text-center">
                     <p className="text-wadu-navy dark:text-white font-bold text-sm">Attendee</p>
-                    <p className="text-slate-450 dark:text-slate-500 text-xs mt-1 font-semibold">Buy tickets & explore events</p>
+                    <p className="text-slate-400 dark:text-slate-500 text-xs mt-1 font-semibold">Buy tickets & explore events</p>
                   </div>
                 </button>
 
@@ -157,7 +157,7 @@ export default function SignInPage() {
                   {selectedRole === "organizer" && (
                     <CheckCircle2 size={16} className="absolute top-2.5 right-2.5 text-wadu-teal" />
                   )}
-                  <div className={`w-11 h-11 rounded-xl flex items-center justify-center transition-colors duration-200 ${selectedRole === "organizer" ? "bg-wadu-teal text-wadu-navy font-bold" : "bg-slate-100 dark:bg-slate-855 text-slate-500"
+                  <div className={`w-11 h-11 rounded-xl flex items-center justify-center transition-colors duration-200 ${selectedRole === "organizer" ? "bg-wadu-teal text-wadu-navy font-bold" : "bg-slate-100 dark:bg-slate-800 text-slate-500"
                     }`}>
                     <Building2 size={20} />
                   </div>
@@ -166,7 +166,7 @@ export default function SignInPage() {
                       <p className="text-wadu-navy dark:text-white font-bold text-sm">Organizer</p>
                       <span className="text-[10px] bg-wadu-teal/10 text-wadu-teal border border-wadu-teal/30 px-1.5 py-px rounded-full font-bold">Pro</span>
                     </div>
-                    <p className="text-slate-455 dark:text-slate-500 text-xs mt-1 font-semibold">Manage events & payouts</p>
+                    <p className="text-slate-400 dark:text-slate-500 text-xs mt-1 font-semibold">Manage events & payouts</p>
                   </div>
                 </button>
               </div>
@@ -215,7 +215,7 @@ export default function SignInPage() {
                       placeholder="Your name"
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
-                      className="w-full bg-white dark:bg-slate-955 border border-slate-205 dark:border-slate-800 rounded-xl px-4 py-3 text-slate-805 dark:text-white placeholder-slate-450 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-medium"
+                      className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-medium"
                     />
                   </div>
                 )}
@@ -229,7 +229,7 @@ export default function SignInPage() {
                       placeholder="you@example.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full bg-white dark:bg-slate-955 border border-slate-205 dark:border-slate-800 rounded-xl px-4 py-3 pl-11 text-slate-805 dark:text-white placeholder-slate-450 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-medium"
+                      className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 pl-11 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-medium"
                     />
                   </div>
                 </div>
@@ -250,7 +250,7 @@ export default function SignInPage() {
                       placeholder="••••••••"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 pl-11 pr-11 text-slate-850 dark:text-white placeholder-slate-450 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-medium"
+                      className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 pl-11 pr-11 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-medium"
                     />
                     <button
                       type="button"

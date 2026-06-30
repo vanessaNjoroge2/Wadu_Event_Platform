@@ -440,7 +440,7 @@ export default function AdminDashboardPage() {
                             <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
                               u.role === "ADMIN" ? "bg-red-500/10 text-red-500" : u.role === "ORGANIZER" ? "bg-teal-500/10 text-[#00C2A8]" : "bg-purple-500/10 text-[#6C4DFF]"
                             }`}>
-                              {u.role}
+                              {u.role === "ADMIN" ? "admin" : u.role === "ORGANIZER" ? "organiser" : "attendee"}
                             </span>
                           </div>
                         ))}
@@ -524,7 +524,7 @@ export default function AdminDashboardPage() {
                               : "bg-white border-gray-200 text-gray-600 hover:border-gray-300"
                           }`}
                         >
-                          {r}
+                          {r === "ORGANIZER" ? "ORGANISER" : r}
                         </button>
                       ))}
                     </div>
@@ -556,10 +556,10 @@ export default function AdminDashboardPage() {
                                 </td>
                                 <td className="px-4 py-4 text-gray-500 dark:text-gray-400 font-semibold">{u.phone || "N/A"}</td>
                                 <td className="px-4 py-4">
-                                  <span className={`px-2.5 py-1 rounded text-xs font-bold uppercase ${
+                                  <span className={`px-2.5 py-1 rounded text-xs font-bold ${
                                     u.role === "ADMIN" ? "bg-red-500/10 text-red-500" : u.role === "ORGANIZER" ? "bg-teal-500/10 text-[#00C2A8]" : "bg-purple-500/10 text-[#6C4DFF]"
                                   }`}>
-                                    {u.role}
+                                    {u.role === "ADMIN" ? "admin" : u.role === "ORGANIZER" ? "organiser" : "attendee"}
                                   </span>
                                 </td>
                                 <td className="px-4 py-4">
