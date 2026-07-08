@@ -25,5 +25,6 @@ const createOrderSchema = z.object({
 router.post('/', optionalAuth, validate({ body: createOrderSchema }), OrdersController.createOrder);
 router.get('/', requireAuth, OrdersController.listOrders);
 router.get('/:id', requireAuth, OrdersController.getOrderDetails);
+router.delete('/:id', requireAuth, OrdersController.deleteOrder);
 
 export default router;

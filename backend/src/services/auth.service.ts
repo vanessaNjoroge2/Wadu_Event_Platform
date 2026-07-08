@@ -20,8 +20,13 @@ export class AuthService {
     const passwordHash = await hashPassword(data.password);
     const roleMapping: Record<string, Role> = {
       ATTENDEE: Role.ATTENDEE,
+      attendee: Role.ATTENDEE,
       ORGANIZER: Role.ORGANIZER,
+      organizer: Role.ORGANIZER,
+      ORGANISER: Role.ORGANIZER,
+      organiser: Role.ORGANIZER,
       ADMIN: Role.ADMIN,
+      admin: Role.ADMIN,
     };
 
     const code = Math.floor(100000 + Math.random() * 900000).toString();

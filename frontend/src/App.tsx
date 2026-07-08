@@ -14,6 +14,7 @@ import CreateEventPage from "./pages/CreateEventPage";
 import CategoriesPage from "./pages/CategoriesPage";
 import CitiesPage from "./pages/CitiesPage";
 import SignInPage from "./pages/SignInPage";
+import SignUpPage from "./pages/SignUpPage";
 import DashboardPage from "./pages/DashboardPage";
 import OrganizerDashboardPage from "./pages/OrganizerDashboardPage";
 import AdminDashboardPage from "./pages/AdminDashboardPage";
@@ -66,6 +67,7 @@ export default function App() {
             <Route path="/categories" element={<CategoriesPage />} />
             <Route path="/cities" element={<CitiesPage />} />
             <Route path="/sign-in" element={<SignInPage />} />
+            <Route path="/sign-up" element={<SignUpPage />} />
             <Route
               path="/dashboard"
               element={

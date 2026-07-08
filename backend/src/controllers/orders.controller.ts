@@ -37,4 +37,16 @@ export class OrdersController {
       return next(error);
     }
   }
+
+  static async deleteOrder(req: Request, res: Response, next: NextFunction) {
+    try {
+      if (!req.user) {
+        throw new Error('Authentication required');
+      }
+      const result = await OrdersService.deleteOrder(req.params.id as string, req.user.id);
+      return successResponse(res, result, 200);
+    } catch (error) {
+      return next(error);
+    }
+  }
 }

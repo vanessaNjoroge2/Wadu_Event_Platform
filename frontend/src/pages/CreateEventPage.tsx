@@ -10,6 +10,8 @@ export function CreateEventForm() {
   const { toast } = useToast();
   const navigate = useNavigate();
   const [eventId, setEventId] = useState<string | null>(null);
+  const [imageUrl, setImageUrl] = useState<string>("/Image 1.jpg");
+  const [submitting, setSubmitting] = useState(false);
 
   // Step 1 States
   const [eventName, setEventName] = useState("Tech Conference 2025");
@@ -56,6 +58,9 @@ export function CreateEventForm() {
             setAddress(event.address || "");
             setCity(event.city || "Nairobi");
             setCountry(event.country || "Kenya");
+            if (event.imageUrl) {
+              setImageUrl(event.imageUrl);
+            }
             if (Array.isArray(event.tickets) && event.tickets.length > 0) {
               setTickets(event.tickets.map((t: any) => ({
                 id: t.id,
@@ -171,6 +176,9 @@ export function CreateEventForm() {
   };
 
   const saveEvent = (eventStatus: "DRAFT" | "PUBLISHED") => {
+    if (submitting) return;
+    setSubmitting(true);
+
     const payload = {
       title: eventName,
       description,
@@ -184,7 +192,7 @@ export function CreateEventForm() {
       endDate,
       startTime,
       endTime,
-      imageUrl: "/Image 1.jpg",
+      imageUrl,
       status: eventStatus,
       tickets: tickets.map((t) => ({
         name: t.name,
@@ -195,7 +203,7 @@ export function CreateEventForm() {
     };
 
     const request = eventId
-      ? api.patch(`/events/${eventId}/status`, { status: eventStatus })
+      ? api.patch(`/events/${eventId}`, payload)
       : api.post("/events", payload);
 
     request
@@ -211,6 +219,7 @@ export function CreateEventForm() {
         }, 1500);
       })
       .catch((err: any) => {
+        setSubmitting(false);
         toast({
           title: "Submission Failed",
           description: err.message || "Could not save event.",
@@ -368,6 +377,73 @@ export function CreateEventForm() {
                     rows={4}
                     className="w-full bg-white dark:bg-slate-955 border border-slate-200 dark:border-slate-800 rounded-xl py-3.5 px-4 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-semibold"
                     placeholder="Describe your event..."
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Event Cover Image */}
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 mb-8 shadow-sm transition duration-300">
+              <h3 className="text-lg font-bold text-wadu-navy dark:text-white mb-6">Event Cover Image</h3>
+              <div className="space-y-4">
+                <div className="flex flex-col md:flex-row gap-6 items-center">
+                  {/* Current Image Preview */}
+                  <div className="w-40 h-24 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 flex-shrink-0 flex items-center justify-center shadow-inner">
+                    {imageUrl ? (
+                      <img src={imageUrl} alt="Cover Preview" className="w-full h-full object-cover" />
+                    ) : (
+                      <span className="text-xs text-slate-400">No Image</span>
+                    )}
+                  </div>
+                  
+                  {/* Upload Controls */}
+                  <div className="flex-1 w-full space-y-3">
+                    <div className="flex flex-wrap gap-3">
+                      <label className="bg-wadu-purple hover:bg-wadu-teal hover:text-wadu-navy text-white px-5 py-2.5 rounded-xl font-bold text-xs transition shadow-sm cursor-pointer flex items-center gap-1.5 duration-200">
+                        Upload Local Image
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              const reader = new FileReader();
+                              reader.onloadend = () => {
+                                setImageUrl(reader.result as string);
+                              };
+                              reader.readAsDataURL(file);
+                            }
+                          }}
+                        />
+                      </label>
+                      {imageUrl !== "/Image 1.jpg" && (
+                        <button
+                          type="button"
+                          onClick={() => setImageUrl("/Image 1.jpg")}
+                          className="px-5 py-2.5 rounded-xl font-bold text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-red-500 hover:text-red-500 transition duration-200 shadow-sm"
+                        >
+                          Remove Image
+                        </button>
+                      )}
+                    </div>
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold leading-relaxed">
+                      Upload an image file (JPG, PNG, GIF). It will be saved directly with your event.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Alternative: Image URL Input */}
+                <div className="border-t border-slate-100 dark:border-slate-800 pt-4">
+                  <label className="block text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
+                    Or Enter Image URL
+                  </label>
+                  <input
+                    type="url"
+                    placeholder="https://images.unsplash.com/photo-..."
+                    value={imageUrl === "/Image 1.jpg" ? "" : imageUrl.startsWith("data:") ? "" : imageUrl}
+                    onChange={(e) => setImageUrl(e.target.value || "/Image 1.jpg")}
+                    className="w-full bg-white dark:bg-slate-955 border border-slate-200 dark:border-slate-800 rounded-xl py-3.5 px-4 text-sm text-slate-805 dark:text-white placeholder-slate-400 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-semibold"
                   />
                 </div>
               </div>
@@ -551,9 +627,10 @@ export function CreateEventForm() {
               <button
                 type="button"
                 onClick={handleSaveDraft}
-                className="px-6 py-3.5 rounded-xl font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-wadu-teal hover:text-wadu-teal transition duration-200 shadow-sm"
+                disabled={submitting}
+                className="px-6 py-3.5 rounded-xl font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-wadu-teal hover:text-wadu-teal transition duration-200 shadow-sm disabled:opacity-50"
               >
-                Save as Draft
+                {submitting ? "Saving..." : "Save as Draft"}
               </button>
               <button
                 type="button"
@@ -573,7 +650,7 @@ export function CreateEventForm() {
               </h3>
               <div className="rounded-xl h-40 mb-4 overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm">
                 <img
-                  src="/Image 1.jpg"
+                  src={imageUrl}
                   alt="Event preview"
                   className="w-full h-full object-cover"
                 />
@@ -733,7 +810,7 @@ export function CreateEventForm() {
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 shadow-sm space-y-6">
             <div className="h-64 rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-950 border border-slate-100 dark:border-slate-800">
               <img
-                src="/Image 1.jpg"
+                src={imageUrl}
                 alt="Event cover"
                 className="w-full h-full object-cover"
               />
@@ -805,21 +882,24 @@ export function CreateEventForm() {
           <div className="flex gap-4">
             <button
               onClick={() => setStep(2)}
-              className="px-6 py-3.5 rounded-xl font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-wadu-teal hover:text-wadu-teal transition duration-200 shadow-sm"
+              disabled={submitting}
+              className="px-6 py-3.5 rounded-xl font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-wadu-teal hover:text-wadu-teal transition duration-200 shadow-sm disabled:opacity-50"
             >
               Back
             </button>
             <button
               onClick={handleSaveDraft}
-              className="bg-wadu-navy border border-wadu-navy/15 text-white hover:bg-wadu-teal hover:text-wadu-navy hover:border-wadu-teal px-6 py-3.5 rounded-xl font-bold transition duration-200 shadow-sm"
+              disabled={submitting}
+              className="bg-wadu-navy border border-wadu-navy/15 text-white hover:bg-wadu-teal hover:text-wadu-navy hover:border-wadu-teal px-6 py-3.5 rounded-xl font-bold transition duration-200 shadow-sm disabled:opacity-50"
             >
-              Save as Draft
+              {submitting ? "Saving..." : "Save as Draft"}
             </button>
             <button
               onClick={handlePublish}
-              className="flex-1 bg-wadu-purple text-white hover:bg-wadu-teal hover:text-wadu-navy py-3.5 rounded-xl font-bold transition duration-200 text-center shadow-md"
+              disabled={submitting}
+              className="flex-1 bg-wadu-purple text-white hover:bg-wadu-teal hover:text-wadu-navy py-3.5 rounded-xl font-bold transition duration-200 text-center shadow-md disabled:opacity-50"
             >
-              Publish Event
+              {submitting ? "Publishing..." : "Publish Event"}
             </button>
           </div>
         </div>
