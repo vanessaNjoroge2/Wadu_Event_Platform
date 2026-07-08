@@ -29,7 +29,7 @@ async function main() {
 
   const organizer = await prisma.user.create({
     data: {
-      email: 'organizer@wadu.io',
+      email: 'vanessa642022@gmail.com',
       password: hashedPassword,
       firstName: 'Organizer',
       lastName: 'Wadu',
@@ -41,7 +41,7 @@ async function main() {
 
   const attendee = await prisma.user.create({
     data: {
-      email: 'attendee@wadu.io',
+      email: 'vanessawanjiru472@gmail.com',
       password: hashedPassword,
       firstName: 'Jane',
       lastName: 'Doe',
