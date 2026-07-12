@@ -236,26 +236,26 @@ export default function AdminDashboardPage() {
     <div className={`flex h-screen overflow-hidden font-sans transition-colors duration-200 ${darkMode ? "dark bg-slate-950 text-slate-100" : "bg-gray-50 text-gray-800"}`}>
       
       {/* ── SIDEBAR ── */}
-      <aside className="w-[250px] min-w-[250px] bg-[#0A1F44] flex flex-col h-full shadow-2xl z-10 text-white">
+      <aside className="w-[250px] min-w-[250px] bg-wadu-yellow border-r-4 border-wadu-black text-wadu-black flex flex-col h-full shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] z-10 text-wadu-black">
         {/* Logo */}
-        <div className="px-6 py-6 border-b border-white/10">
+        <div className="px-6 py-6 border-b border-wadu-black">
           <Link to="/" className="flex items-center gap-2">
-            <span className="text-2xl font-black text-white tracking-tight">WADU</span>
-            <span className="text-xs bg-[#6C4DFF] text-white px-2 py-0.5 rounded-full font-semibold">Admin</span>
+            <span className="text-2xl font-black text-wadu-black tracking-tight">WADU</span>
+            <span className="text-xs bg-wadu-black text-wadu-black px-2 py-0.5 rounded-full font-black uppercase">Admin</span>
           </Link>
         </div>
 
         {/* Profile */}
-        <div className="px-6 py-5 border-b border-white/10">
+        <div className="px-6 py-5 border-b border-wadu-black">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#6C4DFF] to-[#00C2A8] flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#6C4DFF] to-[#00C2A8] flex items-center justify-center text-wadu-black font-black uppercase text-sm flex-shrink-0">
               AD
             </div>
             <div className="min-w-0">
-              <p className="text-white font-semibold text-sm truncate">{adminName}</p>
+              <p className="text-wadu-black font-black uppercase text-sm truncate">{adminName}</p>
               <div className="flex items-center gap-1 mt-0.5">
-                <ShieldAlert size={11} className="text-[#00C2A8]" />
-                <span className="text-[#00C2A8] text-xs font-semibold">System Administrator</span>
+                <ShieldAlert size={11} className="text-wadu-black" />
+                <span className="text-wadu-black text-xs font-black uppercase">System Administrator</span>
               </div>
             </div>
           </div>
@@ -272,13 +272,13 @@ export default function AdminDashboardPage() {
               <Link
                 key={item.label}
                 to={item.path}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all group whitespace-nowrap ${
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-none text-sm font-black uppercase uppercase transition-all group whitespace-nowrap ${
                   isActive
-                    ? "bg-[#6C4DFF] text-white shadow-lg shadow-[#6C4DFF]/30"
-                    : "text-gray-400 hover:text-white hover:bg-white/10"
+                    ? "bg-wadu-black text-wadu-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] shadow-[#6C4DFF]/30"
+                    : "text-gray-400 hover:text-wadu-black hover:bg-white/10"
                 }`}
               >
-                <item.icon size={18} className={isActive ? "text-white" : "text-gray-400 group-hover:text-white"} />
+                <item.icon size={18} className={isActive ? "text-wadu-black" : "text-gray-400 group-hover:text-wadu-black"} />
                 {item.label}
               </Link>
             );
@@ -286,22 +286,22 @@ export default function AdminDashboardPage() {
         </nav>
 
         {/* DarkMode & Logout */}
-        <div className="px-4 py-4 border-t border-white/10 space-y-2">
+        <div className="px-4 py-4 border-t border-wadu-black space-y-2">
           <button
             onClick={() => setDarkMode(!darkMode)}
-            className="flex items-center justify-between w-full px-3 py-2.5 rounded-xl text-gray-400 hover:text-white hover:bg-white/10 transition text-sm font-medium"
+            className="flex items-center justify-between w-full px-3 py-2.5 rounded-none text-gray-400 hover:text-wadu-black hover:bg-white/10 transition text-sm font-black uppercase uppercase"
           >
             <span className="flex items-center gap-3">
               {darkMode ? <Sun size={18} /> : <Moon size={18} />}
               {darkMode ? "Light Mode" : "Dark Mode"}
             </span>
-            <div className={`w-9 h-5 rounded-full transition-colors relative ${darkMode ? "bg-[#6C4DFF]" : "bg-white/20"}`}>
+            <div className={`w-9 h-5 rounded-full transition-colors relative ${darkMode ? "bg-wadu-black" : "bg-white/20"}`}>
               <div className={`absolute top-0.5 w-4 h-4 rounded-full bg-white transition-all ${darkMode ? "left-4" : "left-0.5"}`} />
             </div>
           </button>
           <button
             onClick={handleSignOut}
-            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-gray-400 hover:text-white hover:bg-white/10 transition text-sm font-medium"
+            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-none text-gray-400 hover:text-wadu-black hover:bg-white/10 transition text-sm font-black uppercase uppercase"
           >
             <LogOut size={18} />
             Sign Out
@@ -313,9 +313,9 @@ export default function AdminDashboardPage() {
       <main className="flex-1 flex flex-col overflow-hidden">
         
         {/* Top Header */}
-        <header className={`border-b px-8 py-4 flex items-center justify-between flex-shrink-0 transition-colors duration-200 ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-200"}`}>
+        <header className={`border-b px-8 py-4 flex items-center justify-between flex-shrink-0 transition-colors duration-200 ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
           <div className="flex items-center gap-4">
-            <h1 className="text-xl font-extrabold text-wadu-navy dark:text-white uppercase tracking-wider">
+            <h1 className="text-xl font-black uppercase text-wadu-navy dark:text-wadu-black uppercase tracking-wider">
               {activeTab === "overview" && "Platform Overview"}
               {activeTab === "users" && "Manage Users"}
               {activeTab === "events" && "Moderate Events"}
@@ -327,12 +327,12 @@ export default function AdminDashboardPage() {
           <div className="flex items-center gap-3">
             <button
               onClick={loadAllData}
-              className={`p-2 rounded-lg border transition ${darkMode ? "bg-slate-800 border-slate-700 hover:bg-slate-700" : "bg-white border-gray-200 hover:bg-gray-50"}`}
+              className={`p-2 rounded-none border-4 border-wadu-black transition ${darkMode ? "bg-slate-800 border-wadu-black hover:bg-slate-700" : "bg-white border-wadu-black hover:bg-gray-50"}`}
               title="Refresh Data"
             >
               <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
             </button>
-            <span className="text-xs text-gray-400 font-semibold">
+            <span className="text-xs text-gray-400 font-black uppercase">
               System Time: {new Date().toLocaleTimeString()}
             </span>
           </div>
@@ -344,7 +344,7 @@ export default function AdminDashboardPage() {
           {loading ? (
             <div className="flex flex-col items-center justify-center h-[60vh] space-y-4">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#6C4DFF]"></div>
-              <p className="text-gray-400 font-bold">Fetching Platform Data...</p>
+              <p className="text-gray-400 font-black uppercase">Fetching Platform Data...</p>
             </div>
           ) : (
             <>
@@ -354,68 +354,68 @@ export default function AdminDashboardPage() {
                   {/* KPI Cards */}
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {/* KPI 1 */}
-                    <div className={`p-6 rounded-2xl border shadow-sm transition duration-300 ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
+                    <div className={`p-6 rounded-none border-4 border-wadu-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] transition duration-300 ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
                       <div className="flex justify-between items-start">
                         <div>
-                          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Total Platform Users</p>
-                          <h3 className="text-3xl font-extrabold text-wadu-navy dark:text-white mt-2">{stats.totalUsers}</h3>
+                          <p className="text-xs font-black uppercase text-gray-400 uppercase tracking-widest">Total Platform Users</p>
+                          <h3 className="text-3xl font-black uppercase text-wadu-navy dark:text-wadu-black mt-2">{stats.totalUsers}</h3>
                         </div>
-                        <div className="p-3 bg-purple-500/10 text-[#6C4DFF] rounded-xl">
+                        <div className="p-3 bg-purple-500/10 text-wadu-black rounded-none">
                           <Users size={22} />
                         </div>
                       </div>
-                      <div className="flex items-center gap-2 mt-4 text-xs font-bold text-emerald-500">
+                      <div className="flex items-center gap-2 mt-4 text-xs font-black uppercase text-emerald-500">
                         <TrendingUp size={14} />
                         <span>{stats.organizerCount} Organizers / {stats.attendeeCount} Attendees</span>
                       </div>
                     </div>
 
                     {/* KPI 2 */}
-                    <div className={`p-6 rounded-2xl border shadow-sm transition duration-300 ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
+                    <div className={`p-6 rounded-none border-4 border-wadu-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] transition duration-300 ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
                       <div className="flex justify-between items-start">
                         <div>
-                          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Platform Events</p>
-                          <h3 className="text-3xl font-extrabold text-wadu-navy dark:text-white mt-2">{stats.totalEvents}</h3>
+                          <p className="text-xs font-black uppercase text-gray-400 uppercase tracking-widest">Platform Events</p>
+                          <h3 className="text-3xl font-black uppercase text-wadu-navy dark:text-wadu-black mt-2">{stats.totalEvents}</h3>
                         </div>
-                        <div className="p-3 bg-teal-500/10 text-[#00C2A8] rounded-xl">
+                        <div className="p-3 bg-teal-500/10 text-wadu-black rounded-none">
                           <CalendarDays size={22} />
                         </div>
                       </div>
-                      <div className="flex items-center gap-2 mt-4 text-xs font-bold text-emerald-500">
+                      <div className="flex items-center gap-2 mt-4 text-xs font-black uppercase text-emerald-500">
                         <TrendingUp size={14} />
                         <span>{stats.publishedEventsCount} Events Published</span>
                       </div>
                     </div>
 
                     {/* KPI 3 */}
-                    <div className={`p-6 rounded-2xl border shadow-sm transition duration-300 ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
+                    <div className={`p-6 rounded-none border-4 border-wadu-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] transition duration-300 ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
                       <div className="flex justify-between items-start">
                         <div>
-                          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Total Tickets Sold</p>
-                          <h3 className="text-3xl font-extrabold text-wadu-navy dark:text-white mt-2">{stats.totalTicketsSold}</h3>
+                          <p className="text-xs font-black uppercase text-gray-400 uppercase tracking-widest">Total Tickets Sold</p>
+                          <h3 className="text-3xl font-black uppercase text-wadu-navy dark:text-wadu-black mt-2">{stats.totalTicketsSold}</h3>
                         </div>
-                        <div className="p-3 bg-amber-500/10 text-amber-500 rounded-xl">
+                        <div className="p-3 bg-amber-500/10 text-amber-500 rounded-none">
                           <Coins size={22} />
                         </div>
                       </div>
-                      <div className="flex items-center gap-2 mt-4 text-xs font-bold text-emerald-500">
+                      <div className="flex items-center gap-2 mt-4 text-xs font-black uppercase text-emerald-500">
                         <TrendingUp size={14} />
                         <span>{stats.totalOrders} Transactions placed</span>
                       </div>
                     </div>
 
                     {/* KPI 4 */}
-                    <div className={`p-6 rounded-2xl border shadow-sm transition duration-300 ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
+                    <div className={`p-6 rounded-none border-4 border-wadu-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] transition duration-300 ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
                       <div className="flex justify-between items-start">
                         <div>
-                          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Total Platform Volume</p>
-                          <h3 className="text-2xl font-black text-[#00C2A8] mt-2">KES {stats.totalRevenue.toLocaleString()}</h3>
+                          <p className="text-xs font-black uppercase text-gray-400 uppercase tracking-widest">Total Platform Volume</p>
+                          <h3 className="text-2xl font-black text-wadu-black mt-2">KES {stats.totalRevenue.toLocaleString()}</h3>
                         </div>
-                        <div className="p-3 bg-emerald-500/10 text-emerald-500 rounded-xl">
+                        <div className="p-3 bg-emerald-500/10 text-emerald-500 rounded-none">
                           <BarChart3 size={22} />
                         </div>
                       </div>
-                      <div className="flex items-center gap-2 mt-4 text-xs font-bold text-[#6C4DFF]">
+                      <div className="flex items-center gap-2 mt-4 text-xs font-black uppercase text-wadu-black">
                         <TrendingUp size={14} />
                         <span>Platform fee: KES {(stats.totalRevenue * 0.1).toLocaleString()}</span>
                       </div>
@@ -425,20 +425,20 @@ export default function AdminDashboardPage() {
                   {/* Mid dashboard sections */}
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* Recent Users */}
-                    <div className={`lg:col-span-1 p-6 rounded-2xl border shadow-sm ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
-                      <h3 className="font-extrabold text-lg mb-6 flex items-center gap-2">
-                        <Users size={18} className="text-[#6C4DFF]" />
+                    <div className={`lg:col-span-1 p-6 rounded-none border-4 border-wadu-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
+                      <h3 className="font-black uppercase text-lg mb-6 flex items-center gap-2">
+                        <Users size={18} className="text-wadu-black" />
                         Recent Signups
                       </h3>
                       <div className="space-y-4">
                         {stats.recentUsers.map((u) => (
-                          <div key={u.id} className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-slate-800 last:border-0">
+                          <div key={u.id} className="flex justify-between items-center py-2 border-b border-wadu-black dark:border-wadu-black last:border-0">
                             <div>
-                              <p className="font-bold text-sm text-wadu-navy dark:text-white">{u.firstName} {u.lastName}</p>
+                              <p className="font-black uppercase text-sm text-wadu-navy dark:text-wadu-black">{u.firstName} {u.lastName}</p>
                               <p className="text-xs text-gray-400">{u.email}</p>
                             </div>
-                            <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                              u.role === "ADMIN" ? "bg-red-500/10 text-red-500" : u.role === "ORGANIZER" ? "bg-teal-500/10 text-[#00C2A8]" : "bg-purple-500/10 text-[#6C4DFF]"
+                            <span className={`px-2 py-0.5 rounded text-[10px] font-black uppercase ${
+                              u.role === "ADMIN" ? "bg-red-500/10 text-red-500" : u.role === "ORGANIZER" ? "bg-teal-500/10 text-wadu-black" : "bg-purple-500/10 text-wadu-black"
                             }`}>
                               {u.role === "ADMIN" ? "admin" : u.role === "ORGANIZER" ? "organiser" : "attendee"}
                             </span>
@@ -448,19 +448,19 @@ export default function AdminDashboardPage() {
                     </div>
 
                     {/* Recent Events */}
-                    <div className={`lg:col-span-1 p-6 rounded-2xl border shadow-sm ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
-                      <h3 className="font-extrabold text-lg mb-6 flex items-center gap-2">
-                        <CalendarDays size={18} className="text-[#00C2A8]" />
+                    <div className={`lg:col-span-1 p-6 rounded-none border-4 border-wadu-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
+                      <h3 className="font-black uppercase text-lg mb-6 flex items-center gap-2">
+                        <CalendarDays size={18} className="text-wadu-black" />
                         New Events
                       </h3>
                       <div className="space-y-4">
                         {stats.recentEvents.map((e) => (
-                          <div key={e.id} className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-slate-800 last:border-0">
+                          <div key={e.id} className="flex justify-between items-center py-2 border-b border-wadu-black dark:border-wadu-black last:border-0">
                             <div className="min-w-0">
-                              <p className="font-bold text-sm text-wadu-navy dark:text-white truncate">{e.title}</p>
+                              <p className="font-black uppercase text-sm text-wadu-navy dark:text-wadu-black truncate">{e.title}</p>
                               <p className="text-xs text-gray-400">{e.category}</p>
                             </div>
-                            <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                            <span className={`px-2 py-0.5 rounded text-[10px] font-black uppercase ${
                               e.status === "PUBLISHED" ? "bg-emerald-500/10 text-emerald-500" : "bg-yellow-500/10 text-yellow-500"
                             }`}>
                               {e.status}
@@ -471,19 +471,19 @@ export default function AdminDashboardPage() {
                     </div>
 
                     {/* Recent Transactions */}
-                    <div className={`lg:col-span-1 p-6 rounded-2xl border shadow-sm ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
-                      <h3 className="font-extrabold text-lg mb-6 flex items-center gap-2">
+                    <div className={`lg:col-span-1 p-6 rounded-none border-4 border-wadu-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
+                      <h3 className="font-black uppercase text-lg mb-6 flex items-center gap-2">
                         <Coins size={18} className="text-amber-500" />
                         Transactions
                       </h3>
                       <div className="space-y-4">
                         {stats.recentOrders.map((o) => (
-                          <div key={o.id} className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-slate-800 last:border-0">
+                          <div key={o.id} className="flex justify-between items-center py-2 border-b border-wadu-black dark:border-wadu-black last:border-0">
                             <div className="min-w-0">
-                              <p className="font-bold text-sm text-wadu-navy dark:text-white truncate">{o.event.title}</p>
+                              <p className="font-black uppercase text-sm text-wadu-navy dark:text-wadu-black truncate">{o.event.title}</p>
                               <p className="text-xs text-gray-400">{o.firstName} {o.lastName} · {o.paymentMethod}</p>
                             </div>
-                            <span className="font-extrabold text-sm text-emerald-500">
+                            <span className="font-black uppercase text-sm text-emerald-500">
                               KES {o.total.toLocaleString()}
                             </span>
                           </div>
@@ -506,8 +506,8 @@ export default function AdminDashboardPage() {
                         placeholder="Search users by name, email..."
                         value={userSearch}
                         onChange={(e) => setUserSearch(e.target.value)}
-                        className={`w-full pl-10 pr-4 py-2.5 rounded-xl border text-sm focus:outline-none focus:ring-1 focus:ring-[#6C4DFF] ${
-                          darkMode ? "bg-slate-900 border-slate-800 text-white placeholder-slate-500" : "bg-white border-gray-200 text-gray-800"
+                        className={`w-full pl-10 pr-4 py-2.5 rounded-none border-4 border-wadu-black text-sm focus:outline-none focus:ring-1 focus:ring-[#6C4DFF] ${
+                          darkMode ? "bg-slate-900 border-wadu-black text-wadu-black placeholder-slate-500" : "bg-white border-wadu-black text-gray-800"
                         }`}
                       />
                     </div>
@@ -516,12 +516,12 @@ export default function AdminDashboardPage() {
                         <button
                           key={r}
                           onClick={() => setUserRoleFilter(r)}
-                          className={`px-4 py-2 rounded-xl text-xs font-bold transition border whitespace-nowrap ${
+                          className={`px-4 py-2 rounded-none text-xs font-black uppercase transition border-4 border-wadu-black whitespace-nowrap ${
                             userRoleFilter === r
-                              ? "bg-[#6C4DFF] text-white border-[#6C4DFF]"
+                              ? "bg-wadu-black text-wadu-black border-[#6C4DFF]"
                               : darkMode
-                              ? "bg-slate-900 border-slate-800 text-gray-300 hover:border-slate-700"
-                              : "bg-white border-gray-200 text-gray-600 hover:border-gray-300"
+                              ? "bg-slate-900 border-wadu-black text-gray-300 hover:border-wadu-black"
+                              : "bg-white border-wadu-black text-gray-600 hover:border-gray-300"
                           }`}
                         >
                           {r === "ORGANIZER" ? "ORGANISER" : r}
@@ -531,17 +531,17 @@ export default function AdminDashboardPage() {
                   </div>
 
                   {/* Users Table */}
-                  <div className={`rounded-2xl border shadow-sm overflow-hidden ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
+                  <div className={`rounded-none border-4 border-wadu-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] overflow-hidden ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
                     <div className="overflow-x-auto">
                       <table className="w-full text-sm text-left">
                         <thead>
                           <tr className={`text-xs uppercase tracking-wider ${darkMode ? "bg-slate-800/50 text-slate-400" : "bg-gray-50 text-gray-500"}`}>
-                            <th className="px-6 py-4 font-semibold">User Info</th>
-                            <th className="px-4 py-4 font-semibold">Phone</th>
-                            <th className="px-4 py-4 font-semibold">Role</th>
-                            <th className="px-4 py-4 font-semibold">Status</th>
-                            <th className="px-4 py-4 font-semibold">Joined At</th>
-                            <th className="px-6 py-4 font-semibold text-right">Actions</th>
+                            <th className="px-6 py-4 font-black uppercase">User Info</th>
+                            <th className="px-4 py-4 font-black uppercase">Phone</th>
+                            <th className="px-4 py-4 font-black uppercase">Role</th>
+                            <th className="px-4 py-4 font-black uppercase">Status</th>
+                            <th className="px-4 py-4 font-black uppercase">Joined At</th>
+                            <th className="px-6 py-4 font-black uppercase text-right">Actions</th>
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100 dark:divide-slate-800">
@@ -550,20 +550,20 @@ export default function AdminDashboardPage() {
                               <tr key={u.id} className={`transition-colors ${darkMode ? "hover:bg-slate-800/30" : "hover:bg-gray-50"}`}>
                                 <td className="px-6 py-4">
                                   <div>
-                                    <p className="font-bold text-wadu-navy dark:text-white">{u.firstName} {u.lastName}</p>
+                                    <p className="font-black uppercase text-wadu-navy dark:text-wadu-black">{u.firstName} {u.lastName}</p>
                                     <p className="text-xs text-gray-400">{u.email}</p>
                                   </div>
                                 </td>
-                                <td className="px-4 py-4 text-gray-500 dark:text-gray-400 font-semibold">{u.phone || "N/A"}</td>
+                                <td className="px-4 py-4 text-gray-500 dark:text-gray-400 font-black uppercase">{u.phone || "N/A"}</td>
                                 <td className="px-4 py-4">
-                                  <span className={`px-2.5 py-1 rounded text-xs font-bold ${
-                                    u.role === "ADMIN" ? "bg-red-500/10 text-red-500" : u.role === "ORGANIZER" ? "bg-teal-500/10 text-[#00C2A8]" : "bg-purple-500/10 text-[#6C4DFF]"
+                                  <span className={`px-2.5 py-1 rounded text-xs font-black uppercase ${
+                                    u.role === "ADMIN" ? "bg-red-500/10 text-red-500" : u.role === "ORGANIZER" ? "bg-teal-500/10 text-wadu-black" : "bg-purple-500/10 text-wadu-black"
                                   }`}>
                                     {u.role === "ADMIN" ? "admin" : u.role === "ORGANIZER" ? "organiser" : "attendee"}
                                   </span>
                                 </td>
                                 <td className="px-4 py-4">
-                                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${u.isVerified ? "bg-emerald-500/10 text-emerald-500" : "bg-yellow-500/10 text-yellow-500"}`}>
+                                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase ${u.isVerified ? "bg-emerald-500/10 text-emerald-500" : "bg-yellow-500/10 text-yellow-500"}`}>
                                     {u.isVerified ? "Verified" : "Pending"}
                                   </span>
                                 </td>
@@ -573,14 +573,14 @@ export default function AdminDashboardPage() {
                                     <>
                                       <button
                                         onClick={() => handleUpdateUserRole(u.id, u.role === "ATTENDEE" ? "ORGANIZER" : "ATTENDEE")}
-                                        className="text-xs font-bold text-[#6C4DFF] hover:underline whitespace-nowrap inline-block"
+                                        className="text-xs font-black uppercase text-wadu-black hover:underline whitespace-nowrap inline-block"
                                         title="Toggle Attendee/Organizer Role"
                                       >
                                         Toggle Role
                                       </button>
                                       <button
                                         onClick={() => handleDeleteUser(u.id)}
-                                        className="text-xs font-bold text-red-500 hover:text-red-700 hover:underline whitespace-nowrap inline-block"
+                                        className="text-xs font-black uppercase text-red-500 hover:text-red-700 hover:underline whitespace-nowrap inline-block"
                                         title="Delete user"
                                       >
                                         Delete
@@ -614,8 +614,8 @@ export default function AdminDashboardPage() {
                         placeholder="Search events by title, location..."
                         value={eventSearch}
                         onChange={(e) => setEventSearch(e.target.value)}
-                        className={`w-full pl-10 pr-4 py-2.5 rounded-xl border text-sm focus:outline-none focus:ring-1 focus:ring-[#6C4DFF] ${
-                          darkMode ? "bg-slate-900 border-slate-800 text-white placeholder-slate-500" : "bg-white border-gray-200 text-gray-800"
+                        className={`w-full pl-10 pr-4 py-2.5 rounded-none border-4 border-wadu-black text-sm focus:outline-none focus:ring-1 focus:ring-[#6C4DFF] ${
+                          darkMode ? "bg-slate-900 border-wadu-black text-wadu-black placeholder-slate-500" : "bg-white border-wadu-black text-gray-800"
                         }`}
                       />
                     </div>
@@ -624,12 +624,12 @@ export default function AdminDashboardPage() {
                         <button
                           key={s}
                           onClick={() => setEventStatusFilter(s)}
-                          className={`px-4 py-2 rounded-xl text-xs font-bold transition border whitespace-nowrap ${
+                          className={`px-4 py-2 rounded-none text-xs font-black uppercase transition border-4 border-wadu-black whitespace-nowrap ${
                             eventStatusFilter === s
-                              ? "bg-[#6C4DFF] text-white border-[#6C4DFF]"
+                              ? "bg-wadu-black text-wadu-black border-[#6C4DFF]"
                               : darkMode
-                              ? "bg-slate-900 border-slate-800 text-gray-300 hover:border-slate-700"
-                              : "bg-white border-gray-200 text-gray-600 hover:border-gray-300"
+                              ? "bg-slate-900 border-wadu-black text-gray-300 hover:border-wadu-black"
+                              : "bg-white border-wadu-black text-gray-600 hover:border-gray-300"
                           }`}
                         >
                           {s}
@@ -639,17 +639,17 @@ export default function AdminDashboardPage() {
                   </div>
 
                   {/* Events Table */}
-                  <div className={`rounded-2xl border shadow-sm overflow-hidden ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
+                  <div className={`rounded-none border-4 border-wadu-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] overflow-hidden ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
                     <div className="overflow-x-auto">
                       <table className="w-full text-sm text-left">
                         <thead>
                           <tr className={`text-xs uppercase tracking-wider ${darkMode ? "bg-slate-800/50 text-slate-400" : "bg-gray-50 text-gray-500"}`}>
-                            <th className="px-6 py-4 font-semibold">Event</th>
-                            <th className="px-4 py-4 font-semibold">Organizer</th>
-                            <th className="px-4 py-4 font-semibold">Date & Location</th>
-                            <th className="px-4 py-4 font-semibold">Tiers (Capacity)</th>
-                            <th className="px-4 py-4 font-semibold">Status</th>
-                            <th className="px-6 py-4 font-semibold text-right">Moderation Actions</th>
+                            <th className="px-6 py-4 font-black uppercase">Event</th>
+                            <th className="px-4 py-4 font-black uppercase">Organizer</th>
+                            <th className="px-4 py-4 font-black uppercase">Date & Location</th>
+                            <th className="px-4 py-4 font-black uppercase">Tiers (Capacity)</th>
+                            <th className="px-4 py-4 font-black uppercase">Status</th>
+                            <th className="px-6 py-4 font-black uppercase text-right">Moderation Actions</th>
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100 dark:divide-slate-800">
@@ -658,27 +658,27 @@ export default function AdminDashboardPage() {
                               <tr key={e.id} className={`transition-colors ${darkMode ? "hover:bg-slate-800/30" : "hover:bg-gray-50"}`}>
                                 <td className="px-6 py-4">
                                   <div>
-                                    <p className="font-bold text-wadu-navy dark:text-white">{e.title}</p>
+                                    <p className="font-black uppercase text-wadu-navy dark:text-wadu-black">{e.title}</p>
                                     <p className="text-xs text-gray-400">{e.category}</p>
                                   </div>
                                 </td>
                                 <td className="px-4 py-4">
                                   <div>
-                                    <p className="font-bold text-gray-500 dark:text-gray-400">{e.organizer.firstName} {e.organizer.lastName}</p>
+                                    <p className="font-black uppercase text-gray-500 dark:text-gray-400">{e.organizer.firstName} {e.organizer.lastName}</p>
                                     <p className="text-xs text-gray-400">{e.organizer.email}</p>
                                   </div>
                                 </td>
                                 <td className="px-4 py-4">
                                   <div className="space-y-0.5 text-xs text-gray-400">
-                                    <p className="font-semibold">{new Date(e.startDate).toLocaleDateString()}</p>
+                                    <p className="font-black uppercase">{new Date(e.startDate).toLocaleDateString()}</p>
                                     <p className="truncate">{e.location}</p>
                                   </div>
                                 </td>
-                                <td className="px-4 py-4 font-semibold text-gray-400">
+                                <td className="px-4 py-4 font-black uppercase text-gray-400">
                                   {e.tickets.length} tier(s) ({e.tickets.reduce((acc: number, curr: any) => acc + curr.quantity, 0)} slots)
                                 </td>
                                 <td className="px-4 py-4">
-                                  <span className={`px-2.5 py-1 rounded-full text-xs font-bold uppercase ${
+                                  <span className={`px-2.5 py-1 rounded-full text-xs font-black uppercase uppercase ${
                                     e.status === "PUBLISHED"
                                       ? "bg-emerald-500/10 text-emerald-500"
                                       : e.status === "DRAFT"
@@ -692,7 +692,7 @@ export default function AdminDashboardPage() {
                                   {e.status === "DRAFT" && (
                                     <button
                                       onClick={() => handleUpdateEventStatus(e.id, "PUBLISHED")}
-                                      className="text-xs font-bold text-emerald-500 hover:text-emerald-700 hover:underline whitespace-nowrap inline-block"
+                                      className="text-xs font-black uppercase text-emerald-500 hover:text-emerald-700 hover:underline whitespace-nowrap inline-block"
                                     >
                                       Approve &amp; Publish
                                     </button>
@@ -700,7 +700,7 @@ export default function AdminDashboardPage() {
                                   {e.status === "PUBLISHED" && (
                                     <button
                                       onClick={() => handleUpdateEventStatus(e.id, "CANCELLED")}
-                                      className="text-xs font-bold text-red-500 hover:text-red-700 hover:underline whitespace-nowrap inline-block"
+                                      className="text-xs font-black uppercase text-red-500 hover:text-red-700 hover:underline whitespace-nowrap inline-block"
                                     >
                                       Cancel Event
                                     </button>
@@ -708,7 +708,7 @@ export default function AdminDashboardPage() {
                                   {e.status === "CANCELLED" && (
                                     <button
                                       onClick={() => handleUpdateEventStatus(e.id, "PUBLISHED")}
-                                      className="text-xs font-bold text-[#6C4DFF] hover:underline whitespace-nowrap inline-block"
+                                      className="text-xs font-black uppercase text-wadu-black hover:underline whitespace-nowrap inline-block"
                                     >
                                       Restore Event
                                     </button>
@@ -740,46 +740,46 @@ export default function AdminDashboardPage() {
                         placeholder="Search orders by attendee name, email, ref ID..."
                         value={orderSearch}
                         onChange={(e) => setOrderSearch(e.target.value)}
-                        className={`w-full pl-10 pr-4 py-2.5 rounded-xl border text-sm focus:outline-none focus:ring-1 focus:ring-[#6C4DFF] ${
-                          darkMode ? "bg-slate-900 border-slate-800 text-white placeholder-slate-500" : "bg-white border-gray-200 text-gray-800"
+                        className={`w-full pl-10 pr-4 py-2.5 rounded-none border-4 border-wadu-black text-sm focus:outline-none focus:ring-1 focus:ring-[#6C4DFF] ${
+                          darkMode ? "bg-slate-900 border-wadu-black text-wadu-black placeholder-slate-500" : "bg-white border-wadu-black text-gray-800"
                         }`}
                       />
                     </div>
                   </div>
 
                   {/* Orders Table */}
-                  <div className={`rounded-2xl border shadow-sm overflow-hidden ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
+                  <div className={`rounded-none border-4 border-wadu-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] overflow-hidden ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
                     <div className="overflow-x-auto">
                       <table className="w-full text-sm text-left">
                         <thead>
                           <tr className={`text-xs uppercase tracking-wider ${darkMode ? "bg-slate-800/50 text-slate-400" : "bg-gray-50 text-gray-500"}`}>
-                            <th className="px-6 py-4 font-semibold">Order ID</th>
-                            <th className="px-4 py-4 font-semibold">Event</th>
-                            <th className="px-4 py-4 font-semibold">Buyer Details</th>
-                            <th className="px-4 py-4 font-semibold">Method & Status</th>
-                            <th className="px-4 py-4 font-semibold">Total Amount</th>
-                            <th className="px-4 py-4 font-semibold">Date</th>
+                            <th className="px-6 py-4 font-black uppercase">Order ID</th>
+                            <th className="px-4 py-4 font-black uppercase">Event</th>
+                            <th className="px-4 py-4 font-black uppercase">Buyer Details</th>
+                            <th className="px-4 py-4 font-black uppercase">Method & Status</th>
+                            <th className="px-4 py-4 font-black uppercase">Total Amount</th>
+                            <th className="px-4 py-4 font-black uppercase">Date</th>
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100 dark:divide-slate-800">
                           {filteredOrders.length > 0 ? (
                             filteredOrders.map((o) => (
                               <tr key={o.id} className={`transition-colors ${darkMode ? "hover:bg-slate-800/30" : "hover:bg-gray-50"}`}>
-                                <td className="px-6 py-4 font-bold text-gray-500 dark:text-gray-400">{o.id}</td>
-                                <td className="px-4 py-4 font-bold text-wadu-navy dark:text-white">{o.event.title}</td>
+                                <td className="px-6 py-4 font-black uppercase text-gray-500 dark:text-gray-400">{o.id}</td>
+                                <td className="px-4 py-4 font-black uppercase text-wadu-navy dark:text-wadu-black">{o.event.title}</td>
                                 <td className="px-4 py-4">
                                   <div>
-                                    <p className="font-semibold">{o.firstName} {o.lastName}</p>
+                                    <p className="font-black uppercase">{o.firstName} {o.lastName}</p>
                                     <p className="text-xs text-gray-400">{o.email}</p>
                                   </div>
                                 </td>
                                 <td className="px-4 py-4">
                                   <div className="space-y-1">
-                                    <span className="text-xs bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                                    <span className="text-xs bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded font-black uppercase uppercase tracking-wider text-slate-500 dark:text-slate-400">
                                       {o.paymentMethod}
                                     </span>
                                     <div>
-                                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase ${
                                         o.paymentStatus === "PAID"
                                           ? "bg-emerald-500/10 text-emerald-500"
                                           : o.paymentStatus === "PENDING"
@@ -791,7 +791,7 @@ export default function AdminDashboardPage() {
                                     </div>
                                   </div>
                                 </td>
-                                <td className="px-4 py-4 font-extrabold text-wadu-navy dark:text-white">KES {o.total.toLocaleString()}</td>
+                                <td className="px-4 py-4 font-black uppercase text-wadu-navy dark:text-wadu-black">KES {o.total.toLocaleString()}</td>
                                 <td className="px-4 py-4 text-gray-400 text-xs">{new Date(o.createdAt).toLocaleString()}</td>
                               </tr>
                             ))
@@ -811,28 +811,28 @@ export default function AdminDashboardPage() {
               {activeTab === "payouts" && (
                 <div className="space-y-6">
                   {/* Payouts Table */}
-                  <div className={`rounded-2xl border shadow-sm overflow-hidden ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
+                  <div className={`rounded-none border-4 border-wadu-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] overflow-hidden ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
                     <div className="overflow-x-auto">
                       <table className="w-full text-sm text-left">
                         <thead>
                           <tr className={`text-xs uppercase tracking-wider ${darkMode ? "bg-slate-800/50 text-slate-400" : "bg-gray-50 text-gray-500"}`}>
-                            <th className="px-6 py-4 font-semibold">Reference</th>
-                            <th className="px-4 py-4 font-semibold">Organizer</th>
-                            <th className="px-4 py-4 font-semibold">Amount</th>
-                            <th className="px-4 py-4 font-semibold">Date</th>
-                            <th className="px-4 py-4 font-semibold">Status</th>
-                            <th className="px-6 py-4 font-semibold text-right">Action</th>
+                            <th className="px-6 py-4 font-black uppercase">Reference</th>
+                            <th className="px-4 py-4 font-black uppercase">Organizer</th>
+                            <th className="px-4 py-4 font-black uppercase">Amount</th>
+                            <th className="px-4 py-4 font-black uppercase">Date</th>
+                            <th className="px-4 py-4 font-black uppercase">Status</th>
+                            <th className="px-6 py-4 font-black uppercase text-right">Action</th>
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100 dark:divide-slate-800">
                           {payoutsList.map((p) => (
                             <tr key={p.id} className={`transition-colors ${darkMode ? "hover:bg-slate-800/30" : "hover:bg-gray-50"}`}>
-                              <td className="px-6 py-4 font-bold text-gray-500 dark:text-gray-400">{p.id}</td>
-                              <td className="px-4 py-4 font-bold text-wadu-navy dark:text-white">{p.organizer}</td>
-                              <td className="px-4 py-4 font-extrabold text-emerald-500">KES {p.amount.toLocaleString()}</td>
+                              <td className="px-6 py-4 font-black uppercase text-gray-500 dark:text-gray-400">{p.id}</td>
+                              <td className="px-4 py-4 font-black uppercase text-wadu-navy dark:text-wadu-black">{p.organizer}</td>
+                              <td className="px-4 py-4 font-black uppercase text-emerald-500">KES {p.amount.toLocaleString()}</td>
                               <td className="px-4 py-4 text-gray-400 text-xs">{p.date}</td>
                               <td className="px-4 py-4">
-                                <span className={`px-2.5 py-1 rounded-full text-xs font-bold uppercase ${
+                                <span className={`px-2.5 py-1 rounded-full text-xs font-black uppercase uppercase ${
                                   p.status === "PAID"
                                     ? "bg-emerald-500/10 text-emerald-500"
                                     : "bg-yellow-500/10 text-yellow-500"
@@ -844,12 +844,12 @@ export default function AdminDashboardPage() {
                                 {p.status === "PENDING" ? (
                                   <button
                                     onClick={() => handleApprovePayout(p.id)}
-                                    className="bg-emerald-500 border border-emerald-500/10 text-white hover:bg-emerald-600 px-4 py-1.5 rounded-lg text-xs font-bold transition duration-200 whitespace-nowrap"
+                                    className="bg-emerald-500 border-4 border-wadu-black border-emerald-500/10 text-wadu-black hover:bg-emerald-600 px-4 py-1.5 rounded-none text-xs font-black uppercase transition duration-200 whitespace-nowrap"
                                   >
                                     Release Funds
                                   </button>
                                 ) : (
-                                  <span className="text-gray-400 text-xs italic font-semibold">Released</span>
+                                  <span className="text-gray-400 text-xs italic font-black uppercase">Released</span>
                                 )}
                               </td>
                             </tr>
@@ -865,12 +865,12 @@ export default function AdminDashboardPage() {
               {activeTab === "logs" && (
                 <div className="space-y-6">
                   {/* System Event Timeline Log */}
-                  <div className={`p-6 rounded-2xl border shadow-sm ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
-                    <h3 className="font-extrabold text-lg mb-6 flex items-center gap-2">
-                      <Activity size={18} className="text-[#6C4DFF]" />
+                  <div className={`p-6 rounded-none border-4 border-wadu-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
+                    <h3 className="font-black uppercase text-lg mb-6 flex items-center gap-2">
+                      <Activity size={18} className="text-wadu-black" />
                       Real-Time Platform Activity Audit Logs
                     </h3>
-                    <div className="relative border-l-2 border-slate-100 dark:border-slate-800 pl-6 ml-3 space-y-6">
+                    <div className="relative border-l-2 border-slate-100 dark:border-wadu-black pl-6 ml-3 space-y-6">
                       {[
                         { time: "Just now", desc: "User database count synced. Platform stats compiled successfully.", type: "system" },
                         { time: "10 mins ago", desc: "Admin user vanessawanjiru2023@gmail.com initialized session dashboard.", type: "auth" },
@@ -879,9 +879,9 @@ export default function AdminDashboardPage() {
                         { time: "Yesterday", desc: "Database seed operation completed: 3 users, 10 events, 30 tickets inserted.", type: "system" }
                       ].map((log, i) => (
                         <div key={i} className="relative">
-                          <div className="absolute -left-[31px] top-1.5 w-3 h-3 rounded-full bg-[#6C4DFF] border-2 border-white dark:border-slate-950" />
-                          <p className="text-xs text-gray-400 font-semibold">{log.time}</p>
-                          <p className="text-sm font-semibold text-wadu-navy dark:text-white mt-1 leading-relaxed">
+                          <div className="absolute -left-[31px] top-1.5 w-3 h-3 rounded-full bg-wadu-black border-2 border-white dark:border-slate-950" />
+                          <p className="text-xs text-gray-400 font-black uppercase">{log.time}</p>
+                          <p className="text-sm font-black uppercase text-wadu-navy dark:text-wadu-black mt-1 leading-relaxed">
                             {log.desc}
                           </p>
                         </div>

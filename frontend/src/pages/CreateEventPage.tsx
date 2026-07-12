@@ -1,6 +1,6 @@
 import { Layout } from "@/components/Layout";
 import { useState, useEffect } from "react";
-import { Check, Plus, Trash2, Calendar, MapPin, Building, ArrowLeft } from "lucide-react";
+import { Check, Plus, Trash2, Calendar, MapPin, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
 import { api } from "@/lib/api";
@@ -237,24 +237,24 @@ export function CreateEventForm() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-12">
+    <div className="max-w-5xl mx-auto px-4 py-16">
       {/* Step Indicator */}
-      <div className="mb-12">
-        <div className="flex items-center justify-between mb-8">
+      <div className="mb-16">
+        <div className="flex items-center justify-between">
           {/* Step 1 */}
           <div className="flex flex-col items-center">
             <div
-              className={`w-12 h-12 rounded-full flex items-center justify-center font-extrabold text-lg mb-2 transition duration-300 ${
+              className={`w-16 h-16 border-4 border-wadu-black flex items-center justify-center font-black text-2xl mb-4 transition duration-300 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] ${
                 step >= 1
-                  ? "bg-wadu-purple text-white shadow-sm"
-                  : "bg-slate-200 dark:bg-slate-800 text-slate-500"
+                  ? "bg-wadu-black text-wadu-yellow"
+                  : "bg-white text-wadu-black"
               }`}
             >
-              {step > 1 ? <Check size={24} /> : "1"}
+              {step > 1 ? <Check size={32} /> : "1"}
             </div>
             <span
-              className={`text-sm font-bold ${
-                step >= 1 ? "text-wadu-navy dark:text-white" : "text-slate-400 dark:text-gray-500"
+              className={`text-lg font-black uppercase ${
+                step >= 1 ? "text-wadu-black" : "text-wadu-black/50"
               }`}
             >
               Event Info
@@ -263,27 +263,27 @@ export function CreateEventForm() {
 
           {/* Line 1 */}
           <div
-            className={`flex-1 h-1 mx-4 mb-8 transition duration-300 ${
+            className={`flex-1 h-2 mx-6 border-y-4 border-wadu-black transition duration-300 ${
               step >= 2
-                ? "bg-wadu-purple"
-                : "bg-slate-200 dark:bg-slate-800"
+                ? "bg-wadu-black"
+                : "bg-white"
             }`}
           />
 
           {/* Step 2 */}
           <div className="flex flex-col items-center">
             <div
-              className={`w-12 h-12 rounded-full flex items-center justify-center font-extrabold text-lg mb-2 transition duration-300 ${
+              className={`w-16 h-16 border-4 border-wadu-black flex items-center justify-center font-black text-2xl mb-4 transition duration-300 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] ${
                 step >= 2
-                  ? "bg-wadu-purple text-white shadow-sm"
-                  : "bg-slate-200 dark:bg-slate-800 text-slate-500"
+                  ? "bg-wadu-black text-wadu-yellow"
+                  : "bg-white text-wadu-black"
               }`}
             >
-              {step > 2 ? <Check size={24} /> : "2"}
+              {step > 2 ? <Check size={32} /> : "2"}
             </div>
             <span
-              className={`text-sm font-bold ${
-                step >= 2 ? "text-wadu-navy dark:text-white" : "text-slate-400 dark:text-gray-500"
+              className={`text-lg font-black uppercase ${
+                step >= 2 ? "text-wadu-black" : "text-wadu-black/50"
               }`}
             >
               Tickets
@@ -292,30 +292,30 @@ export function CreateEventForm() {
 
           {/* Line 2 */}
           <div
-            className={`flex-1 h-1 mx-4 mb-8 transition duration-300 ${
+            className={`flex-1 h-2 mx-6 border-y-4 border-wadu-black transition duration-300 ${
               step >= 3
-                ? "bg-wadu-purple"
-                : "bg-slate-200 dark:bg-slate-800"
+                ? "bg-wadu-black"
+                : "bg-white"
             }`}
           />
 
           {/* Step 3 */}
           <div className="flex flex-col items-center">
             <div
-              className={`w-12 h-12 rounded-full flex items-center justify-center font-extrabold text-lg mb-2 transition duration-300 ${
+              className={`w-16 h-16 border-4 border-wadu-black flex items-center justify-center font-black text-2xl mb-4 transition duration-300 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] ${
                 step >= 3
-                  ? "bg-wadu-purple text-white shadow-sm"
-                  : "bg-slate-200 dark:bg-slate-800 text-slate-500"
+                  ? "bg-wadu-black text-wadu-yellow"
+                  : "bg-white text-wadu-black"
               }`}
             >
-              {step > 2 ? <Check size={24} /> : "3"}
+              {step > 2 ? <Check size={32} /> : "3"}
             </div>
             <span
-              className={`text-sm font-bold ${
-                step >= 3 ? "text-wadu-navy dark:text-white" : "text-slate-400 dark:text-gray-500"
+              className={`text-lg font-black uppercase ${
+                step >= 3 ? "text-wadu-black" : "text-wadu-black/50"
               }`}
             >
-              Preview & Publish
+              Publish
             </span>
           </div>
         </div>
@@ -323,42 +323,42 @@ export function CreateEventForm() {
 
       {/* Content */}
       {step === 1 && (
-        <div className="grid md:grid-cols-3 gap-8">
-          <div className="md:col-span-2">
-            <h2 className="text-2xl font-bold text-wadu-navy dark:text-white mb-6">
-              Create Event: Event Info
+        <div className="grid lg:grid-cols-3 gap-12">
+          <div className="lg:col-span-2 space-y-12">
+            <h2 className="text-4xl font-black text-wadu-black uppercase">
+              Create Event: Info
             </h2>
 
             {/* Basic Info */}
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 mb-8 shadow-sm transition duration-300">
-              <h3 className="text-lg font-bold text-wadu-navy dark:text-white mb-6">Basic Info</h3>
-              <div className="space-y-5">
+            <div className="bg-white border-4 border-wadu-black p-8 shadow-[8px_8px_0px_0px_rgba(5,5,5,1)]">
+              <h3 className="text-2xl font-black text-wadu-black uppercase mb-8 border-b-4 border-wadu-black pb-4">Basic Info</h3>
+              <div className="space-y-8">
                 <div>
-                  <label className="block text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
+                  <label className="block text-wadu-black text-sm font-black uppercase tracking-wider mb-2">
                     Event Name
                   </label>
                   <input
                     type="text"
                     value={eventName}
                     onChange={(e) => setEventName(e.target.value)}
-                    className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl py-3.5 px-4 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-semibold"
+                    className="w-full bg-white border-4 border-wadu-black px-4 py-4 text-wadu-black font-black uppercase placeholder-wadu-black/40 focus:outline-none focus:bg-wadu-yellow transition duration-200 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-3">
+                  <label className="block text-wadu-black text-sm font-black uppercase tracking-wider mb-4">
                     Category
                   </label>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-4">
                     {categories.map((cat) => (
                       <button
                         key={cat}
                         type="button"
                         onClick={() => setCategory(cat)}
-                        className={`px-4 py-2.5 rounded-xl text-xs font-bold transition duration-200 ${
+                        className={`px-6 py-3 font-black uppercase transition duration-200 border-4 border-wadu-black ${
                           category === cat
-                            ? "bg-wadu-purple text-white shadow-sm"
-                            : "bg-slate-50 dark:bg-slate-850 text-slate-600 dark:text-slate-300 border border-slate-205 dark:border-slate-800 hover:border-wadu-teal hover:text-wadu-teal"
+                            ? "bg-wadu-black text-wadu-yellow shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] translate-y-1 translate-x-1"
+                            : "bg-white text-wadu-black hover:bg-wadu-black hover:text-wadu-yellow shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] hover:translate-y-1 hover:translate-x-1"
                         }`}
                       >
                         {cat}
@@ -368,14 +368,14 @@ export function CreateEventForm() {
                 </div>
 
                 <div>
-                  <label className="block text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
+                  <label className="block text-wadu-black text-sm font-black uppercase tracking-wider mb-2">
                     Description
                   </label>
                   <textarea
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    rows={4}
-                    className="w-full bg-white dark:bg-slate-955 border border-slate-200 dark:border-slate-800 rounded-xl py-3.5 px-4 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-semibold"
+                    rows={5}
+                    className="w-full bg-white border-4 border-wadu-black px-4 py-4 text-wadu-black font-bold placeholder-wadu-black/40 focus:outline-none focus:bg-wadu-yellow transition duration-200 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]"
                     placeholder="Describe your event..."
                   />
                 </div>
@@ -383,24 +383,22 @@ export function CreateEventForm() {
             </div>
 
             {/* Event Cover Image */}
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 mb-8 shadow-sm transition duration-300">
-              <h3 className="text-lg font-bold text-wadu-navy dark:text-white mb-6">Event Cover Image</h3>
-              <div className="space-y-4">
-                <div className="flex flex-col md:flex-row gap-6 items-center">
-                  {/* Current Image Preview */}
-                  <div className="w-40 h-24 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 flex-shrink-0 flex items-center justify-center shadow-inner">
+            <div className="bg-wadu-yellow border-4 border-wadu-black p-8 shadow-[8px_8px_0px_0px_rgba(5,5,5,1)]">
+              <h3 className="text-2xl font-black text-wadu-black uppercase mb-8 border-b-4 border-wadu-black pb-4">Cover Image</h3>
+              <div className="space-y-6">
+                <div className="flex flex-col md:flex-row gap-8 items-center">
+                  <div className="w-full md:w-48 h-32 border-4 border-wadu-black bg-white flex-shrink-0 flex items-center justify-center shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] overflow-hidden">
                     {imageUrl ? (
                       <img src={imageUrl} alt="Cover Preview" className="w-full h-full object-cover" />
                     ) : (
-                      <span className="text-xs text-slate-400">No Image</span>
+                      <span className="text-sm font-black uppercase text-wadu-black">No Image</span>
                     )}
                   </div>
                   
-                  {/* Upload Controls */}
-                  <div className="flex-1 w-full space-y-3">
-                    <div className="flex flex-wrap gap-3">
-                      <label className="bg-wadu-purple hover:bg-wadu-teal hover:text-wadu-navy text-white px-5 py-2.5 rounded-xl font-bold text-xs transition shadow-sm cursor-pointer flex items-center gap-1.5 duration-200">
-                        Upload Local Image
+                  <div className="flex-1 w-full space-y-4">
+                    <div className="flex flex-wrap gap-4">
+                      <label className="bg-wadu-black hover:bg-white text-wadu-yellow hover:text-wadu-black border-4 border-wadu-black px-6 py-3 font-black text-sm uppercase transition shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] cursor-pointer hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[8px_8px_0px_0px_rgba(5,5,5,1)]">
+                        Upload Image
                         <input
                           type="file"
                           accept="image/*"
@@ -421,21 +419,17 @@ export function CreateEventForm() {
                         <button
                           type="button"
                           onClick={() => setImageUrl("/Image 1.jpg")}
-                          className="px-5 py-2.5 rounded-xl font-bold text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-red-500 hover:text-red-500 transition duration-200 shadow-sm"
+                          className="px-6 py-3 font-black uppercase text-sm bg-white border-4 border-wadu-black text-wadu-black hover:bg-wadu-black hover:text-wadu-yellow transition duration-200 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[8px_8px_0px_0px_rgba(5,5,5,1)]"
                         >
-                          Remove Image
+                          Remove
                         </button>
                       )}
                     </div>
-                    <p className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold leading-relaxed">
-                      Upload an image file (JPG, PNG, GIF). It will be saved directly with your event.
-                    </p>
                   </div>
                 </div>
 
-                {/* Alternative: Image URL Input */}
-                <div className="border-t border-slate-100 dark:border-slate-800 pt-4">
-                  <label className="block text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
+                <div className="pt-6 border-t-4 border-wadu-black">
+                  <label className="block text-wadu-black text-sm font-black uppercase tracking-wider mb-2">
                     Or Enter Image URL
                   </label>
                   <input
@@ -443,64 +437,64 @@ export function CreateEventForm() {
                     placeholder="https://images.unsplash.com/photo-..."
                     value={imageUrl === "/Image 1.jpg" ? "" : imageUrl.startsWith("data:") ? "" : imageUrl}
                     onChange={(e) => setImageUrl(e.target.value || "/Image 1.jpg")}
-                    className="w-full bg-white dark:bg-slate-955 border border-slate-200 dark:border-slate-800 rounded-xl py-3.5 px-4 text-sm text-slate-805 dark:text-white placeholder-slate-400 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-semibold"
+                    className="w-full bg-white border-4 border-wadu-black px-4 py-4 text-wadu-black font-bold focus:outline-none focus:bg-wadu-yellow transition duration-200 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]"
                   />
                 </div>
               </div>
             </div>
 
             {/* Date & Time */}
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 mb-8 shadow-sm transition duration-300">
-              <h3 className="text-lg font-bold text-wadu-navy dark:text-white mb-6">
+            <div className="bg-white border-4 border-wadu-black p-8 shadow-[8px_8px_0px_0px_rgba(5,5,5,1)]">
+              <h3 className="text-2xl font-black text-wadu-black uppercase mb-8 border-b-4 border-wadu-black pb-4">
                 Date & Time
               </h3>
-              <div className="space-y-5">
-                <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
+                    <label className="block text-wadu-black text-sm font-black uppercase tracking-wider mb-2">
                       Start Date
                     </label>
                     <input
                       type="date"
                       value={startDate}
                       onChange={(e) => setStartDate(e.target.value)}
-                      className="w-full bg-white dark:bg-slate-955 border border-slate-200 dark:border-slate-800 rounded-xl py-3.5 px-4 text-slate-800 dark:text-white focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-semibold"
+                      className="w-full bg-white border-4 border-wadu-black px-4 py-4 text-wadu-black font-black uppercase focus:outline-none focus:bg-wadu-yellow transition duration-200 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]"
                     />
                   </div>
                   <div>
-                    <label className="block text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
+                    <label className="block text-wadu-black text-sm font-black uppercase tracking-wider mb-2">
                       Start Time
                     </label>
                     <input
                       type="time"
                       value={startTime}
                       onChange={(e) => setStartTime(e.target.value)}
-                      className="w-full bg-white dark:bg-slate-955 border border-slate-200 dark:border-slate-800 rounded-xl py-3.5 px-4 text-slate-800 dark:text-white focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-semibold"
+                      className="w-full bg-white border-4 border-wadu-black px-4 py-4 text-wadu-black font-black uppercase focus:outline-none focus:bg-wadu-yellow transition duration-200 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]"
                     />
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
+                    <label className="block text-wadu-black text-sm font-black uppercase tracking-wider mb-2">
                       End Date
                     </label>
                     <input
                       type="date"
                       value={endDate}
                       onChange={(e) => setEndDate(e.target.value)}
-                      className="w-full bg-white dark:bg-slate-955 border border-slate-200 dark:border-slate-800 rounded-xl py-3.5 px-4 text-slate-800 dark:text-white focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-semibold"
+                      className="w-full bg-white border-4 border-wadu-black px-4 py-4 text-wadu-black font-black uppercase focus:outline-none focus:bg-wadu-yellow transition duration-200 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]"
                     />
                   </div>
                   <div>
-                    <label className="block text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
+                    <label className="block text-wadu-black text-sm font-black uppercase tracking-wider mb-2">
                       End Time
                     </label>
                     <input
                       type="time"
                       value={endTime}
                       onChange={(e) => setEndTime(e.target.value)}
-                      className="w-full bg-white dark:bg-slate-955 border border-slate-200 dark:border-slate-800 rounded-xl py-3.5 px-4 text-slate-800 dark:text-white focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-semibold"
+                      className="w-full bg-white border-4 border-wadu-black px-4 py-4 text-wadu-black font-black uppercase focus:outline-none focus:bg-wadu-yellow transition duration-200 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]"
                     />
                   </div>
                 </div>
@@ -508,56 +502,54 @@ export function CreateEventForm() {
             </div>
 
             {/* Location */}
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 mb-8 shadow-sm transition duration-300">
-              <h3 className="text-lg font-bold text-wadu-navy dark:text-white mb-6">Location</h3>
-              <div className="space-y-5">
+            <div className="bg-wadu-yellow border-4 border-wadu-black p-8 shadow-[8px_8px_0px_0px_rgba(5,5,5,1)]">
+              <h3 className="text-2xl font-black text-wadu-black uppercase mb-8 border-b-4 border-wadu-black pb-4">Location</h3>
+              <div className="space-y-6">
                 <div>
-                  <label className="block text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
+                  <label className="block text-wadu-black text-sm font-black uppercase tracking-wider mb-2">
                     Venue Name
                   </label>
                   <input
                     type="text"
                     value={venueName}
                     onChange={(e) => setVenueName(e.target.value)}
-                    className="w-full bg-white dark:bg-slate-955 border border-slate-200 dark:border-slate-800 rounded-xl py-3.5 px-4 text-slate-800 dark:text-white focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-semibold"
+                    className="w-full bg-white border-4 border-wadu-black px-4 py-4 text-wadu-black font-black uppercase focus:outline-none focus:bg-white shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
+                  <label className="block text-wadu-black text-sm font-black uppercase tracking-wider mb-2">
                     Address
                   </label>
                   <input
                     type="text"
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
-                    className="w-full bg-white dark:bg-slate-955 border border-slate-200 dark:border-slate-800 rounded-xl py-3.5 px-4 text-slate-800 dark:text-white focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-semibold"
+                    className="w-full bg-white border-4 border-wadu-black px-4 py-4 text-wadu-black font-black uppercase focus:outline-none focus:bg-white shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]"
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
+                    <label className="block text-wadu-black text-sm font-black uppercase tracking-wider mb-2">
                       City
                     </label>
                     <input
                       type="text"
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
-                      placeholder="e.g. Nairobi"
-                      className="w-full bg-white dark:bg-slate-955 border border-slate-200 dark:border-slate-800 rounded-xl py-3.5 px-4 text-slate-805 dark:text-white focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-semibold"
+                      className="w-full bg-white border-4 border-wadu-black px-4 py-4 text-wadu-black font-black uppercase focus:outline-none focus:bg-white shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]"
                     />
                   </div>
                   <div>
-                    <label className="block text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
+                    <label className="block text-wadu-black text-sm font-black uppercase tracking-wider mb-2">
                       Country
                     </label>
                     <input
                       type="text"
                       value={country}
                       onChange={(e) => setCountry(e.target.value)}
-                      placeholder="e.g. Kenya"
-                      className="w-full bg-white dark:bg-slate-955 border border-slate-200 dark:border-slate-800 rounded-xl py-3.5 px-4 text-slate-805 dark:text-white focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-semibold"
+                      className="w-full bg-white border-4 border-wadu-black px-4 py-4 text-wadu-black font-black uppercase focus:outline-none focus:bg-white shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]"
                     />
                   </div>
                 </div>
@@ -565,57 +557,61 @@ export function CreateEventForm() {
             </div>
 
             {/* Settings */}
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 mb-8 shadow-sm transition duration-300">
-              <h3 className="text-lg font-bold text-wadu-navy dark:text-white mb-6">Settings</h3>
-              <div className="flex gap-3 mb-6">
-                {["Public", "Private", "Invite Only"].map((setting) => (
-                  <button
-                    key={setting}
-                    type="button"
-                    onClick={() => setVisibility(setting)}
-                    className={`px-5 py-2.5 rounded-xl font-bold text-sm transition duration-200 ${
-                      setting === visibility
-                        ? "bg-wadu-purple text-white border border-wadu-purple"
-                        : "bg-white dark:bg-slate-955 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-350 hover:border-wadu-teal dark:hover:border-wadu-teal hover:text-wadu-teal"
-                    }`}
-                  >
-                    {setting}
-                  </button>
-                ))}
+            <div className="bg-white border-4 border-wadu-black p-8 shadow-[8px_8px_0px_0px_rgba(5,5,5,1)]">
+              <h3 className="text-2xl font-black text-wadu-black uppercase mb-8 border-b-4 border-wadu-black pb-4">Settings</h3>
+              
+              <div className="mb-8">
+                <label className="block text-wadu-black text-sm font-black uppercase tracking-wider mb-4">Visibility</label>
+                <div className="flex flex-wrap gap-4">
+                  {["Public", "Private", "Invite Only"].map((setting) => (
+                    <button
+                      key={setting}
+                      type="button"
+                      onClick={() => setVisibility(setting)}
+                      className={`px-6 py-3 font-black uppercase transition duration-200 border-4 border-wadu-black ${
+                        setting === visibility
+                          ? "bg-wadu-black text-wadu-yellow shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] translate-y-1 translate-x-1"
+                          : "bg-white text-wadu-black hover:bg-wadu-black hover:text-wadu-yellow shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] hover:translate-y-1 hover:translate-x-1"
+                      }`}
+                    >
+                      {setting}
+                    </button>
+                  ))}
+                </div>
               </div>
 
               <div>
-                <label className="block text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-3">
+                <label className="block text-wadu-black text-sm font-black uppercase tracking-wider mb-4">
                   Tags
                 </label>
-                <form onSubmit={handleAddTag} className="flex gap-2 mb-4">
+                <form onSubmit={handleAddTag} className="flex gap-4 mb-6">
                   <input
                     type="text"
-                    placeholder="Add tag..."
+                    placeholder="ADD TAG..."
                     value={newTag}
                     onChange={(e) => setNewTag(e.target.value)}
-                    className="flex-1 bg-white dark:bg-slate-955 border border-slate-205 dark:border-slate-800 rounded-xl px-4 py-2 text-sm text-slate-800 dark:text-white focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal font-semibold"
+                    className="flex-1 bg-white border-4 border-wadu-black px-4 py-4 text-wadu-black font-black uppercase focus:outline-none focus:bg-wadu-yellow shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]"
                   />
                   <button
                     type="submit"
-                    className="bg-wadu-navy hover:bg-wadu-teal hover:text-wadu-navy text-white text-xs font-bold px-4 rounded-xl transition duration-200 border border-slate-200 dark:border-slate-800 shadow-sm"
+                    className="bg-wadu-black hover:bg-white text-wadu-yellow hover:text-wadu-black text-xl font-black uppercase px-8 border-4 border-wadu-black transition duration-200 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[8px_8px_0px_0px_rgba(5,5,5,1)]"
                   >
                     Add
                   </button>
                 </form>
-                <div className="flex flex-wrap gap-2.5">
+                <div className="flex flex-wrap gap-4">
                   {tags.map((tag) => (
                     <span
                       key={tag}
-                      className="bg-wadu-navy text-wadu-teal border border-wadu-teal/20 px-3.5 py-1.5 rounded-full text-sm font-bold flex items-center gap-2 shadow-sm bg-opacity-95"
+                      className="bg-white text-wadu-black border-4 border-wadu-black px-4 py-2 font-black uppercase flex items-center gap-3 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]"
                     >
                       {tag}
                       <button
                         type="button"
                         onClick={() => handleRemoveTag(tag)}
-                        className="hover:text-white text-base leading-none"
+                        className="hover:text-red-500 transition duration-200"
                       >
-                        ×
+                        <Trash2 size={16} />
                       </button>
                     </span>
                   ))}
@@ -623,19 +619,19 @@ export function CreateEventForm() {
               </div>
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex flex-col md:flex-row gap-6">
               <button
                 type="button"
                 onClick={handleSaveDraft}
                 disabled={submitting}
-                className="px-6 py-3.5 rounded-xl font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-wadu-teal hover:text-wadu-teal transition duration-200 shadow-sm disabled:opacity-50"
+                className="px-8 py-5 font-black uppercase text-lg bg-white border-4 border-wadu-black text-wadu-black hover:bg-wadu-black hover:text-wadu-yellow transition duration-200 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[8px_8px_0px_0px_rgba(5,5,5,1)] disabled:opacity-50"
               >
-                {submitting ? "Saving..." : "Save as Draft"}
+                {submitting ? "Saving..." : "Save Draft"}
               </button>
               <button
                 type="button"
                 onClick={handleContinueToStep2}
-                className="flex-1 bg-wadu-navy border border-wadu-navy/15 text-white py-3.5 rounded-xl font-bold hover:bg-wadu-teal hover:text-wadu-navy hover:border-wadu-teal transition duration-200 text-center shadow-md"
+                className="flex-1 bg-wadu-black border-4 border-wadu-black text-wadu-yellow py-5 font-black uppercase text-lg hover:bg-white hover:text-wadu-black transition duration-200 text-center shadow-[6px_6px_0px_0px_rgba(5,5,5,0.2)] hover:-translate-y-1 hover:-translate-x-1"
               >
                 Continue to Tickets
               </button>
@@ -643,31 +639,33 @@ export function CreateEventForm() {
           </div>
 
           {/* Live Preview Sidebar */}
-          <div>
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 sticky top-24 shadow-md transition duration-300">
-              <h3 className="text-lg font-bold text-wadu-navy dark:text-white mb-6">
+          <div className="lg:col-span-1">
+            <div className="bg-wadu-yellow border-8 border-wadu-black p-8 sticky top-28 shadow-[12px_12px_0px_0px_rgba(5,5,5,1)]">
+              <h3 className="text-2xl font-black uppercase text-wadu-black mb-6 border-b-4 border-wadu-black pb-4">
                 Live Preview
               </h3>
-              <div className="rounded-xl h-40 mb-4 overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm">
+              <div className="h-48 mb-6 overflow-hidden border-4 border-wadu-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] bg-white">
                 <img
                   src={imageUrl}
                   alt="Event preview"
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div>
-                <span className="bg-wadu-purple text-white px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase shadow-sm">
+              <div className="space-y-4">
+                <span className="inline-block bg-wadu-black text-wadu-yellow px-4 py-2 text-sm font-black uppercase border-2 border-wadu-black shadow-[2px_2px_0px_0px_rgba(255,255,255,1)]">
                   {category}
                 </span>
-                <h4 className="text-wadu-navy dark:text-white font-bold text-base mt-3 mb-1">
+                <h4 className="text-wadu-black font-black text-2xl uppercase leading-tight">
                   {eventName || "Event Name"}
                 </h4>
-                <p className="text-slate-500 dark:text-slate-400 text-xs mt-1.5 font-semibold">
-                  Date: {startDate || "YYYY-MM-DD"} • {startTime} - {endTime}
-                </p>
-                <p className="text-slate-500 dark:text-slate-400 text-xs font-semibold mt-1">
-                  Location: {venueName || "Venue"} • {city}, {country}
-                </p>
+                <div className="bg-white border-4 border-wadu-black p-4 space-y-2 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]">
+                  <p className="text-wadu-black text-sm font-bold uppercase flex items-center gap-2">
+                    <Calendar size={16}/> {startDate || "YYYY-MM-DD"} • {startTime}
+                  </p>
+                  <p className="text-wadu-black text-sm font-bold uppercase flex items-center gap-2">
+                    <MapPin size={16}/> {city}, {country}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -675,70 +673,70 @@ export function CreateEventForm() {
       )}
 
       {step === 2 && (
-        <div className="space-y-6">
-          <div className="flex items-center gap-4 mb-6">
+        <div className="space-y-8 max-w-4xl mx-auto">
+          <div className="flex items-center gap-6 mb-8">
             <button
               onClick={() => setStep(1)}
-              className="p-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl transition duration-200 shadow-sm"
+              className="p-3 bg-white border-4 border-wadu-black hover:bg-wadu-black hover:text-wadu-yellow text-wadu-black transition duration-200 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] hover:-translate-y-1 hover:-translate-x-1"
             >
-              <ArrowLeft size={18} />
+              <ArrowLeft size={24} />
             </button>
-            <h2 className="text-2xl font-bold text-wadu-navy dark:text-white">
-              Create Event: Ticket Types
+            <h2 className="text-4xl font-black uppercase text-wadu-black">
+              Create Event: Tickets
             </h2>
           </div>
 
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 shadow-sm space-y-6">
+          <div className="bg-white border-4 border-wadu-black p-8 shadow-[8px_8px_0px_0px_rgba(5,5,5,1)] space-y-10">
             {tickets.map((ticket, index) => (
               <div
                 key={ticket.id}
-                className="p-6 border border-slate-100 dark:border-slate-800 rounded-2xl space-y-4 relative bg-slate-50/50 dark:bg-slate-950/20"
+                className="p-8 border-4 border-wadu-black bg-wadu-yellow relative shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]"
               >
-                <div className="flex justify-between items-center">
-                  <span className="text-sm font-bold text-wadu-purple">
+                <div className="flex justify-between items-center mb-6 border-b-4 border-wadu-black pb-4">
+                  <span className="text-xl font-black uppercase text-wadu-black">
                     Tier #{index + 1}
                   </span>
                   {tickets.length > 1 && (
                     <button
                       type="button"
                       onClick={() => handleRemoveTicket(ticket.id)}
-                      className="text-red-500 bg-red-500/10 hover:bg-red-500/20 rounded-xl p-2 transition duration-200"
+                      className="text-white bg-wadu-black border-2 border-wadu-black hover:bg-white hover:text-wadu-black p-2 transition duration-200 shadow-[2px_2px_0px_0px_rgba(255,255,255,1)]"
                     >
-                      <Trash2 size={16} />
+                      <Trash2 size={20} />
                     </button>
                   )}
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="space-y-1">
-                    <label className="text-xs font-semibold text-slate-500 dark:text-slate-400">
+                <div className="grid md:grid-cols-2 gap-8">
+                  <div className="space-y-2">
+                    <label className="text-sm font-black uppercase text-wadu-black">
                       Ticket Name
                     </label>
                     <input
                       type="text"
                       required
-                      placeholder="e.g. VIP Access"
+                      placeholder="E.G. VIP ACCESS"
                       value={ticket.name}
                       onChange={(e) => handleTicketChange(ticket.id, "name", e.target.value)}
-                      className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-sm font-semibold focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal text-slate-805 dark:text-white"
+                      className="w-full bg-white border-4 border-wadu-black px-4 py-4 text-wadu-black font-black uppercase focus:outline-none shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]"
                     />
                   </div>
 
-                  <div className="space-y-1">
-                    <label className="text-xs font-semibold text-slate-500 dark:text-slate-400">
-                      Ticket Description
+                  <div className="space-y-2">
+                    <label className="text-sm font-black uppercase text-wadu-black">
+                      Description
                     </label>
                     <input
                       type="text"
-                      placeholder="e.g. Priority boarding + welcome drink"
+                      placeholder="E.G. PRIORITY BOARDING"
                       value={ticket.description}
                       onChange={(e) => handleTicketChange(ticket.id, "description", e.target.value)}
-                      className="w-full bg-white dark:bg-slate-955 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-sm font-semibold focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal text-slate-805 dark:text-white"
+                      className="w-full bg-white border-4 border-wadu-black px-4 py-4 text-wadu-black font-black uppercase focus:outline-none shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]"
                     />
                   </div>
 
-                  <div className="space-y-1">
-                    <label className="text-xs font-semibold text-slate-500 dark:text-slate-400">
+                  <div className="space-y-2">
+                    <label className="text-sm font-black uppercase text-wadu-black">
                       Price (KES)
                     </label>
                     <input
@@ -746,12 +744,12 @@ export function CreateEventForm() {
                       min={0}
                       value={ticket.price}
                       onChange={(e) => handleTicketChange(ticket.id, "price", parseInt(e.target.value, 10) || 0)}
-                      className="w-full bg-white dark:bg-slate-955 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-sm font-semibold focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal text-slate-805 dark:text-white"
+                      className="w-full bg-white border-4 border-wadu-black px-4 py-4 text-wadu-black font-black uppercase focus:outline-none shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]"
                     />
                   </div>
 
-                  <div className="space-y-1">
-                    <label className="text-xs font-semibold text-slate-500 dark:text-slate-400">
+                  <div className="space-y-2">
+                    <label className="text-sm font-black uppercase text-wadu-black">
                       Quantity Available
                     </label>
                     <input
@@ -759,7 +757,7 @@ export function CreateEventForm() {
                       min={1}
                       value={ticket.quantity}
                       onChange={(e) => handleTicketChange(ticket.id, "quantity", parseInt(e.target.value, 10) || 0)}
-                      className="w-full bg-white dark:bg-slate-955 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-sm font-semibold focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal text-slate-850 dark:text-white"
+                      className="w-full bg-white border-4 border-wadu-black px-4 py-4 text-wadu-black font-black uppercase focus:outline-none shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]"
                     />
                   </div>
                 </div>
@@ -769,46 +767,46 @@ export function CreateEventForm() {
             <button
               type="button"
               onClick={handleAddTicket}
-              className="flex items-center justify-center gap-2 w-full py-3.5 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-xl hover:border-wadu-teal hover:text-wadu-teal transition font-bold text-slate-400 dark:text-slate-500 text-sm"
+              className="flex items-center justify-center gap-3 w-full py-6 border-4 border-dashed border-wadu-black bg-white hover:bg-wadu-black hover:text-wadu-yellow transition font-black text-wadu-black text-xl uppercase shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] hover:-translate-y-1 hover:-translate-x-1"
             >
-              <Plus size={16} /> Add Ticket Type
+              <Plus size={24} /> Add Ticket Type
             </button>
           </div>
 
-          <div className="flex gap-4">
+          <div className="flex flex-col md:flex-row gap-6">
             <button
               onClick={() => setStep(1)}
-              className="px-6 py-3.5 rounded-xl font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-wadu-teal hover:text-wadu-teal transition duration-200 shadow-sm"
+              className="px-8 py-5 font-black uppercase text-lg bg-white border-4 border-wadu-black text-wadu-black hover:bg-wadu-black hover:text-wadu-yellow transition duration-200 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] hover:-translate-y-1 hover:-translate-x-1"
             >
               Back
             </button>
             <button
               onClick={handleContinueToStep3}
-              className="flex-1 bg-wadu-navy border border-wadu-navy/15 text-white py-3.5 rounded-xl font-bold hover:bg-wadu-teal hover:text-wadu-navy hover:border-wadu-teal transition duration-200 text-center shadow-md"
+              className="flex-1 bg-wadu-black border-4 border-wadu-black text-wadu-yellow py-5 font-black uppercase text-lg hover:bg-white hover:text-wadu-black transition duration-200 text-center shadow-[6px_6px_0px_0px_rgba(255,255,255,1)] hover:-translate-y-1 hover:-translate-x-1"
             >
-              Continue to Preview &amp; Publish
+              Continue to Publish
             </button>
           </div>
         </div>
       )}
 
       {step === 3 && (
-        <div className="space-y-6">
-          <div className="flex items-center gap-4 mb-6">
+        <div className="space-y-8 max-w-4xl mx-auto">
+          <div className="flex items-center gap-6 mb-8">
             <button
               onClick={() => setStep(2)}
-              className="p-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl transition duration-200 shadow-sm"
+              className="p-3 bg-white border-4 border-wadu-black hover:bg-wadu-black hover:text-wadu-yellow text-wadu-black transition duration-200 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] hover:-translate-y-1 hover:-translate-x-1"
             >
-              <ArrowLeft size={18} />
+              <ArrowLeft size={24} />
             </button>
-            <h2 className="text-2xl font-bold text-wadu-navy dark:text-white">
-              Create Event: Review &amp; Publish
+            <h2 className="text-4xl font-black uppercase text-wadu-black">
+              Review &amp; Publish
             </h2>
           </div>
 
           {/* Event Preview Summary Card */}
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 shadow-sm space-y-6">
-            <div className="h-64 rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-950 border border-slate-100 dark:border-slate-800">
+          <div className="bg-wadu-yellow border-8 border-wadu-black p-8 md:p-12 shadow-[12px_12px_0px_0px_rgba(5,5,5,1)] space-y-10">
+            <div className="h-80 border-4 border-wadu-black overflow-hidden bg-white shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]">
               <img
                 src={imageUrl}
                 alt="Event cover"
@@ -816,61 +814,61 @@ export function CreateEventForm() {
               />
             </div>
 
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <span className="bg-wadu-purple text-white px-3 py-1 rounded-full text-xs font-bold shadow-sm uppercase">
+            <div className="space-y-6">
+              <div className="flex items-center gap-4">
+                <span className="bg-wadu-black text-wadu-yellow px-4 py-2 border-2 border-wadu-black text-sm font-black uppercase shadow-[2px_2px_0px_0px_rgba(255,255,255,1)]">
                   {category}
                 </span>
-                <span className="text-wadu-teal border border-wadu-teal/20 bg-wadu-teal/10 px-3 py-1 rounded-full text-xs font-bold uppercase shadow-sm">
+                <span className="bg-white text-wadu-black border-2 border-wadu-black px-4 py-2 text-sm font-black uppercase shadow-[2px_2px_0px_0px_rgba(5,5,5,1)]">
                   {visibility}
                 </span>
               </div>
-              <h1 className="text-3xl font-extrabold text-wadu-navy dark:text-white">
+              <h1 className="text-5xl md:text-6xl font-black uppercase text-wadu-black leading-none">
                 {eventName}
               </h1>
-              <p className="text-slate-500 dark:text-slate-400 font-semibold text-sm leading-relaxed">
+              <p className="text-wadu-black font-bold text-lg leading-relaxed bg-white border-4 border-wadu-black p-6 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]">
                 {description || "No description provided."}
               </p>
             </div>
 
-            <div className="border-t border-slate-100 dark:border-slate-800 pt-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm font-semibold text-slate-600 dark:text-slate-300">
-              <div className="flex items-center gap-2">
-                <Calendar size={18} className="text-wadu-teal" />
+            <div className="border-t-4 border-wadu-black pt-8 grid grid-cols-1 md:grid-cols-2 gap-6 text-lg font-black uppercase text-wadu-black">
+              <div className="flex items-center gap-4">
+                <Calendar size={28} className="text-wadu-black" />
                 <span>
-                  {startDate} ({startTime}) to {endDate} ({endTime})
+                  {startDate} ({startTime})<br/>to {endDate} ({endTime})
                 </span>
               </div>
-              <div className="flex items-center gap-2">
-                <MapPin size={18} className="text-wadu-teal" />
+              <div className="flex items-center gap-4">
+                <MapPin size={28} className="text-wadu-black" />
                 <span>
-                  {venueName} - {address && `${address}, `}
-                  {city}, {country}
+                  {venueName}<br/>
+                  {address && `${address}, `}{city}, {country}
                 </span>
               </div>
             </div>
 
             {/* Ticket Table */}
-            <div className="border-t border-slate-100 dark:border-slate-800 pt-6">
-              <h3 className="font-bold text-wadu-navy dark:text-white mb-4 text-base">
-                Ticket Information
+            <div className="border-t-4 border-wadu-black pt-8">
+              <h3 className="font-black text-3xl text-wadu-black uppercase mb-6">
+                Tickets
               </h3>
-              <div className="overflow-x-auto rounded-xl border border-slate-205 dark:border-slate-800">
-                <table className="w-full text-sm text-left">
+              <div className="overflow-x-auto border-4 border-wadu-black bg-white shadow-[8px_8px_0px_0px_rgba(5,5,5,1)]">
+                <table className="w-full text-left border-collapse">
                   <thead>
-                    <tr className="bg-slate-50 dark:bg-slate-800/50 text-slate-550 dark:text-slate-400 text-xs uppercase tracking-wider">
-                      <th className="px-6 py-3 font-semibold">Tier Name</th>
-                      <th className="px-4 py-3 font-semibold">Description</th>
-                      <th className="px-4 py-3 font-semibold">Price</th>
-                      <th className="px-4 py-3 font-semibold">Capacity</th>
+                    <tr className="bg-wadu-black text-wadu-yellow text-sm uppercase">
+                      <th className="px-6 py-4 font-black border-b-4 border-wadu-black">Tier Name</th>
+                      <th className="px-6 py-4 font-black border-b-4 border-wadu-black">Description</th>
+                      <th className="px-6 py-4 font-black border-b-4 border-wadu-black">Price</th>
+                      <th className="px-6 py-4 font-black border-b-4 border-wadu-black">Capacity</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-semibold text-slate-700 dark:text-slate-350">
+                  <tbody className="text-wadu-black font-bold text-sm uppercase">
                     {tickets.map((t) => (
-                      <tr key={t.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/10">
-                        <td className="px-6 py-4">{t.name || "Unnamed Tier"}</td>
-                        <td className="px-4 py-4 text-xs text-slate-450">{t.description || "—"}</td>
-                        <td className="px-4 py-4">KES {t.price.toLocaleString()}</td>
-                        <td className="px-4 py-4">{t.quantity} qty</td>
+                      <tr key={t.id} className="hover:bg-wadu-yellow transition duration-200">
+                        <td className="px-6 py-5 border-b-2 border-wadu-black/20">{t.name || "UNNAMED TIER"}</td>
+                        <td className="px-6 py-5 border-b-2 border-wadu-black/20">{t.description || "—"}</td>
+                        <td className="px-6 py-5 border-b-2 border-wadu-black/20">KES {t.price.toLocaleString()}</td>
+                        <td className="px-6 py-5 border-b-2 border-wadu-black/20">{t.quantity} QTY</td>
                       </tr>
                     ))}
                   </tbody>
@@ -879,25 +877,25 @@ export function CreateEventForm() {
             </div>
           </div>
 
-          <div className="flex gap-4">
+          <div className="flex flex-col md:flex-row gap-6 pt-8">
             <button
               onClick={() => setStep(2)}
               disabled={submitting}
-              className="px-6 py-3.5 rounded-xl font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-wadu-teal hover:text-wadu-teal transition duration-200 shadow-sm disabled:opacity-50"
+              className="px-8 py-5 font-black uppercase text-lg bg-white border-4 border-wadu-black text-wadu-black hover:bg-wadu-black hover:text-wadu-yellow transition duration-200 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] hover:-translate-y-1 hover:-translate-x-1 disabled:opacity-50"
             >
               Back
             </button>
             <button
               onClick={handleSaveDraft}
               disabled={submitting}
-              className="bg-wadu-navy border border-wadu-navy/15 text-white hover:bg-wadu-teal hover:text-wadu-navy hover:border-wadu-teal px-6 py-3.5 rounded-xl font-bold transition duration-200 shadow-sm disabled:opacity-50"
+              className="px-8 py-5 font-black uppercase text-lg bg-white border-4 border-wadu-black text-wadu-black hover:bg-wadu-black hover:text-wadu-yellow transition duration-200 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] hover:-translate-y-1 hover:-translate-x-1 disabled:opacity-50"
             >
-              {submitting ? "Saving..." : "Save as Draft"}
+              {submitting ? "Saving..." : "Save Draft"}
             </button>
             <button
               onClick={handlePublish}
               disabled={submitting}
-              className="flex-1 bg-wadu-purple text-white hover:bg-wadu-teal hover:text-wadu-navy py-3.5 rounded-xl font-bold transition duration-200 text-center shadow-md disabled:opacity-50"
+              className="flex-1 bg-wadu-black border-4 border-wadu-black text-wadu-yellow py-5 font-black uppercase text-xl hover:bg-white hover:text-wadu-black transition duration-200 text-center shadow-[6px_6px_0px_0px_rgba(255,255,255,1)] hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[10px_10px_0px_0px_rgba(255,255,255,1)] disabled:opacity-50"
             >
               {submitting ? "Publishing..." : "Publish Event"}
             </button>

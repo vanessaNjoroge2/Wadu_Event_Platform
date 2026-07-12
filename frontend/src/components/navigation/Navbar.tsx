@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { DarkModeToggle } from "@/components/common/DarkModeToggle";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -55,14 +54,17 @@ export function Navbar() {
       }}
       animate={hidden ? "hidden" : "visible"}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className="sticky top-0 z-50 border-b border-white/10 bg-[#0A1F44] text-white transition-all duration-300 shadow-md"
+      className={`sticky top-0 z-50 border-b-4 border-wadu-black bg-wadu-yellow text-wadu-black transition-all duration-300 ${scrolled ? 'shadow-[0px_8px_0px_0px_rgba(5,5,5,1)]' : ''}`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <Link to="/" className="text-2xl font-bold flex items-center gap-2 group">
-            <span className="text-white group-hover:text-wadu-teal font-extrabold tracking-tight transition duration-200">
-              WADU
+          <Link to="/" className="flex items-center group select-none" style={{ gap: 0 }}>
+            <span className="font-logo text-4xl leading-none text-wadu-black" style={{ letterSpacing: '0.05em' }}>
+              Wadu
+            </span>
+            <span className="font-logo text-4xl leading-none text-wadu-yellow" style={{ marginLeft: '-1px' }}>
+              .
             </span>
           </Link>
 
@@ -70,26 +72,26 @@ export function Navbar() {
           <div className="hidden md:flex items-center gap-8">
             <Link
               to="/explore"
-              className="text-slate-200 hover:text-wadu-teal transition text-sm font-semibold duration-200"
+              className="text-wadu-black hover:text-white transition-colors text-sm font-black uppercase duration-200"
             >
               Explore
             </Link>
             <Link
               to="/categories"
-              className="text-slate-200 hover:text-wadu-teal transition text-sm font-semibold duration-200"
+              className="text-wadu-black hover:text-white transition-colors text-sm font-black uppercase duration-200"
             >
               Categories
             </Link>
             <Link
               to="/cities"
-              className="text-slate-200 hover:text-wadu-teal transition text-sm font-semibold duration-200"
+              className="text-wadu-black hover:text-white transition-colors text-sm font-black uppercase duration-200"
             >
               Cities
             </Link>
             {isLoggedIn && userRole === "ATTENDEE" && (
               <Link
                 to="/dashboard"
-                className="text-slate-200 hover:text-wadu-teal transition text-sm font-semibold flex items-center gap-1 duration-200"
+                className="text-wadu-black hover:text-white transition-colors text-sm font-black uppercase flex items-center gap-1 duration-200"
               >
                 My Dashboard
               </Link>
@@ -97,7 +99,7 @@ export function Navbar() {
             {isLoggedIn && userRole === "ORGANIZER" && (
               <Link
                 to="/organizer-dashboard"
-                className="text-slate-200 hover:text-wadu-teal transition text-sm font-semibold flex items-center gap-1 duration-200"
+                className="text-wadu-black hover:text-white transition-colors text-sm font-black uppercase flex items-center gap-1 duration-200"
               >
                 Dashboard
               </Link>
@@ -105,7 +107,7 @@ export function Navbar() {
             {isLoggedIn && userRole === "ADMIN" && (
               <Link
                 to="/admin-dashboard"
-                className="text-slate-200 hover:text-wadu-teal transition text-sm font-semibold flex items-center gap-1 duration-200"
+                className="text-wadu-black hover:text-white transition-colors text-sm font-black uppercase flex items-center gap-1 duration-200"
               >
                 Admin Dashboard
               </Link>
@@ -113,45 +115,44 @@ export function Navbar() {
             {isLoggedIn ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <button className="w-9 h-9 rounded-full bg-wadu-purple text-white text-sm font-bold flex items-center justify-center hover:ring-2 hover:ring-wadu-teal transition focus:outline-none">
-                    V
+                  <button className="w-10 h-10 rounded-none border-2 border-wadu-black bg-white text-wadu-black text-sm font-black uppercase flex items-center justify-center hover:bg-wadu-black hover:text-wadu-yellow transition focus:outline-none">
+                    U
                   </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="bg-[#0A1F44] border border-white/10 text-white rounded-xl shadow-lg mt-2 min-w-[160px] p-1.5 z-50">
+                <DropdownMenuContent className="bg-white border-4 border-wadu-black text-wadu-black rounded-none shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] mt-4 min-w-[160px] p-0 z-50">
                   {userRole === "ATTENDEE" && (
-                    <DropdownMenuItem asChild>
+                    <DropdownMenuItem asChild className="rounded-none focus:bg-wadu-yellow focus:text-wadu-black cursor-pointer px-4 py-3 border-b-2 border-wadu-black last:border-b-0">
                       <Link
                         to="/dashboard"
-                        className="block w-full px-3 py-2 text-sm font-bold rounded-lg text-slate-200 hover:text-wadu-teal hover:bg-white/10 transition cursor-pointer"
+                        className="block w-full font-black uppercase"
                       >
                         My Dashboard
                       </Link>
                     </DropdownMenuItem>
                   )}
                   {userRole === "ORGANIZER" && (
-                    <DropdownMenuItem asChild>
+                    <DropdownMenuItem asChild className="rounded-none focus:bg-wadu-yellow focus:text-wadu-black cursor-pointer px-4 py-3 border-b-2 border-wadu-black last:border-b-0">
                       <Link
                         to="/organizer-dashboard"
-                        className="block w-full px-3 py-2 text-sm font-bold rounded-lg text-slate-200 hover:text-wadu-teal hover:bg-white/10 transition cursor-pointer"
+                        className="block w-full font-black uppercase"
                       >
                         Organizer Dashboard
                       </Link>
                     </DropdownMenuItem>
                   )}
                   {userRole === "ADMIN" && (
-                    <DropdownMenuItem asChild>
+                    <DropdownMenuItem asChild className="rounded-none focus:bg-wadu-yellow focus:text-wadu-black cursor-pointer px-4 py-3 border-b-2 border-wadu-black last:border-b-0">
                       <Link
                         to="/admin-dashboard"
-                        className="block w-full px-3 py-2 text-sm font-bold rounded-lg text-slate-200 hover:text-wadu-teal hover:bg-white/10 transition cursor-pointer"
+                        className="block w-full font-black uppercase"
                       >
                         Admin Dashboard
                       </Link>
                     </DropdownMenuItem>
                   )}
-                  <DropdownMenuSeparator className="bg-white/10 my-1" />
                   <DropdownMenuItem
                     onClick={handleSignOut}
-                    className="block w-full text-left px-3 py-2 text-sm font-bold rounded-lg text-slate-200 hover:text-red-450 hover:bg-white/10 transition cursor-pointer"
+                    className="block w-full text-left font-black uppercase rounded-none focus:bg-red-500 focus:text-white cursor-pointer px-4 py-3"
                   >
                     Sign Out
                   </DropdownMenuItem>
@@ -161,13 +162,13 @@ export function Navbar() {
               <>
                 <Link
                   to="/sign-in"
-                  className="text-slate-200 hover:text-wadu-teal transition text-sm font-semibold duration-200"
+                  className="text-wadu-black hover:text-white transition-colors text-sm font-black uppercase duration-200"
                 >
                   Sign In
                 </Link>
                 <Link
                   to="/sign-up"
-                  className="text-slate-200 hover:text-wadu-teal transition text-sm font-semibold duration-200"
+                  className="text-wadu-black hover:text-white transition-colors text-sm font-black uppercase duration-200"
                 >
                   Sign Up
                 </Link>
@@ -176,47 +177,45 @@ export function Navbar() {
             {(!isLoggedIn || userRole !== "ATTENDEE") && (
               <Link
                 to="/post-event"
-                className="bg-wadu-purple hover:bg-wadu-teal hover:text-wadu-navy text-white px-5 py-2.5 rounded-xl font-bold text-xs transition shadow-md flex items-center gap-1.5 duration-200"
+                className="bg-wadu-black hover:bg-white hover:text-wadu-black text-wadu-yellow border-2 border-wadu-black px-6 py-2.5 rounded-none font-black text-xs uppercase transition-colors shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:translate-y-0.5 hover:translate-x-0.5 hover:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] flex items-center gap-1.5 duration-200"
               >
                 Post Event
               </Link>
             )}
-            <DarkModeToggle />
           </div>
 
           {/* Mobile menu button */}
           <div className="flex items-center gap-2 md:hidden">
-            <DarkModeToggle />
             <button
-              className="text-white hover:text-wadu-teal p-2 transition duration-200"
+              className="text-wadu-black hover:text-white p-2 transition-colors duration-200"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
         </div>
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <div className="md:hidden pb-4 border-t border-white/10 space-y-1 bg-[#0A1F44] px-2">
+          <div className="md:hidden pb-4 border-t-4 border-wadu-black space-y-1 bg-wadu-yellow px-2 pt-2">
             <Link
               to="/explore"
-              className="block text-slate-200 hover:text-wadu-teal py-2.5 text-sm font-medium transition duration-200"
+              className="block text-wadu-black hover:bg-wadu-black hover:text-wadu-yellow px-4 py-3 text-sm font-black uppercase transition-colors duration-200"
               onClick={() => setMobileMenuOpen(false)}
             >
               Explore
             </Link>
             <Link
               to="/categories"
-              className="block text-slate-200 hover:text-wadu-teal py-2.5 text-sm font-medium transition duration-200"
+              className="block text-wadu-black hover:bg-wadu-black hover:text-wadu-yellow px-4 py-3 text-sm font-black uppercase transition-colors duration-200"
               onClick={() => setMobileMenuOpen(false)}
             >
               Categories
             </Link>
             <Link
               to="/cities"
-              className="block text-slate-200 hover:text-wadu-teal py-2.5 text-sm font-medium transition duration-200"
+              className="block text-wadu-black hover:bg-wadu-black hover:text-wadu-yellow px-4 py-3 text-sm font-black uppercase transition-colors duration-200"
               onClick={() => setMobileMenuOpen(false)}
             >
               Cities
@@ -224,7 +223,7 @@ export function Navbar() {
             {isLoggedIn && userRole === "ATTENDEE" && (
               <Link
                 to="/dashboard"
-                className="block text-slate-200 hover:text-wadu-teal py-2.5 text-sm font-medium transition duration-200"
+                className="block text-wadu-black hover:bg-wadu-black hover:text-wadu-yellow px-4 py-3 text-sm font-black uppercase transition-colors duration-200"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 My Dashboard
@@ -233,7 +232,7 @@ export function Navbar() {
             {isLoggedIn && userRole === "ORGANIZER" && (
               <Link
                 to="/organizer-dashboard"
-                className="block text-slate-200 hover:text-wadu-teal py-2.5 text-sm font-medium transition duration-200"
+                className="block text-wadu-black hover:bg-wadu-black hover:text-wadu-yellow px-4 py-3 text-sm font-black uppercase transition-colors duration-200"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Organizer Dashboard
@@ -242,7 +241,7 @@ export function Navbar() {
             {isLoggedIn && userRole === "ADMIN" && (
               <Link
                 to="/admin-dashboard"
-                className="block text-slate-200 hover:text-wadu-teal py-2.5 text-sm font-medium transition duration-200"
+                className="block text-wadu-black hover:bg-wadu-black hover:text-wadu-yellow px-4 py-3 text-sm font-black uppercase transition-colors duration-200"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Admin Dashboard
@@ -254,7 +253,7 @@ export function Navbar() {
                   handleSignOut();
                   setMobileMenuOpen(false);
                 }}
-                className="block w-full text-left text-slate-200 hover:text-red-400 py-2.5 text-sm font-medium transition duration-200"
+                className="block w-full text-left text-wadu-black hover:bg-red-500 hover:text-white px-4 py-3 text-sm font-black uppercase transition-colors duration-200"
               >
                 Sign Out
               </button>
@@ -262,14 +261,14 @@ export function Navbar() {
               <>
                 <Link
                   to="/sign-in"
-                  className="block text-slate-200 hover:text-wadu-teal py-2.5 text-sm font-medium transition duration-200"
+                  className="block text-wadu-black hover:bg-wadu-black hover:text-wadu-yellow px-4 py-3 text-sm font-black uppercase transition-colors duration-200"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Sign In
                 </Link>
                 <Link
                   to="/sign-up"
-                  className="block text-slate-200 hover:text-wadu-teal py-2.5 text-sm font-medium transition duration-200"
+                  className="block text-wadu-black hover:bg-wadu-black hover:text-wadu-yellow px-4 py-3 text-sm font-black uppercase transition-colors duration-200"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Sign Up
@@ -279,7 +278,7 @@ export function Navbar() {
             {(!isLoggedIn || userRole !== "ATTENDEE") && (
               <Link
                 to="/post-event"
-                className="block bg-wadu-purple hover:bg-wadu-teal hover:text-wadu-navy text-white px-4 py-2.5 rounded-xl font-bold text-center mt-4 transition text-xs duration-200"
+                className="block bg-wadu-black hover:bg-white hover:text-wadu-black text-wadu-yellow border-2 border-wadu-black px-4 py-3 font-black text-center mt-4 transition-colors text-sm uppercase duration-200"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Post Event

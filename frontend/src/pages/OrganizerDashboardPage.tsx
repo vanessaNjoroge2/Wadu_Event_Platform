@@ -168,9 +168,9 @@ const getEventImage = (id: string | number) => {
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-[#0A1F44] border border-[#6C4DFF]/30 rounded-xl px-4 py-3 shadow-xl">
+      <div className="bg-wadu-yellow border-r-4 border-wadu-black border-4 border-wadu-black border-[#6C4DFF]/30 rounded-none px-4 py-3 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]">
         <p className="text-gray-400 text-xs mb-1">{label}</p>
-        <p className="text-white font-bold text-sm">{formatKES(payload[0].value)}</p>
+        <p className="text-white font-black uppercase text-sm">{formatKES(payload[0].value)}</p>
       </div>
     );
   }
@@ -482,26 +482,26 @@ export default function OrganizerDashboardPage() {
     <div className={`flex h-screen overflow-hidden font-sans transition-colors duration-200 ${darkMode ? "dark bg-slate-950 text-slate-100" : "bg-gray-50 text-gray-800"}`}>
       
       {/* ── SIDEBAR ── */}
-      <aside className="w-[240px] min-w-[240px] bg-[#0A1F44] flex flex-col h-full shadow-2xl z-10 text-white">
+      <aside className="w-[240px] min-w-[240px] bg-wadu-yellow border-r-4 border-wadu-black flex flex-col h-full shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] z-10 text-white">
         {/* Logo */}
-        <div className="px-6 py-6 border-b border-white/10">
+        <div className="px-6 py-6 border-b border-wadu-black">
           <Link to="/" className="flex items-center gap-2">
             <span className="text-2xl font-black text-white tracking-tight">WADU</span>
-            <span className="text-xs bg-[#6C4DFF] text-white px-2 py-0.5 rounded-full font-semibold">Pro</span>
+            <span className="text-xs bg-wadu-black text-white px-2 py-0.5 rounded-full font-black uppercase">Pro</span>
           </Link>
         </div>
 
         {/* Profile */}
-        <div className="px-6 py-5 border-b border-white/10">
+        <div className="px-6 py-5 border-b border-wadu-black">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#6C4DFF] to-[#00C2A8] flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#6C4DFF] to-[#00C2A8] flex items-center justify-center text-white font-black uppercase text-sm flex-shrink-0">
               AF
             </div>
             <div className="min-w-0">
-              <p className="text-white font-semibold text-sm truncate">{orgName}</p>
+              <p className="text-white font-black uppercase text-sm truncate">{orgName}</p>
               <div className="flex items-center gap-1 mt-0.5">
-                <CheckCircle2 size={11} className="text-[#00C2A8]" />
-                <span className="text-[#00C2A8] text-xs font-medium">Verified Organizer</span>
+                <CheckCircle2 size={11} className="text-wadu-black" />
+                <span className="text-wadu-black text-xs font-black uppercase uppercase">Verified Organizer</span>
               </div>
             </div>
           </div>
@@ -518,9 +518,9 @@ export default function OrganizerDashboardPage() {
               <Link
                 key={item.label}
                 to={item.path}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all group ${
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-none text-sm font-black uppercase uppercase transition-all group ${
                   isActive
-                    ? "bg-[#6C4DFF] text-white shadow-lg shadow-[#6C4DFF]/30"
+                    ? "bg-wadu-black text-white shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] shadow-[#6C4DFF]/30"
                     : "text-gray-400 hover:text-white hover:bg-white/10"
                 }`}
               >
@@ -532,22 +532,22 @@ export default function OrganizerDashboardPage() {
         </nav>
 
         {/* Footer actions */}
-        <div className="px-4 py-4 border-t border-white/10 space-y-2">
+        <div className="px-4 py-4 border-t border-wadu-black space-y-2">
           <button
             onClick={() => setDarkMode(!darkMode)}
-            className="flex items-center justify-between w-full px-3 py-2.5 rounded-xl text-gray-400 hover:text-white hover:bg-white/10 transition text-sm font-medium"
+            className="flex items-center justify-between w-full px-3 py-2.5 rounded-none text-gray-400 hover:text-white hover:bg-white/10 transition text-sm font-black uppercase uppercase"
           >
             <span className="flex items-center gap-3">
               {darkMode ? <Sun size={18} /> : <Moon size={18} />}
               {darkMode ? "Light Mode" : "Dark Mode"}
             </span>
-            <div className={`w-9 h-5 rounded-full transition-colors relative ${darkMode ? "bg-[#6C4DFF]" : "bg-white/20"}`}>
+            <div className={`w-9 h-5 rounded-full transition-colors relative ${darkMode ? "bg-wadu-black" : "bg-white/20"}`}>
               <div className={`absolute top-0.5 w-4 h-4 rounded-full bg-white transition-all ${darkMode ? "left-4" : "left-0.5"}`} />
             </div>
           </button>
           <button
             onClick={handleSignOut}
-            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-gray-400 hover:text-white hover:bg-white/10 transition text-sm font-medium"
+            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-none text-gray-400 hover:text-white hover:bg-white/10 transition text-sm font-black uppercase uppercase"
           >
             <LogOut size={18} />
             Sign Out
@@ -559,27 +559,27 @@ export default function OrganizerDashboardPage() {
       <main className="flex-1 flex flex-col overflow-hidden">
         
         {/* Top Header */}
-        <header className={`border-b px-8 py-4 flex items-center justify-between flex-shrink-0 transition-colors duration-200 ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-200"}`}>
+        <header className={`border-b px-8 py-4 flex items-center justify-between flex-shrink-0 transition-colors duration-200 ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
           <div>
-            <h1 className="text-2xl font-bold">{getPageTitle()}</h1>
+            <h1 className="text-2xl font-black uppercase">{getPageTitle()}</h1>
             <p className="text-gray-400 text-sm mt-0.5">Thursday, 21 May 2026</p>
           </div>
           
           <div className="flex items-center gap-3">
-            <button className={`relative p-2 rounded-xl transition ${darkMode ? "hover:bg-slate-800 text-slate-300" : "hover:bg-gray-100 text-gray-500"}`}>
+            <button className={`relative p-2 rounded-none transition ${darkMode ? "hover:bg-slate-800 text-slate-300" : "hover:bg-gray-100 text-gray-500"}`}>
               <Bell size={20} />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#6C4DFF] rounded-full" />
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-wadu-black rounded-full" />
             </button>
             
-            <button className={`flex items-center gap-2 text-sm font-medium transition px-3 py-2 rounded-xl ${darkMode ? "bg-slate-800 hover:bg-slate-700 text-slate-200" : "bg-gray-100 hover:bg-gray-200 text-gray-700"}`}>
-              <div className="w-6 h-6 rounded-full bg-gradient-to-br from-[#6C4DFF] to-[#00C2A8] flex items-center justify-center text-white text-xs font-bold">AF</div>
+            <button className={`flex items-center gap-2 text-sm font-black uppercase uppercase transition px-3 py-2 rounded-none ${darkMode ? "bg-slate-800 hover:bg-slate-700 text-slate-200" : "bg-gray-100 hover:bg-gray-200 text-gray-700"}`}>
+              <div className="w-6 h-6 rounded-full bg-gradient-to-br from-[#6C4DFF] to-[#00C2A8] flex items-center justify-center text-white text-xs font-black uppercase">AF</div>
               {orgName}
               <ChevronDown size={14} />
             </button>
             
             <Link
               to="/post-event"
-              className="flex items-center gap-2 bg-[#6C4DFF] hover:bg-[#5a3de8] text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow-md shadow-[#6C4DFF]/30"
+              className="flex items-center gap-2 bg-wadu-black hover:bg-[#5a3de8] text-white px-4 py-2.5 rounded-none text-sm font-black uppercase transition shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] shadow-[#6C4DFF]/30"
             >
               <PlusCircle size={16} />
               Create Event
@@ -625,8 +625,8 @@ export default function OrganizerDashboardPage() {
                     up: null,
                     icon: Star,
                     iconBg: "bg-teal-50 dark:bg-teal-950/30",
-                    iconColor: "text-[#00C2A8]",
-                    changeColor: "text-[#00C2A8] bg-teal-50 dark:bg-teal-950/20",
+                    iconColor: "text-wadu-black",
+                    changeColor: "text-wadu-black bg-teal-50 dark:bg-teal-950/20",
                   },
                   {
                     label: "Upcoming Events",
@@ -636,19 +636,19 @@ export default function OrganizerDashboardPage() {
                     up: null,
                     icon: CalendarDays,
                     iconBg: "bg-purple-50 dark:bg-purple-950/30",
-                    iconColor: "text-[#6C4DFF]",
-                    changeColor: "text-[#6C4DFF] bg-purple-50 dark:bg-purple-950/20",
+                    iconColor: "text-wadu-black",
+                    changeColor: "text-wadu-black bg-purple-50 dark:bg-purple-950/20",
                   },
                 ].map((stat) => (
-                  <div key={stat.label} className={`rounded-2xl p-5 flex flex-col gap-3 shadow-sm border transition hover:shadow-md ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
+                  <div key={stat.label} className={`rounded-none p-5 flex flex-col gap-3 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] border-4 border-wadu-black transition hover:shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
                     <div className="flex items-center justify-between">
-                      <span className={`text-sm font-medium ${darkMode ? "text-slate-400" : "text-gray-500"}`}>{stat.label}</span>
-                      <div className={`w-10 h-10 rounded-xl ${stat.iconBg} flex items-center justify-center`}>
+                      <span className={`text-sm font-black uppercase uppercase ${darkMode ? "text-slate-400" : "text-gray-500"}`}>{stat.label}</span>
+                      <div className={`w-10 h-10 rounded-none ${stat.iconBg} flex items-center justify-center`}>
                         <stat.icon size={20} className={stat.iconColor} />
                       </div>
                     </div>
                     <div className="text-3xl font-black">{stat.value}</div>
-                    <div className={`inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full w-fit ${stat.changeColor}`}>
+                    <div className={`inline-flex items-center gap-1.5 text-xs font-black uppercase px-2.5 py-1 rounded-full w-fit ${stat.changeColor}`}>
                       {stat.up === true && <TrendingUp size={12} />}
                       {stat.up === false && <TrendingDown size={12} />}
                       {stat.change}
@@ -661,13 +661,13 @@ export default function OrganizerDashboardPage() {
               {/* Charts Row */}
               <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
                 {/* Line chart */}
-                <div className={`lg:col-span-3 rounded-2xl shadow-sm border p-6 ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
+                <div className={`lg:col-span-3 rounded-none shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] border-4 border-wadu-black p-6 ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
                   <div className="flex items-center justify-between mb-6">
                     <div>
-                      <h2 className="font-bold">Monthly Revenue</h2>
+                      <h2 className="font-black uppercase">Monthly Revenue</h2>
                       <p className="text-gray-400 text-sm">Last 6 months</p>
                     </div>
-                    <span className="text-xs bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400 font-semibold px-3 py-1.5 rounded-full flex items-center gap-1">
+                    <span className="text-xs bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400 font-black uppercase px-3 py-1.5 rounded-full flex items-center gap-1">
                       <TrendingUp size={12} /> +18% this month
                     </span>
                   </div>
@@ -689,9 +689,9 @@ export default function OrganizerDashboardPage() {
                 </div>
 
                 {/* Donut chart */}
-                <div className={`lg:col-span-2 rounded-2xl shadow-sm border p-6 ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
+                <div className={`lg:col-span-2 rounded-none shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] border-4 border-wadu-black p-6 ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
                   <div className="mb-4">
-                    <h2 className="font-bold">Tickets by Category</h2>
+                    <h2 className="font-black uppercase">Tickets by Category</h2>
                     <p className="text-gray-400 text-sm">All events combined</p>
                   </div>
                   <ResponsiveContainer width="100%" height={160}>
@@ -711,7 +711,7 @@ export default function OrganizerDashboardPage() {
                           <div className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: cat.color }} />
                           <span className={`${darkMode ? "text-slate-300" : "text-gray-600"}`}>{cat.name}</span>
                         </div>
-                        <span className="font-semibold">{cat.value}</span>
+                        <span className="font-black uppercase">{cat.value}</span>
                       </div>
                     ))}
                   </div>
@@ -721,10 +721,10 @@ export default function OrganizerDashboardPage() {
               {/* Bottom Row: Active Events & Transactions */}
               <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 pb-4">
                 {/* Events list mini */}
-                <div className={`lg:col-span-3 rounded-2xl shadow-sm border overflow-hidden ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
-                  <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-slate-800">
-                    <h2 className="font-bold">My Active Events</h2>
-                    <Link to="/organizer-dashboard/events" className="text-[#6C4DFF] text-sm font-semibold hover:text-[#5a3de8] flex items-center gap-1">
+                <div className={`lg:col-span-3 rounded-none shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] border-4 border-wadu-black overflow-hidden ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
+                  <div className="flex items-center justify-between px-6 py-4 border-b border-wadu-black dark:border-wadu-black">
+                    <h2 className="font-black uppercase">My Active Events</h2>
+                    <Link to="/organizer-dashboard/events" className="text-wadu-black text-sm font-black uppercase hover:text-[#5a3de8] flex items-center gap-1">
                       View all <ExternalLink size={14} />
                     </Link>
                   </div>
@@ -732,32 +732,32 @@ export default function OrganizerDashboardPage() {
                     <table className="w-full text-sm text-left">
                       <thead>
                         <tr className={`text-xs uppercase tracking-wider ${darkMode ? "bg-slate-800/50 text-slate-400" : "bg-gray-50 text-gray-500"}`}>
-                          <th className="px-6 py-3 font-semibold">Event Name</th>
-                          <th className="px-4 py-3 font-semibold">Date</th>
-                          <th className="px-4 py-3 font-semibold">Tickets</th>
-                          <th className="px-4 py-3 font-semibold">Revenue</th>
-                          <th className="px-4 py-3 font-semibold">Status</th>
+                          <th className="px-6 py-3 font-black uppercase">Event Name</th>
+                          <th className="px-4 py-3 font-black uppercase">Date</th>
+                          <th className="px-4 py-3 font-black uppercase">Tickets</th>
+                          <th className="px-4 py-3 font-black uppercase">Revenue</th>
+                          <th className="px-4 py-3 font-black uppercase">Status</th>
                         </tr>
                       </thead>
                       <tbody>
                         {events.slice(0, 3).map((event, i) => (
-                          <tr key={event.name} className={`border-t transition-colors ${darkMode ? "border-slate-800 hover:bg-slate-800/30" : "border-gray-50 hover:bg-gray-50"} ${i % 2 === 1 ? (darkMode ? "bg-slate-900" : "bg-gray-50/50") : ""}`}>
-                            <td className="px-6 py-4 font-semibold">{event.name}</td>
+                          <tr key={event.name} className={`border-t transition-colors ${darkMode ? "border-wadu-black hover:bg-slate-800/30" : "border-gray-50 hover:bg-gray-50"} ${i % 2 === 1 ? (darkMode ? "bg-slate-900" : "bg-gray-50/50") : ""}`}>
+                            <td className="px-6 py-4 font-black uppercase">{event.name}</td>
                             <td className="px-4 py-4 text-gray-400 whitespace-nowrap">{event.date}</td>
                             <td className="px-4 py-4">
                               <div className="flex flex-col gap-1">
-                                <span className="font-medium">{event.sold} / {event.capacity}</span>
+                                <span className="font-black uppercase uppercase">{event.sold} / {event.capacity}</span>
                                 <div className="w-20 h-1.5 bg-gray-200 dark:bg-slate-700 rounded-full overflow-hidden">
                                   <div
-                                    className="h-full rounded-full bg-[#6C4DFF]"
+                                    className="h-full rounded-full bg-wadu-black"
                                     style={{ width: `${(event.sold / event.capacity) * 100}%` }}
                                   />
                                 </div>
                               </div>
                             </td>
-                            <td className="px-4 py-4 font-semibold">KES {event.revenue.toLocaleString()}</td>
+                            <td className="px-4 py-4 font-black uppercase">KES {event.revenue.toLocaleString()}</td>
                             <td className="px-4 py-4">
-                              <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${
+                              <span className={`px-2.5 py-1 rounded-full text-xs font-black uppercase ${
                                 event.status === "On Sale"
                                   ? "bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400"
                                   : "bg-amber-50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-400"
@@ -773,26 +773,26 @@ export default function OrganizerDashboardPage() {
                 </div>
 
                 {/* Transactions list mini */}
-                <div className={`lg:col-span-2 rounded-2xl shadow-sm border overflow-hidden ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
-                  <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-slate-800">
-                    <h2 className="font-bold">Recent Transactions</h2>
-                    <Link to="/organizer-dashboard/attendees" className="text-[#6C4DFF] text-sm font-semibold hover:text-[#5a3de8]">View all</Link>
+                <div className={`lg:col-span-2 rounded-none shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] border-4 border-wadu-black overflow-hidden ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
+                  <div className="flex items-center justify-between px-6 py-4 border-b border-wadu-black dark:border-wadu-black">
+                    <h2 className="font-black uppercase">Recent Transactions</h2>
+                    <Link to="/organizer-dashboard/attendees" className="text-wadu-black text-sm font-black uppercase hover:text-[#5a3de8]">View all</Link>
                   </div>
                   <div className="divide-y divide-gray-50 dark:divide-slate-800">
                     {initialTransactions.map((tx) => (
                       <div key={tx.name + tx.time} className={`flex items-center gap-3 px-6 py-3.5 transition-colors ${darkMode ? "hover:bg-slate-800/30" : "hover:bg-gray-50"}`}>
                         <div
-                          className="w-9 h-9 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0"
+                          className="w-9 h-9 rounded-full flex items-center justify-center text-white text-xs font-black uppercase flex-shrink-0"
                           style={{ background: tx.color }}
                         >
                           {tx.avatar}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-semibold truncate">{tx.name}</p>
+                          <p className="text-sm font-black uppercase truncate">{tx.name}</p>
                           <p className="text-xs text-gray-400 truncate">{tx.event}</p>
                         </div>
                         <div className="text-right flex-shrink-0">
-                          <p className="text-sm font-bold">{tx.amount}</p>
+                          <p className="text-sm font-black uppercase">{tx.amount}</p>
                           <div className="flex items-center justify-end gap-1 mt-0.5">
                             {tx.status === "completed" ? (
                               <CheckCircle2 size={11} className="text-emerald-500" />
@@ -815,7 +815,7 @@ export default function OrganizerDashboardPage() {
             <div className="space-y-6">
               {/* Filter controls */}
               <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-                <div className={`flex items-center gap-3 border rounded-xl px-3 py-2 w-full md:w-96 transition-colors ${darkMode ? "bg-slate-900 border-slate-800 focus-within:border-[#6C4DFF]" : "bg-white border-gray-200 focus-within:border-[#6C4DFF]"}`}>
+                <div className={`flex items-center gap-3 border-4 border-wadu-black rounded-none px-3 py-2 w-full md:w-96 transition-colors ${darkMode ? "bg-slate-900 border-wadu-black focus-within:border-[#6C4DFF]" : "bg-white border-wadu-black focus-within:border-[#6C4DFF]"}`}>
                   <Search size={18} className="text-gray-400" />
                   <input
                     type="text"
@@ -831,12 +831,12 @@ export default function OrganizerDashboardPage() {
                     <button
                       key={filter}
                       onClick={() => setEventFilter(filter)}
-                      className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition ${
+                      className={`px-4 py-2 rounded-none text-xs font-black uppercase whitespace-nowrap transition ${
                         eventFilter === filter
-                          ? "bg-[#6C4DFF] text-white shadow-md shadow-[#6C4DFF]/25"
+                          ? "bg-wadu-black text-white shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] shadow-[#6C4DFF]/25"
                           : darkMode
                           ? "bg-slate-900 hover:bg-slate-800 text-slate-300"
-                          : "bg-white hover:bg-gray-100 text-gray-600 border border-gray-100"
+                          : "bg-white hover:bg-gray-100 text-gray-600 border-4 border-wadu-black border-wadu-black"
                       }`}
                     >
                       {filter}
@@ -846,17 +846,17 @@ export default function OrganizerDashboardPage() {
               </div>
 
               {/* Events list table */}
-              <div className={`rounded-2xl border shadow-sm overflow-hidden ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
+              <div className={`rounded-none border-4 border-wadu-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] overflow-hidden ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm text-left">
                     <thead>
                       <tr className={`text-xs uppercase tracking-wider ${darkMode ? "bg-slate-800/50 text-slate-400" : "bg-gray-50 text-gray-500"}`}>
-                        <th className="px-6 py-4 font-semibold">Event Name</th>
-                        <th className="px-4 py-4 font-semibold">Date & Location</th>
-                        <th className="px-4 py-4 font-semibold">Tickets Sold</th>
-                        <th className="px-4 py-4 font-semibold">Revenue</th>
-                        <th className="px-4 py-4 font-semibold">Status</th>
-                        <th className="px-6 py-4 font-semibold text-right">Actions</th>
+                        <th className="px-6 py-4 font-black uppercase">Event Name</th>
+                        <th className="px-4 py-4 font-black uppercase">Date & Location</th>
+                        <th className="px-4 py-4 font-black uppercase">Tickets Sold</th>
+                        <th className="px-4 py-4 font-black uppercase">Revenue</th>
+                        <th className="px-4 py-4 font-black uppercase">Status</th>
+                        <th className="px-6 py-4 font-black uppercase text-right">Actions</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100 dark:divide-slate-800">
@@ -872,21 +872,21 @@ export default function OrganizerDashboardPage() {
                                     err.currentTarget.src = getEventImage(e.id);
                                   }}
                                   alt={e.name}
-                                  className="w-12 h-12 rounded-lg object-cover flex-shrink-0"
+                                  className="w-12 h-12 rounded-none object-cover flex-shrink-0"
                                 />
-                                <span className="font-bold text-wadu-navy dark:text-white">{e.name}</span>
+                                <span className="font-black uppercase text-wadu-navy dark:text-white">{e.name}</span>
                               </div>
                             </td>
                             <td className="px-4 py-4">
                               <div className="space-y-0.5 text-xs text-gray-400">
-                                <p className="font-semibold">{e.date}</p>
+                                <p className="font-black uppercase">{e.date}</p>
                                 <p>Nairobi, Kenya</p>
                               </div>
                             </td>
                             <td className="px-4 py-4">
                               {e.status !== "Draft" ? (
                                 <div className="space-y-1 w-32">
-                                  <div className="flex items-center justify-between text-xs font-semibold">
+                                  <div className="flex items-center justify-between text-xs font-black uppercase">
                                     <span className="text-gray-400">{e.sold} / {e.capacity}</span>
                                     <span>{Math.round((e.sold / e.capacity) * 100)}%</span>
                                   </div>
@@ -905,14 +905,14 @@ export default function OrganizerDashboardPage() {
                               KES {e.revenue.toLocaleString()}
                             </td>
                             <td className="px-4 py-4">
-                              <span className={`px-2.5 py-1 rounded-full text-xs font-semibold uppercase ${
+                              <span className={`px-2.5 py-1 rounded-full text-xs font-black uppercase uppercase ${
                                 e.status === "On Sale"
-                                  ? "bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20"
+                                  ? "bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400 border-4 border-wadu-black border-emerald-500/20"
                                   : e.status === "Sold Out"
-                                  ? "bg-blue-50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400 border border-blue-500/20"
+                                  ? "bg-blue-50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400 border-4 border-wadu-black border-blue-500/20"
                                   : e.status === "Cancelled"
-                                  ? "bg-red-50 dark:bg-red-950/20 text-red-600 dark:text-red-400 border border-red-500/20"
-                                  : "bg-amber-50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-400 border border-amber-500/20"
+                                  ? "bg-red-50 dark:bg-red-950/20 text-red-600 dark:text-red-400 border-4 border-wadu-black border-red-500/20"
+                                  : "bg-amber-50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-400 border-4 border-wadu-black border-amber-500/20"
                               }`}>
                                 {e.status}
                               </span>
@@ -923,7 +923,7 @@ export default function OrganizerDashboardPage() {
                                   onClick={() => {
                                     navigate(`/post-event?id=${e.id}`);
                                   }}
-                                  className="text-xs bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 dark:hover:bg-slate-750 text-gray-700 dark:text-gray-300 px-3 py-1.5 rounded-lg font-bold transition"
+                                  className="text-xs bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 dark:hover:bg-slate-750 text-gray-700 dark:text-gray-300 px-3 py-1.5 rounded-none font-black uppercase transition"
                                 >
                                   Edit
                                 </button>
@@ -931,7 +931,7 @@ export default function OrganizerDashboardPage() {
                                   onClick={() => {
                                     setSelectedEventDetails(e);
                                   }}
-                                  className="text-xs bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 dark:hover:bg-slate-750 text-gray-700 dark:text-gray-300 px-3 py-1.5 rounded-lg font-bold transition"
+                                  className="text-xs bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 dark:hover:bg-slate-750 text-gray-700 dark:text-gray-300 px-3 py-1.5 rounded-none font-black uppercase transition"
                                 >
                                   View
                                 </button>
@@ -959,7 +959,7 @@ export default function OrganizerDashboardPage() {
                                         }
                                       }
                                     }}
-                                    className="text-xs bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 px-3 py-1.5 rounded-lg font-bold transition"
+                                    className="text-xs bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 px-3 py-1.5 rounded-none font-black uppercase transition"
                                   >
                                     Cancel
                                   </button>
@@ -972,7 +972,7 @@ export default function OrganizerDashboardPage() {
                         <tr>
                           <td colSpan={6} className="text-center py-16 text-gray-400">
                             <CalendarDays size={48} className="mx-auto mb-4 opacity-50" />
-                            <h3 className="text-lg font-bold text-gray-350">No Events Found</h3>
+                            <h3 className="text-lg font-black uppercase text-gray-350">No Events Found</h3>
                             <p className="text-sm max-w-sm mx-auto mt-1">We couldn't find any events matching "{eventSearch}" under this filter.</p>
                           </td>
                         </tr>
@@ -991,12 +991,12 @@ export default function OrganizerDashboardPage() {
               {/* Quick Metrics */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 {[
-                  { label: "Total Registered", value: attendees.length.toLocaleString(), desc: "Across all active events", color: "text-[#6C4DFF]" },
+                  { label: "Total Registered", value: attendees.length.toLocaleString(), desc: "Across all active events", color: "text-wadu-black" },
                   { label: "Checked In", value: `${attendees.filter(a => a.status === "Checked In").length} / ${attendees.length}`, desc: "Attending live sessions", color: "text-emerald-500" },
-                  { label: "Check-in rate", value: `${Math.round((attendees.filter(a => a.status === "Checked In").length / attendees.length) * 100)}%`, desc: "Average QR scans", color: "text-[#00C2A8]" },
+                  { label: "Check-in rate", value: `${Math.round((attendees.filter(a => a.status === "Checked In").length / attendees.length) * 100)}%`, desc: "Average QR scans", color: "text-wadu-black" },
                 ].map(m => (
-                  <div key={m.label} className={`p-5 rounded-2xl border shadow-sm flex flex-col gap-1 ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
-                    <span className="text-gray-400 text-xs font-semibold uppercase">{m.label}</span>
+                  <div key={m.label} className={`p-5 rounded-none border-4 border-wadu-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] flex flex-col gap-1 ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
+                    <span className="text-gray-400 text-xs font-black uppercase uppercase">{m.label}</span>
                     <span className={`text-3xl font-black ${m.color}`}>{m.value}</span>
                     <span className="text-gray-400 text-xs mt-1">{m.desc}</span>
                   </div>
@@ -1005,7 +1005,7 @@ export default function OrganizerDashboardPage() {
 
               {/* Filters */}
               <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-                <div className={`flex items-center gap-3 border rounded-xl px-3 py-2 w-full md:w-96 transition-colors ${darkMode ? "bg-slate-900 border-slate-800 focus-within:border-[#6C4DFF]" : "bg-white border-gray-200 focus-within:border-[#6C4DFF]"}`}>
+                <div className={`flex items-center gap-3 border-4 border-wadu-black rounded-none px-3 py-2 w-full md:w-96 transition-colors ${darkMode ? "bg-slate-900 border-wadu-black focus-within:border-[#6C4DFF]" : "bg-white border-wadu-black focus-within:border-[#6C4DFF]"}`}>
                   <Search size={18} className="text-gray-400" />
                   <input
                     type="text"
@@ -1017,10 +1017,10 @@ export default function OrganizerDashboardPage() {
                 </div>
 
                 <div className="flex items-center gap-3 w-full md:w-auto">
-                  <span className="text-gray-400 text-xs font-semibold whitespace-nowrap">Filter by Event:</span>
+                  <span className="text-gray-400 text-xs font-black uppercase whitespace-nowrap">Filter by Event:</span>
                   <select
-                    className={`px-3 py-2 rounded-xl text-xs font-semibold border outline-none cursor-pointer w-full md:w-60 transition ${
-                      darkMode ? "bg-slate-900 border-slate-800 text-slate-200" : "bg-white border-gray-200 text-gray-700"
+                    className={`px-3 py-2 rounded-none text-xs font-black uppercase border-4 border-wadu-black outline-none cursor-pointer w-full md:w-60 transition ${
+                      darkMode ? "bg-slate-900 border-wadu-black text-slate-200" : "bg-white border-wadu-black text-gray-700"
                     }`}
                     value={selectedEventFilter}
                     onChange={(e) => setSelectedEventFilter(e.target.value)}
@@ -1037,7 +1037,7 @@ export default function OrganizerDashboardPage() {
                         description: "Your CSV export of attendees has started download.",
                       });
                     }}
-                    className="bg-[#0A1F44] border border-white/10 text-white hover:bg-wadu-teal hover:text-[#0A1F44] hover:border-[#00C2A8] px-4 py-2 rounded-xl font-bold transition duration-205 text-xs shadow-sm whitespace-nowrap"
+                    className="bg-wadu-yellow border-r-4 border-wadu-black border-4 border-wadu-black border-wadu-black text-white hover:bg-wadu-teal hover:text-[#0A1F44] hover:border-[#00C2A8] px-4 py-2 rounded-none font-black uppercase transition duration-205 text-xs shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] whitespace-nowrap"
                   >
                     Export CSV
                   </button>
@@ -1045,35 +1045,35 @@ export default function OrganizerDashboardPage() {
               </div>
 
               {/* Attendees Table */}
-              <div className={`rounded-2xl border shadow-sm overflow-hidden ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
+              <div className={`rounded-none border-4 border-wadu-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] overflow-hidden ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm text-left">
                     <thead>
                       <tr className={`text-xs uppercase tracking-wider ${darkMode ? "bg-slate-800/50 text-slate-400" : "bg-gray-50 text-gray-500"}`}>
-                        <th className="px-6 py-4 font-semibold">Name</th>
-                        <th className="px-4 py-4 font-semibold">Email</th>
-                        <th className="px-4 py-4 font-semibold">Phone</th>
-                        <th className="px-4 py-4 font-semibold">Ticket Type</th>
-                        <th className="px-4 py-4 font-semibold">Order Date</th>
-                        <th className="px-4 py-4 font-semibold">Payment Status</th>
-                        <th className="px-4 py-4 font-semibold">Delivery Method</th>
-                        <th className="px-6 py-4 font-semibold text-right">Actions</th>
+                        <th className="px-6 py-4 font-black uppercase">Name</th>
+                        <th className="px-4 py-4 font-black uppercase">Email</th>
+                        <th className="px-4 py-4 font-black uppercase">Phone</th>
+                        <th className="px-4 py-4 font-black uppercase">Ticket Type</th>
+                        <th className="px-4 py-4 font-black uppercase">Order Date</th>
+                        <th className="px-4 py-4 font-black uppercase">Payment Status</th>
+                        <th className="px-4 py-4 font-black uppercase">Delivery Method</th>
+                        <th className="px-6 py-4 font-black uppercase text-right">Actions</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100 dark:divide-slate-800">
                       {filteredAttendees.length > 0 ? (
                         filteredAttendees.map((a) => (
                           <tr key={a.id} className={`transition-colors ${darkMode ? "hover:bg-slate-800/30" : "hover:bg-gray-50"}`}>
-                            <td className="px-6 py-4 font-bold text-wadu-navy dark:text-white">
+                            <td className="px-6 py-4 font-black uppercase text-wadu-navy dark:text-white">
                               <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#6C4DFF]/20 to-[#00C2A8]/20 flex items-center justify-center text-xs font-bold text-[#6C4DFF] flex-shrink-0">
+                                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#6C4DFF]/20 to-[#00C2A8]/20 flex items-center justify-center text-xs font-black uppercase text-wadu-black flex-shrink-0">
                                   {a.name.split(" ").map(n => n[0]).join("")}
                                 </div>
                                 <span>{a.name}</span>
                               </div>
                             </td>
                             <td className="px-4 py-4 text-gray-400">{a.email}</td>
-                            <td className="px-4 py-4 font-semibold text-gray-450">{a.phone}</td>
+                            <td className="px-4 py-4 font-black uppercase text-gray-450">{a.phone}</td>
                             <td className="px-4 py-4">
                               <span className={`px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wide ${
                                 a.ticket === "VIP" || a.ticket === "VVIP"
@@ -1087,28 +1087,28 @@ export default function OrganizerDashboardPage() {
                             </td>
                             <td className="px-4 py-4 text-gray-400">{a.date}</td>
                             <td className="px-4 py-4">
-                              <span className={`px-2.5 py-1 rounded-full text-xs font-semibold inline-flex items-center gap-1.5 ${
+                              <span className={`px-2.5 py-1 rounded-full text-xs font-black uppercase inline-flex items-center gap-1.5 ${
                                 a.paymentStatus === "Paid"
-                                  ? "bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20"
-                                  : "bg-amber-50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-400 border border-amber-500/20"
+                                  ? "bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400 border-4 border-wadu-black border-emerald-500/20"
+                                  : "bg-amber-50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-400 border-4 border-wadu-black border-amber-500/20"
                               }`}>
                                 <Check size={12} className={a.paymentStatus === "Paid" ? "text-emerald-500" : "text-amber-500"} />
                                 {a.paymentStatus}
                               </span>
                             </td>
-                            <td className="px-4 py-4 font-medium text-gray-450">
+                            <td className="px-4 py-4 font-black uppercase uppercase text-gray-450">
                               {a.deliveryMethod}
                             </td>
                             <td className="px-6 py-4 text-right">
                               {a.status !== "Checked In" ? (
                                 <button
                                   onClick={() => handleCheckIn(a.id)}
-                                  className="text-xs bg-[#00C2A8]/10 hover:bg-[#00C2A8]/20 text-[#00C2A8] px-3 py-1.5 rounded-lg font-bold transition inline-flex items-center gap-1"
+                                  className="text-xs bg-white border-4 border-wadu-black/10 hover:bg-white border-4 border-wadu-black/20 text-wadu-black px-3 py-1.5 rounded-none font-black uppercase transition inline-flex items-center gap-1"
                                 >
                                   Check In
                                 </button>
                               ) : (
-                                <span className="text-xs text-emerald-500 font-bold flex items-center justify-end gap-1">
+                                <span className="text-xs text-emerald-500 font-black uppercase flex items-center justify-end gap-1">
                                   <CheckCircle2 size={12} />
                                   Checked In
                                 </span>
@@ -1120,7 +1120,7 @@ export default function OrganizerDashboardPage() {
                         <tr>
                           <td colSpan={8} className="text-center py-16 text-gray-400">
                             <Users size={48} className="mx-auto mb-4 opacity-50" />
-                            <h3 className="text-lg font-bold text-gray-300">No Attendees Found</h3>
+                            <h3 className="text-lg font-black uppercase text-gray-300">No Attendees Found</h3>
                             <p className="text-sm max-w-sm mx-auto mt-1">Try refining your search keyword or selected event filter.</p>
                           </td>
                         </tr>
@@ -1139,17 +1139,17 @@ export default function OrganizerDashboardPage() {
               {/* Analytics Header Metrics */}
               <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
                 {[
-                  { label: "Total Page Views", value: "45,820", icon: ExternalLink, color: "text-[#6C4DFF]" },
+                  { label: "Total Page Views", value: "45,820", icon: ExternalLink, color: "text-wadu-black" },
                   { label: "Tickets Sold", value: "1,247", icon: Ticket, color: "text-blue-500" },
                   { label: "Conversion Rate", value: "2.7%", icon: TrendingUp, color: "text-emerald-500" },
-                  { label: "Average Order Value", value: "KES 3,250", icon: Wallet, color: "text-[#00C2A8]" },
+                  { label: "Average Order Value", value: "KES 3,250", icon: Wallet, color: "text-wadu-black" },
                 ].map(m => (
-                  <div key={m.label} className={`p-5 rounded-2xl border shadow-sm flex items-center justify-between ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
+                  <div key={m.label} className={`p-5 rounded-none border-4 border-wadu-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] flex items-center justify-between ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
                     <div className="space-y-1">
-                      <span className="text-gray-400 text-xs font-semibold uppercase">{m.label}</span>
+                      <span className="text-gray-400 text-xs font-black uppercase uppercase">{m.label}</span>
                       <p className="text-2xl font-black">{m.value}</p>
                     </div>
-                    <div className="w-10 h-10 rounded-xl bg-gray-100 dark:bg-slate-800 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-none bg-gray-100 dark:bg-slate-800 flex items-center justify-center">
                       <m.icon size={20} className={m.color} />
                     </div>
                   </div>
@@ -1160,13 +1160,13 @@ export default function OrganizerDashboardPage() {
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
                 
                 {/* Revenue Over Time AreaChart */}
-                <div className={`lg:col-span-2 p-6 rounded-2xl border shadow-sm ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
+                <div className={`lg:col-span-2 p-6 rounded-none border-4 border-wadu-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
                   <div className="flex items-center justify-between mb-6">
                     <div>
-                      <h3 className="font-bold">Revenue Over Time</h3>
+                      <h3 className="font-black uppercase">Revenue Over Time</h3>
                       <p className="text-gray-400 text-xs">Monthly ticket sales revenue</p>
                     </div>
-                    <span className="text-xs bg-[#6C4DFF]/10 text-[#6C4DFF] font-bold px-3 py-1.5 rounded-full flex items-center gap-1">
+                    <span className="text-xs bg-wadu-black/10 text-wadu-black font-black uppercase px-3 py-1.5 rounded-full flex items-center gap-1">
                       <TrendingUp size={12} /> +18% growth
                     </span>
                   </div>
@@ -1188,9 +1188,9 @@ export default function OrganizerDashboardPage() {
                 </div>
 
                 {/* Ticket Categories PieChart */}
-                <div className={`p-6 rounded-2xl border shadow-sm ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
+                <div className={`p-6 rounded-none border-4 border-wadu-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
                   <div className="mb-6">
-                    <h3 className="font-bold">Ticket Categories</h3>
+                    <h3 className="font-black uppercase">Ticket Categories</h3>
                     <p className="text-gray-400 text-xs">Sales distribution by event type</p>
                   </div>
                   <ResponsiveContainer width="100%" height={160}>
@@ -1205,7 +1205,7 @@ export default function OrganizerDashboardPage() {
                   </ResponsiveContainer>
                   <div className="space-y-2.5 mt-4">
                     {ticketCategories.map((c) => (
-                      <div key={c.name} className="flex items-center justify-between text-xs font-semibold">
+                      <div key={c.name} className="flex items-center justify-between text-xs font-black uppercase">
                         <div className="flex items-center gap-2">
                           <div className="w-3 h-3 rounded-full" style={{ background: c.color }} />
                           <span className="text-gray-450">{c.name}</span>
@@ -1219,13 +1219,13 @@ export default function OrganizerDashboardPage() {
               </div>
 
               {/* Daily Sales BarChart */}
-              <div className={`p-6 rounded-2xl border shadow-sm ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
+              <div className={`p-6 rounded-none border-4 border-wadu-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
                 <div className="flex items-center justify-between mb-6">
                   <div>
-                    <h3 className="font-bold">Daily Ticket Sales</h3>
+                    <h3 className="font-black uppercase">Daily Ticket Sales</h3>
                     <p className="text-gray-400 text-xs">Sales activity over the last 7 days</p>
                   </div>
-                  <span className="text-xs bg-[#00C2A8]/10 text-[#00C2A8] font-bold px-3 py-1.5 rounded-full">
+                  <span className="text-xs bg-white border-4 border-wadu-black/10 text-wadu-black font-black uppercase px-3 py-1.5 rounded-full">
                     Average: KES 103K / day
                   </span>
                 </div>
@@ -1254,11 +1254,11 @@ export default function OrganizerDashboardPage() {
               {/* Wallet balances */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 {/* Account Balance Card */}
-                <div className="rounded-2xl p-6 bg-gradient-to-br from-[#6C4DFF] to-[#0A1F44] text-white shadow-xl flex flex-col justify-between h-[180px] relative overflow-hidden">
+                <div className="rounded-none p-6 bg-gradient-to-br from-[#6C4DFF] to-[#0A1F44] text-white shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] flex flex-col justify-between h-[180px] relative overflow-hidden">
                   <div className="absolute top-0 right-0 w-36 h-36 bg-white/5 rounded-full blur-2xl pointer-events-none" />
                   
                   <div className="space-y-1">
-                    <span className="text-white/70 text-xs font-semibold uppercase tracking-wider">Account Balance</span>
+                    <span className="text-white/70 text-xs font-black uppercase uppercase tracking-wider">Account Balance</span>
                     <p className="text-3xl font-black">KES {balance.toLocaleString()}</p>
                   </div>
 
@@ -1267,10 +1267,10 @@ export default function OrganizerDashboardPage() {
                       <button
                         onClick={handleRequestPayout}
                         disabled={requestingPayout}
-                        className={`w-full flex items-center justify-center gap-2 py-3 rounded-xl text-xs font-black uppercase tracking-wider transition ${
+                        className={`w-full flex items-center justify-center gap-2 py-3 rounded-none text-xs font-black uppercase tracking-wider transition ${
                           requestingPayout
                             ? "bg-white/20 text-white/50 cursor-not-allowed"
-                            : "bg-[#00C2A8] hover:bg-[#00b098] text-white shadow-md shadow-[#00C2A8]/20"
+                            : "bg-white border-4 border-wadu-black hover:bg-[#00b098] text-white shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] shadow-[#00C2A8]/20"
                         }`}
                       >
                         {requestingPayout ? payoutStatus : (
@@ -1281,7 +1281,7 @@ export default function OrganizerDashboardPage() {
                         )}
                       </button>
                     ) : (
-                      <div className="bg-white/10 rounded-xl px-4 py-2.5 text-xs text-white/80 font-bold text-center">
+                      <div className="bg-white/10 rounded-none px-4 py-2.5 text-xs text-white/80 font-black uppercase text-center">
                         Payout completed successfully.
                       </div>
                     )}
@@ -1289,28 +1289,28 @@ export default function OrganizerDashboardPage() {
                 </div>
 
                 {/* Scheduled Payout */}
-                <div className={`p-6 rounded-2xl border shadow-sm flex flex-col justify-between h-[180px] ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
+                <div className={`p-6 rounded-none border-4 border-wadu-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] flex flex-col justify-between h-[180px] ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
                   <div className="space-y-1">
-                    <span className="text-gray-400 text-xs font-semibold uppercase tracking-wider">Scheduled Payout (Sept 1)</span>
+                    <span className="text-gray-400 text-xs font-black uppercase uppercase tracking-wider">Scheduled Payout (Sept 1)</span>
                     <p className="text-3xl font-black">KES 1,263,000</p>
                     <p className="text-gray-400 text-xs mt-1">Automatic payout to NCB Bank Account</p>
                   </div>
                   
-                  <div className="flex items-center gap-2 border-t pt-3 border-gray-100 dark:border-slate-800 text-xs text-gray-400">
-                    <CheckCircle2 size={14} className="text-[#00C2A8]" />
+                  <div className="flex items-center gap-2 border-t pt-3 border-wadu-black dark:border-wadu-black text-xs text-gray-400">
+                    <CheckCircle2 size={14} className="text-wadu-black" />
                     Verification checks completed.
                   </div>
                 </div>
 
                 {/* Lifetime earnings */}
-                <div className={`p-6 rounded-2xl border shadow-sm flex flex-col justify-between h-[180px] ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
+                <div className={`p-6 rounded-none border-4 border-wadu-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] flex flex-col justify-between h-[180px] ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
                   <div className="space-y-1">
-                    <span className="text-gray-400 text-xs font-semibold uppercase tracking-wider">Lifetime Revenue</span>
+                    <span className="text-gray-400 text-xs font-black uppercase uppercase tracking-wider">Lifetime Revenue</span>
                     <p className="text-3xl font-black">KES {(2450000 + (482500 - balance)).toLocaleString()}</p>
                     <p className="text-gray-400 text-xs mt-1">Excludes active refund reserves</p>
                   </div>
 
-                  <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-500">
+                  <div className="flex items-center gap-1.5 text-xs font-black uppercase text-emerald-500">
                     <TrendingUp size={14} />
                     +34% Growth compared to Q1 2025
                   </div>
@@ -1320,20 +1320,20 @@ export default function OrganizerDashboardPage() {
               {/* Payment Details Form */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
                 {/* Form configuration */}
-                <div className={`lg:col-span-2 p-6 rounded-2xl border shadow-sm space-y-5 ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
+                <div className={`lg:col-span-2 p-6 rounded-none border-4 border-wadu-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] space-y-5 ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
                   <div>
-                    <h3 className="font-bold text-lg">Payout Accounts Setup</h3>
+                    <h3 className="font-black uppercase text-lg">Payout Accounts Setup</h3>
                     <p className="text-gray-400 text-xs">Configure where you receive ticket sales payouts</p>
                   </div>
 
                   {/* Payment Method Switcher */}
-                  <div className="flex bg-gray-100 dark:bg-slate-800 p-1.5 rounded-xl gap-2 w-fit">
+                  <div className="flex bg-gray-100 dark:bg-slate-800 p-1.5 rounded-none gap-2 w-fit">
                     <button
                       type="button"
                       onClick={() => setPayoutMethod("mpesa")}
-                      className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition ${
+                      className={`flex items-center gap-2 px-4 py-2 rounded-none text-xs font-black uppercase transition ${
                         payoutMethod === "mpesa"
-                          ? "bg-[#00C2A8] text-white"
+                          ? "bg-white border-4 border-wadu-black text-white"
                           : "text-gray-400 hover:text-white"
                       }`}
                     >
@@ -1343,9 +1343,9 @@ export default function OrganizerDashboardPage() {
                     <button
                       type="button"
                       onClick={() => setPayoutMethod("bank")}
-                      className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition ${
+                      className={`flex items-center gap-2 px-4 py-2 rounded-none text-xs font-black uppercase transition ${
                         payoutMethod === "bank"
-                          ? "bg-[#6C4DFF] text-white"
+                          ? "bg-wadu-black text-white"
                           : "text-gray-400 hover:text-white"
                       }`}
                     >
@@ -1359,27 +1359,27 @@ export default function OrganizerDashboardPage() {
                     {payoutMethod === "mpesa" ? (
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-1">
-                          <label className="text-xs font-semibold text-gray-400">Registered Name (Safaricom M-Pesa)</label>
+                          <label className="text-xs font-black uppercase text-gray-400">Registered Name (Safaricom M-Pesa)</label>
                           <input
                             type="text"
                             required
-                            className={`w-full text-sm px-4 py-3 rounded-xl border outline-none ${
-                              darkMode ? "bg-slate-800 border-slate-700 text-slate-100 focus:border-[#00C2A8]" : "bg-white border-gray-200 focus:border-[#00C2A8]"
+                            className={`w-full text-sm px-4 py-3 rounded-none border-4 border-wadu-black outline-none ${
+                              darkMode ? "bg-slate-800 border-wadu-black text-slate-100 focus:border-[#00C2A8]" : "bg-white border-wadu-black focus:border-[#00C2A8]"
                             }`}
                             value={mpesaName}
                             onChange={(e) => setMpesaName(e.target.value)}
                           />
                         </div>
                         <div className="space-y-1">
-                          <label className="text-xs font-semibold text-gray-400">Registered Safaricom Mobile Number</label>
+                          <label className="text-xs font-black uppercase text-gray-400">Registered Safaricom Mobile Number</label>
                           <div className="relative">
-                            <span className="absolute left-4 top-3 text-sm text-gray-400 font-bold">+254</span>
+                            <span className="absolute left-4 top-3 text-sm text-gray-400 font-black uppercase">+254</span>
                             <input
                               type="text"
                               required
                               pattern="[0-9]{9,10}"
-                              className={`w-full text-sm pl-14 pr-4 py-3 rounded-xl border outline-none ${
-                                darkMode ? "bg-slate-800 border-slate-700 text-slate-100 focus:border-[#00C2A8]" : "bg-white border-gray-200 focus:border-[#00C2A8]"
+                              className={`w-full text-sm pl-14 pr-4 py-3 rounded-none border-4 border-wadu-black outline-none ${
+                                darkMode ? "bg-slate-800 border-wadu-black text-slate-100 focus:border-[#00C2A8]" : "bg-white border-wadu-black focus:border-[#00C2A8]"
                               }`}
                               placeholder="712345678"
                               value={mpesaPhone}
@@ -1391,48 +1391,48 @@ export default function OrganizerDashboardPage() {
                     ) : (
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-1">
-                          <label className="text-xs font-semibold text-gray-400">Bank Name</label>
+                          <label className="text-xs font-black uppercase text-gray-400">Bank Name</label>
                           <input
                             type="text"
                             required
-                            className={`w-full text-sm px-4 py-3 rounded-xl border outline-none ${
-                              darkMode ? "bg-slate-800 border-slate-700 text-slate-100 focus:border-[#6C4DFF]" : "bg-white border-gray-200 focus:border-[#6C4DFF]"
+                            className={`w-full text-sm px-4 py-3 rounded-none border-4 border-wadu-black outline-none ${
+                              darkMode ? "bg-slate-800 border-wadu-black text-slate-100 focus:border-[#6C4DFF]" : "bg-white border-wadu-black focus:border-[#6C4DFF]"
                             }`}
                             value={bankName}
                             onChange={(e) => setBankName(e.target.value)}
                           />
                         </div>
                         <div className="space-y-1">
-                          <label className="text-xs font-semibold text-gray-400">Account Holder Name</label>
+                          <label className="text-xs font-black uppercase text-gray-400">Account Holder Name</label>
                           <input
                             type="text"
                             required
-                            className={`w-full text-sm px-4 py-3 rounded-xl border outline-none ${
-                              darkMode ? "bg-slate-800 border-slate-700 text-slate-100 focus:border-[#6C4DFF]" : "bg-white border-gray-200 focus:border-[#6C4DFF]"
+                            className={`w-full text-sm px-4 py-3 rounded-none border-4 border-wadu-black outline-none ${
+                              darkMode ? "bg-slate-800 border-wadu-black text-slate-100 focus:border-[#6C4DFF]" : "bg-white border-wadu-black focus:border-[#6C4DFF]"
                             }`}
                             value={bankAccountName}
                             onChange={(e) => setBankAccountName(e.target.value)}
                           />
                         </div>
                         <div className="space-y-1">
-                          <label className="text-xs font-semibold text-gray-400">Account Number</label>
+                          <label className="text-xs font-black uppercase text-gray-400">Account Number</label>
                           <input
                             type="text"
                             required
-                            className={`w-full text-sm px-4 py-3 rounded-xl border outline-none ${
-                              darkMode ? "bg-slate-800 border-slate-700 text-slate-100 focus:border-[#6C4DFF]" : "bg-white border-gray-200 focus:border-[#6C4DFF]"
+                            className={`w-full text-sm px-4 py-3 rounded-none border-4 border-wadu-black outline-none ${
+                              darkMode ? "bg-slate-800 border-wadu-black text-slate-100 focus:border-[#6C4DFF]" : "bg-white border-wadu-black focus:border-[#6C4DFF]"
                             }`}
                             value={bankAccountNumber}
                             onChange={(e) => setBankAccountNumber(e.target.value)}
                           />
                         </div>
                         <div className="space-y-1">
-                          <label className="text-xs font-semibold text-gray-400">SWIFT / BIC Code</label>
+                          <label className="text-xs font-black uppercase text-gray-400">SWIFT / BIC Code</label>
                           <input
                             type="text"
                             required
-                            className={`w-full text-sm px-4 py-3 rounded-xl border outline-none ${
-                              darkMode ? "bg-slate-800 border-slate-700 text-slate-100 focus:border-[#6C4DFF]" : "bg-white border-gray-200 focus:border-[#6C4DFF]"
+                            className={`w-full text-sm px-4 py-3 rounded-none border-4 border-wadu-black outline-none ${
+                              darkMode ? "bg-slate-800 border-wadu-black text-slate-100 focus:border-[#6C4DFF]" : "bg-white border-wadu-black focus:border-[#6C4DFF]"
                             }`}
                             value={bankSwift}
                             onChange={(e) => setBankSwift(e.target.value)}
@@ -1444,14 +1444,14 @@ export default function OrganizerDashboardPage() {
                     <div className="flex items-center gap-3 pt-2">
                       <button
                         type="submit"
-                        className="flex items-center gap-2 bg-[#6C4DFF] hover:bg-[#5a3de8] text-white px-5 py-2.5 rounded-xl text-xs font-bold transition"
+                        className="flex items-center gap-2 bg-wadu-black hover:bg-[#5a3de8] text-white px-5 py-2.5 rounded-none text-xs font-black uppercase transition"
                       >
                         <Save size={14} />
                         Save Payout Details
                       </button>
 
                       {saveSettingsSuccess && (
-                        <span className="text-emerald-500 text-xs font-semibold flex items-center gap-1">
+                        <span className="text-emerald-500 text-xs font-black uppercase flex items-center gap-1">
                           <Check size={14} />
                           Saved successfully!
                         </span>
@@ -1461,19 +1461,19 @@ export default function OrganizerDashboardPage() {
                 </div>
 
                 {/* Quick Info card */}
-                <div className={`p-6 rounded-2xl border shadow-sm space-y-4 ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
-                  <h4 className="font-bold text-sm">Payout Rules & Fees</h4>
-                  <ul className="space-y-3 text-xs text-gray-400 font-medium">
+                <div className={`p-6 rounded-none border-4 border-wadu-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] space-y-4 ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
+                  <h4 className="font-black uppercase text-sm">Payout Rules & Fees</h4>
+                  <ul className="space-y-3 text-xs text-gray-400 font-black uppercase uppercase">
                     <li className="flex gap-2">
-                      <span className="text-[#00C2A8]">•</span>
+                      <span className="text-wadu-black">•</span>
                       <span>M-Pesa instant transfers reflect within 2 minutes. Instant payout fee is 1.5%.</span>
                     </li>
                     <li className="flex gap-2">
-                      <span className="text-[#00C2A8]">•</span>
+                      <span className="text-wadu-black">•</span>
                       <span>Regular bank transfers are free of charge and processed automatically every Saturday.</span>
                     </li>
                     <li className="flex gap-2">
-                      <span className="text-[#00C2A8]">•</span>
+                      <span className="text-wadu-black">•</span>
                       <span>Minimum transfer limit is KES 500; maximum per single instant transfer is KES 150,000 due to Central Bank regulation.</span>
                     </li>
                   </ul>
@@ -1481,30 +1481,30 @@ export default function OrganizerDashboardPage() {
               </div>
 
               {/* Payout History list */}
-              <div className={`rounded-2xl border shadow-sm overflow-hidden ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
-                <div className="px-6 py-4 border-b border-gray-100 dark:border-slate-800">
-                  <h3 className="font-bold text-md">Payouts History</h3>
+              <div className={`rounded-none border-4 border-wadu-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] overflow-hidden ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
+                <div className="px-6 py-4 border-b border-wadu-black dark:border-wadu-black">
+                  <h3 className="font-black uppercase text-md">Payouts History</h3>
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm text-left">
                     <thead>
                       <tr className={`text-xs uppercase tracking-wider ${darkMode ? "bg-slate-800/50 text-slate-400" : "bg-gray-50 text-gray-500"}`}>
-                        <th className="px-6 py-4 font-semibold">Date Completed</th>
-                        <th className="px-4 py-4 font-semibold">Payout ID</th>
-                        <th className="px-4 py-4 font-semibold">Amount Transferred</th>
-                        <th className="px-4 py-4 font-semibold">Destination Method</th>
-                        <th className="px-4 py-4 font-semibold">Status</th>
+                        <th className="px-6 py-4 font-black uppercase">Date Completed</th>
+                        <th className="px-4 py-4 font-black uppercase">Payout ID</th>
+                        <th className="px-4 py-4 font-black uppercase">Amount Transferred</th>
+                        <th className="px-4 py-4 font-black uppercase">Destination Method</th>
+                        <th className="px-4 py-4 font-black uppercase">Status</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100 dark:divide-slate-800">
                       {payoutsHistory.map((history) => (
                         <tr key={history.id} className={`transition-colors ${darkMode ? "hover:bg-slate-800/30" : "hover:bg-gray-50"}`}>
                           <td className="px-6 py-4 text-gray-400">{history.date}</td>
-                          <td className="px-4 py-4 font-mono text-xs font-semibold text-gray-400">{history.id}</td>
+                          <td className="px-4 py-4 font-mono text-xs font-black uppercase text-gray-400">{history.id}</td>
                           <td className="px-4 py-4 font-black">{history.amount}</td>
-                          <td className="px-4 py-4 font-medium text-gray-400">{history.method}</td>
+                          <td className="px-4 py-4 font-black uppercase uppercase text-gray-400">{history.method}</td>
                           <td className="px-4 py-4">
-                            <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400 inline-flex items-center gap-1">
+                            <span className="px-2.5 py-1 rounded-full text-xs font-black uppercase bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400 inline-flex items-center gap-1">
                               <Check size={12} className="text-emerald-500" />
                               {history.status}
                             </span>
@@ -1524,22 +1524,22 @@ export default function OrganizerDashboardPage() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
               
               {/* Profile Config */}
-              <div className={`lg:col-span-2 p-6 rounded-2xl border shadow-sm space-y-6 ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
+              <div className={`lg:col-span-2 p-6 rounded-none border-4 border-wadu-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] space-y-6 ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
                 <div>
-                  <h3 className="font-bold text-lg">Organization Profile</h3>
+                  <h3 className="font-black uppercase text-lg">Organization Profile</h3>
                   <p className="text-gray-400 text-xs">Configure your public facing branding as an organizer</p>
                 </div>
 
                 <form onSubmit={handleSaveGeneralSettings} className="space-y-4">
-                  <div className="flex flex-col md:flex-row gap-5 items-center pb-4 border-b border-gray-100 dark:border-slate-800">
+                  <div className="flex flex-col md:flex-row gap-5 items-center pb-4 border-b border-wadu-black dark:border-wadu-black">
                     <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#6C4DFF] to-[#00C2A8] flex items-center justify-center text-white font-black text-xl flex-shrink-0">
                       AF
                     </div>
                     <div className="space-y-1 w-full text-center md:text-left">
-                      <p className="text-sm font-semibold">Branding Logo</p>
+                      <p className="text-sm font-black uppercase">Branding Logo</p>
                       <p className="text-gray-400 text-xs">PNG, JPG up to 2MB. Logo appears on all your public ticket pages.</p>
-                      <button type="button" className={`px-4 py-1.5 rounded-lg text-xs font-bold mt-1 border transition ${
-                        darkMode ? "border-slate-700 text-slate-300 hover:bg-slate-800" : "border-gray-200 text-gray-700 hover:bg-gray-50"
+                      <button type="button" className={`px-4 py-1.5 rounded-none text-xs font-black uppercase mt-1 border-4 border-wadu-black transition ${
+                        darkMode ? "border-wadu-black text-slate-300 hover:bg-slate-800" : "border-wadu-black text-gray-700 hover:bg-gray-50"
                       }`}>
                         Upload Logo
                       </button>
@@ -1548,46 +1548,46 @@ export default function OrganizerDashboardPage() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-1">
-                      <label className="text-xs font-semibold text-gray-400">Organization Name</label>
+                      <label className="text-xs font-black uppercase text-gray-400">Organization Name</label>
                       <input
                         type="text"
                         required
-                        className={`w-full text-sm px-4 py-3 rounded-xl border outline-none focus:border-[#6C4DFF] ${
-                          darkMode ? "bg-slate-800 border-slate-700 text-slate-100" : "bg-white border-gray-200"
+                        className={`w-full text-sm px-4 py-3 rounded-none border-4 border-wadu-black outline-none focus:border-[#6C4DFF] ${
+                          darkMode ? "bg-slate-800 border-wadu-black text-slate-100" : "bg-white border-wadu-black"
                         }`}
                         value={orgName}
                         onChange={(e) => setOrgName(e.target.value)}
                       />
                     </div>
                     <div className="space-y-1">
-                      <label className="text-xs font-semibold text-gray-400">Contact / Billing Email</label>
+                      <label className="text-xs font-black uppercase text-gray-400">Contact / Billing Email</label>
                       <input
                         type="email"
                         required
-                        className={`w-full text-sm px-4 py-3 rounded-xl border outline-none focus:border-[#6C4DFF] ${
-                          darkMode ? "bg-slate-800 border-slate-700 text-slate-100" : "bg-white border-gray-200"
+                        className={`w-full text-sm px-4 py-3 rounded-none border-4 border-wadu-black outline-none focus:border-[#6C4DFF] ${
+                          darkMode ? "bg-slate-800 border-wadu-black text-slate-100" : "bg-white border-wadu-black"
                         }`}
                         value={orgEmail}
                         onChange={(e) => setOrgEmail(e.target.value)}
                       />
                     </div>
                     <div className="space-y-1 md:col-span-2">
-                      <label className="text-xs font-semibold text-gray-400">Website Address</label>
+                      <label className="text-xs font-black uppercase text-gray-400">Website Address</label>
                       <input
                         type="url"
-                        className={`w-full text-sm px-4 py-3 rounded-xl border outline-none focus:border-[#6C4DFF] ${
-                          darkMode ? "bg-slate-800 border-slate-700 text-slate-100" : "bg-white border-gray-200"
+                        className={`w-full text-sm px-4 py-3 rounded-none border-4 border-wadu-black outline-none focus:border-[#6C4DFF] ${
+                          darkMode ? "bg-slate-800 border-wadu-black text-slate-100" : "bg-white border-wadu-black"
                         }`}
                         value={orgWebsite}
                         onChange={(e) => setOrgWebsite(e.target.value)}
                       />
                     </div>
                     <div className="space-y-1 md:col-span-2">
-                      <label className="text-xs font-semibold text-gray-400">Organization Description</label>
+                      <label className="text-xs font-black uppercase text-gray-400">Organization Description</label>
                       <textarea
                         rows={3}
-                        className={`w-full text-sm px-4 py-3 rounded-xl border outline-none focus:border-[#6C4DFF] resize-none ${
-                          darkMode ? "bg-slate-800 border-slate-700 text-slate-100" : "bg-white border-gray-200"
+                        className={`w-full text-sm px-4 py-3 rounded-none border-4 border-wadu-black outline-none focus:border-[#6C4DFF] resize-none ${
+                          darkMode ? "bg-slate-800 border-wadu-black text-slate-100" : "bg-white border-wadu-black"
                         }`}
                         value={orgBio}
                         onChange={(e) => setOrgBio(e.target.value)}
@@ -1598,14 +1598,14 @@ export default function OrganizerDashboardPage() {
                   <div className="flex items-center gap-3 pt-2">
                     <button
                       type="submit"
-                      className="flex items-center gap-2 bg-[#6C4DFF] hover:bg-[#5a3de8] text-white px-5 py-2.5 rounded-xl text-xs font-bold transition"
+                      className="flex items-center gap-2 bg-wadu-black hover:bg-[#5a3de8] text-white px-5 py-2.5 rounded-none text-xs font-black uppercase transition"
                     >
                       <Save size={14} />
                       Save General Profile
                     </button>
 
                     {settingsSaved && (
-                      <span className="text-emerald-500 text-xs font-semibold flex items-center gap-1">
+                      <span className="text-emerald-500 text-xs font-black uppercase flex items-center gap-1">
                         <Check size={14} />
                         Profile updated!
                       </span>
@@ -1617,10 +1617,10 @@ export default function OrganizerDashboardPage() {
               {/* Notifications and Security panel */}
               <div className="space-y-5">
                 {/* Security settings */}
-                <div className={`p-6 rounded-2xl border shadow-sm space-y-4 ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
-                  <div className="flex items-center gap-2 pb-2 border-b border-gray-100 dark:border-slate-800">
-                    <Shield size={16} className="text-[#6C4DFF]" />
-                    <h4 className="font-bold text-sm">Security Controls</h4>
+                <div className={`p-6 rounded-none border-4 border-wadu-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] space-y-4 ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
+                  <div className="flex items-center gap-2 pb-2 border-b border-wadu-black dark:border-wadu-black">
+                    <Shield size={16} className="text-wadu-black" />
+                    <h4 className="font-black uppercase text-sm">Security Controls</h4>
                   </div>
                   
                   <form
@@ -1655,39 +1655,39 @@ export default function OrganizerDashboardPage() {
                     className="space-y-3"
                   >
                     <div className="space-y-1">
-                      <label className="text-[10px] font-semibold text-gray-400 uppercase">Current Password</label>
+                      <label className="text-[10px] font-black uppercase text-gray-400 uppercase">Current Password</label>
                       <input
                         type="password"
                         required
                         placeholder="••••••••"
-                        className={`w-full text-xs px-3 py-2.5 rounded-lg border outline-none focus:border-[#6C4DFF] ${
-                          darkMode ? "bg-slate-800 border-slate-700 text-slate-100" : "bg-white border-gray-200"
+                        className={`w-full text-xs px-3 py-2.5 rounded-none border-4 border-wadu-black outline-none focus:border-[#6C4DFF] ${
+                          darkMode ? "bg-slate-800 border-wadu-black text-slate-100" : "bg-white border-wadu-black"
                         }`}
                         value={currentPassword}
                         onChange={(e) => setCurrentPassword(e.target.value)}
                       />
                     </div>
                     <div className="space-y-1">
-                      <label className="text-[10px] font-semibold text-gray-400 uppercase">New Password</label>
+                      <label className="text-[10px] font-black uppercase text-gray-400 uppercase">New Password</label>
                       <input
                         type="password"
                         required
                         placeholder="••••••••"
-                        className={`w-full text-xs px-3 py-2.5 rounded-lg border outline-none focus:border-[#6C4DFF] ${
-                          darkMode ? "bg-slate-800 border-slate-700 text-slate-100" : "bg-white border-gray-200"
+                        className={`w-full text-xs px-3 py-2.5 rounded-none border-4 border-wadu-black outline-none focus:border-[#6C4DFF] ${
+                          darkMode ? "bg-slate-800 border-wadu-black text-slate-100" : "bg-white border-wadu-black"
                         }`}
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.target.value)}
                       />
                     </div>
                     <div className="space-y-1">
-                      <label className="text-[10px] font-semibold text-gray-400 uppercase">Confirm New Password</label>
+                      <label className="text-[10px] font-black uppercase text-gray-400 uppercase">Confirm New Password</label>
                       <input
                         type="password"
                         required
                         placeholder="••••••••"
-                        className={`w-full text-xs px-3 py-2.5 rounded-lg border outline-none focus:border-[#6C4DFF] ${
-                          darkMode ? "bg-slate-800 border-slate-700 text-slate-100" : "bg-white border-gray-200"
+                        className={`w-full text-xs px-3 py-2.5 rounded-none border-4 border-wadu-black outline-none focus:border-[#6C4DFF] ${
+                          darkMode ? "bg-slate-800 border-wadu-black text-slate-100" : "bg-white border-wadu-black"
                         }`}
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
@@ -1695,12 +1695,12 @@ export default function OrganizerDashboardPage() {
                     </div>
                     <button
                       type="submit"
-                      className="w-full text-xs bg-wadu-purple hover:bg-wadu-teal hover:text-wadu-navy text-white font-bold py-2.5 rounded-lg transition"
+                      className="w-full text-xs bg-wadu-purple hover:bg-wadu-teal hover:text-wadu-navy text-white font-black uppercase py-2.5 rounded-none transition"
                     >
                       Update Password
                     </button>
                     {securitySaved && (
-                      <span className="text-emerald-500 text-xs font-semibold flex items-center justify-center gap-1 mt-2">
+                      <span className="text-emerald-500 text-xs font-black uppercase flex items-center justify-center gap-1 mt-2">
                         <Check size={14} />
                         Password changed!
                       </span>
@@ -1709,22 +1709,22 @@ export default function OrganizerDashboardPage() {
                 </div>
 
                 {/* Notifications setup */}
-                <div className={`p-6 rounded-2xl border shadow-sm space-y-4 ${darkMode ? "bg-slate-900 border-slate-800" : "bg-white border-gray-100"}`}>
-                  <div className="flex items-center gap-2 pb-2 border-b border-gray-100 dark:border-slate-800">
-                    <Bell size={16} className="text-[#00C2A8]" />
-                    <h4 className="font-bold text-sm">Sale Notifications</h4>
+                <div className={`p-6 rounded-none border-4 border-wadu-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] space-y-4 ${darkMode ? "bg-slate-900 border-wadu-black" : "bg-white border-wadu-black"}`}>
+                  <div className="flex items-center gap-2 pb-2 border-b border-wadu-black dark:border-wadu-black">
+                    <Bell size={16} className="text-wadu-black" />
+                    <h4 className="font-black uppercase text-sm">Sale Notifications</h4>
                   </div>
 
                   <div className="space-y-4">
                     {/* Toggle row 1 */}
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-xs font-bold">Email on Ticket Sale</p>
+                        <p className="text-xs font-black uppercase">Email on Ticket Sale</p>
                         <p className="text-[10px] text-gray-400">Receive alert for every registration</p>
                       </div>
                       <button
                         onClick={() => setEmailOnTicketSale(!emailOnTicketSale)}
-                        className={`w-9 h-5 rounded-full transition relative ${emailOnTicketSale ? "bg-[#00C2A8]" : "bg-gray-200 dark:bg-slate-700"}`}
+                        className={`w-9 h-5 rounded-full transition relative ${emailOnTicketSale ? "bg-white border-4 border-wadu-black" : "bg-gray-200 dark:bg-slate-700"}`}
                       >
                         <div className={`absolute top-0.5 w-4 h-4 rounded-full bg-white transition-all ${emailOnTicketSale ? "left-4.5" : "left-0.5"}`} />
                       </button>
@@ -1733,12 +1733,12 @@ export default function OrganizerDashboardPage() {
                     {/* Toggle row 2 */}
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-xs font-bold">Daily Digest Digest</p>
+                        <p className="text-xs font-black uppercase">Daily Digest Digest</p>
                         <p className="text-[10px] text-gray-400">Summarized transaction email daily</p>
                       </div>
                       <button
                         onClick={() => setDailyDigest(!dailyDigest)}
-                        className={`w-9 h-5 rounded-full transition relative ${dailyDigest ? "bg-[#00C2A8]" : "bg-gray-200 dark:bg-slate-700"}`}
+                        className={`w-9 h-5 rounded-full transition relative ${dailyDigest ? "bg-white border-4 border-wadu-black" : "bg-gray-200 dark:bg-slate-700"}`}
                       >
                         <div className={`absolute top-0.5 w-4 h-4 rounded-full bg-white transition-all ${dailyDigest ? "left-4.5" : "left-0.5"}`} />
                       </button>
@@ -1747,12 +1747,12 @@ export default function OrganizerDashboardPage() {
                     {/* Toggle row 3 */}
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-xs font-bold">Weekly Performance Report</p>
+                        <p className="text-xs font-black uppercase">Weekly Performance Report</p>
                         <p className="text-[10px] text-gray-400">Full analysis report on Monday mornings</p>
                       </div>
                       <button
                         onClick={() => setWeeklyDigest(!weeklyDigest)}
-                        className={`w-9 h-5 rounded-full transition relative ${weeklyDigest ? "bg-[#00C2A8]" : "bg-gray-200 dark:bg-slate-700"}`}
+                        className={`w-9 h-5 rounded-full transition relative ${weeklyDigest ? "bg-white border-4 border-wadu-black" : "bg-gray-200 dark:bg-slate-700"}`}
                       >
                         <div className={`absolute top-0.5 w-4 h-4 rounded-full bg-white transition-all ${weeklyDigest ? "left-4.5" : "left-0.5"}`} />
                       </button>
@@ -1761,12 +1761,12 @@ export default function OrganizerDashboardPage() {
                     {/* Toggle row 4 */}
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-xs font-bold">Security Alerts</p>
+                        <p className="text-xs font-black uppercase">Security Alerts</p>
                         <p className="text-[10px] text-gray-400">Instant notification on account settings changes</p>
                       </div>
                       <button
                         onClick={() => setSecurityAlerts(!securityAlerts)}
-                        className={`w-9 h-5 rounded-full transition relative ${securityAlerts ? "bg-[#00C2A8]" : "bg-gray-200 dark:bg-slate-700"}`}
+                        className={`w-9 h-5 rounded-full transition relative ${securityAlerts ? "bg-white border-4 border-wadu-black" : "bg-gray-200 dark:bg-slate-700"}`}
                       >
                         <div className={`absolute top-0.5 w-4 h-4 rounded-full bg-white transition-all ${securityAlerts ? "left-4.5" : "left-0.5"}`} />
                       </button>
@@ -1796,18 +1796,18 @@ export default function OrganizerDashboardPage() {
         const breakdown = getTicketTierBreakdown(selectedEventDetails.name);
         return (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-            <div className={`w-full max-w-md rounded-2xl border p-6 shadow-2xl transform transition-all duration-300 scale-100 ${
-              darkMode ? "bg-slate-900 border-slate-800 text-white" : "bg-white border-gray-200 text-gray-800"
+            <div className={`w-full max-w-md rounded-none border-4 border-wadu-black p-6 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] transform transition-all duration-300 scale-100 ${
+              darkMode ? "bg-slate-900 border-wadu-black text-white" : "bg-white border-wadu-black text-gray-800"
             }`}>
               {/* Header */}
-              <div className="flex items-center justify-between pb-4 border-b border-gray-150 dark:border-slate-800">
+              <div className="flex items-center justify-between pb-4 border-b border-gray-150 dark:border-wadu-black">
                 <div>
                   <h3 className="text-lg font-black tracking-tight">Ticket Sales Breakdown</h3>
-                  <p className="text-xs text-gray-400 font-semibold truncate max-w-[280px] mt-0.5">{selectedEventDetails.name}</p>
+                  <p className="text-xs text-gray-400 font-black uppercase truncate max-w-[280px] mt-0.5">{selectedEventDetails.name}</p>
                 </div>
                 <button
                   onClick={() => setSelectedEventDetails(null)}
-                  className={`p-1.5 rounded-lg transition ${
+                  className={`p-1.5 rounded-none transition ${
                     darkMode ? "hover:bg-slate-800 text-gray-400 hover:text-white" : "hover:bg-gray-100 text-gray-500 hover:text-gray-900"
                   }`}
                 >
@@ -1818,14 +1818,14 @@ export default function OrganizerDashboardPage() {
               {/* Body */}
               <div className="py-6 space-y-5">
                 {/* Total Stats */}
-                <div className="grid grid-cols-2 gap-4 bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-gray-100 dark:border-slate-800/40">
+                <div className="grid grid-cols-2 gap-4 bg-slate-50 dark:bg-slate-950 p-4 rounded-none border-4 border-wadu-black border-wadu-black dark:border-wadu-black/40">
                   <div>
-                    <p className="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Total Tickets Sold</p>
-                    <p className="text-2xl font-black mt-1 text-[#6C4DFF]">{breakdown.total}</p>
+                    <p className="text-[10px] uppercase font-black uppercase text-gray-400 tracking-wider">Total Tickets Sold</p>
+                    <p className="text-2xl font-black mt-1 text-wadu-black">{breakdown.total}</p>
                   </div>
                   <div>
-                    <p className="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Total Revenue</p>
-                    <p className="text-2xl font-black mt-1 text-[#00C2A8]">KES {selectedEventDetails.revenue.toLocaleString()}</p>
+                    <p className="text-[10px] uppercase font-black uppercase text-gray-400 tracking-wider">Total Revenue</p>
+                    <p className="text-2xl font-black mt-1 text-wadu-black">KES {selectedEventDetails.revenue.toLocaleString()}</p>
                   </div>
                 </div>
 
@@ -1833,7 +1833,7 @@ export default function OrganizerDashboardPage() {
                 <div className="space-y-4">
                   {/* VVIP */}
                   <div className="space-y-1.5">
-                    <div className="flex items-center justify-between text-xs font-bold">
+                    <div className="flex items-center justify-between text-xs font-black uppercase">
                       <span className="flex items-center gap-1.5">
                         <span className="w-2.5 h-2.5 rounded-full bg-purple-500" />
                         VVIP Tickets
@@ -1850,16 +1850,16 @@ export default function OrganizerDashboardPage() {
 
                   {/* VIP */}
                   <div className="space-y-1.5">
-                    <div className="flex items-center justify-between text-xs font-bold">
+                    <div className="flex items-center justify-between text-xs font-black uppercase">
                       <span className="flex items-center gap-1.5">
-                        <span className="w-2.5 h-2.5 rounded-full bg-[#6C4DFF]" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-wadu-black" />
                         VIP Tickets
                       </span>
                       <span>{breakdown.vip} sold</span>
                     </div>
                     <div className="w-full h-2 bg-gray-100 dark:bg-slate-800 rounded-full overflow-hidden">
                       <div
-                        className="h-full rounded-full bg-[#6C4DFF] transition-all duration-500"
+                        className="h-full rounded-full bg-wadu-black transition-all duration-500"
                         style={{ width: `${breakdown.total > 0 ? (breakdown.vip / breakdown.total) * 100 : 0}%` }}
                       />
                     </div>
@@ -1867,16 +1867,16 @@ export default function OrganizerDashboardPage() {
 
                   {/* Regular */}
                   <div className="space-y-1.5">
-                    <div className="flex items-center justify-between text-xs font-bold">
+                    <div className="flex items-center justify-between text-xs font-black uppercase">
                       <span className="flex items-center gap-1.5">
-                        <span className="w-2.5 h-2.5 rounded-full bg-[#00C2A8]" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-white border-4 border-wadu-black" />
                         Regular Tickets
                       </span>
                       <span>{breakdown.regular} sold</span>
                     </div>
                     <div className="w-full h-2 bg-gray-100 dark:bg-slate-800 rounded-full overflow-hidden">
                       <div
-                        className="h-full rounded-full bg-[#00C2A8] transition-all duration-500"
+                        className="h-full rounded-full bg-white border-4 border-wadu-black transition-all duration-500"
                         style={{ width: `${breakdown.total > 0 ? (breakdown.regular / breakdown.total) * 100 : 0}%` }}
                       />
                     </div>
@@ -1885,7 +1885,7 @@ export default function OrganizerDashboardPage() {
                   {/* Other / Unclassified */}
                   {breakdown.other > 0 && (
                     <div className="space-y-1.5">
-                      <div className="flex items-center justify-between text-xs font-bold">
+                      <div className="flex items-center justify-between text-xs font-black uppercase">
                         <span className="flex items-center gap-1.5">
                           <span className="w-2.5 h-2.5 rounded-full bg-slate-400" />
                           Other Tickets
@@ -1904,16 +1904,16 @@ export default function OrganizerDashboardPage() {
               </div>
 
               {/* Footer */}
-              <div className="pt-4 border-t border-gray-150 dark:border-slate-800 flex items-center justify-end gap-3">
+              <div className="pt-4 border-t border-gray-150 dark:border-wadu-black flex items-center justify-end gap-3">
                 <Link
                   to={`/event/${selectedEventDetails.id}`}
-                  className="bg-[#0A1F44] border border-white/10 hover:bg-slate-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs transition duration-200"
+                  className="bg-wadu-yellow border-r-4 border-wadu-black border-4 border-wadu-black border-wadu-black hover:bg-slate-800 text-white px-4 py-2.5 rounded-none font-black uppercase text-xs transition duration-200"
                 >
                   View Public Page
                 </Link>
                 <button
                   onClick={() => setSelectedEventDetails(null)}
-                  className="bg-[#6C4DFF] hover:bg-[#5a3de8] text-white px-4 py-2.5 rounded-xl font-bold text-xs transition duration-200"
+                  className="bg-wadu-black hover:bg-[#5a3de8] text-white px-4 py-2.5 rounded-none font-black uppercase text-xs transition duration-200"
                 >
                   Close
                 </button>

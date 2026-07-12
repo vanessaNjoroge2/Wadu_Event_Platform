@@ -54,91 +54,113 @@ export default function Explore() {
   return (
     <Layout>
       {/* Search & Filter Section */}
-      <section className="bg-white dark:bg-slate-900/40 border-b border-slate-200 dark:border-slate-800 py-12 px-4 transition-all duration-300">
+      <section className="bg-wadu-yellow border-b-8 border-wadu-black py-10 md:py-16 px-4">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl font-extrabold text-wadu-navy dark:text-white mb-8">Find Events</h1>
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-display font-black uppercase text-wadu-black mb-6 md:mb-8">Find Events</h1>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-wadu-teal" size={20} />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-wadu-black" size={20} />
               <input
                 type="text"
-                placeholder="Search events..."
+                placeholder="SEARCH EVENTS..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg py-3.5 pl-12 pr-4 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-medium"
+                className="w-full bg-white border-4 border-wadu-black rounded-none py-3.5 pl-11 pr-4 text-wadu-black font-black uppercase placeholder-wadu-black/50 focus:outline-none shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] transition duration-200 text-sm"
               />
             </div>
             <div className="relative">
-              <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-wadu-teal" size={20} />
+              <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-wadu-black" size={20} />
               <input
                 type="text"
-                placeholder="Location (e.g. Nairobi)"
+                placeholder="LOCATION..."
                 value={locationQuery}
                 onChange={(e) => setLocationQuery(e.target.value)}
-                className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg py-3.5 pl-12 pr-4 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-medium"
+                className="w-full bg-white border-4 border-wadu-black rounded-none py-3.5 pl-11 pr-4 text-wadu-black font-black uppercase placeholder-wadu-black/50 focus:outline-none shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] transition duration-200 text-sm"
               />
             </div>
             <div className="relative">
-              <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-wadu-teal" size={20} />
+              <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-wadu-black" size={20} />
               <input
                 type="text"
-                placeholder="Date"
+                placeholder="DATE"
                 value={dateQuery}
                 onChange={(e) => setDateQuery(e.target.value)}
-                className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg py-3.5 pl-12 pr-4 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-medium"
+                className="w-full bg-white border-4 border-wadu-black rounded-none py-3.5 pl-11 pr-4 text-wadu-black font-black uppercase placeholder-wadu-black/50 focus:outline-none shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] transition duration-200 text-sm"
               />
             </div>
           </div>
 
           {/* Category Filter Chips */}
-          <div className="flex flex-wrap gap-2.5">
-            {categories.map((category) => (
+          {categories.length > 0 && (
+            <div className="flex flex-wrap gap-2 md:gap-3">
               <button
-                key={category}
-                onClick={() =>
-                  setSelectedCategory(
-                    selectedCategory === category ? null : category
-                  )
-                }
-                className={`px-5 py-2.5 rounded-full font-bold text-sm transition duration-200 ${
-                  selectedCategory === category
-                    ? "bg-wadu-purple text-white shadow-sm"
-                    : "bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-665 dark:text-slate-300 hover:border-wadu-teal dark:hover:border-wadu-teal hover:text-wadu-teal"
+                onClick={() => setSelectedCategory(null)}
+                className={`px-4 py-2 rounded-none font-black uppercase text-xs border-2 border-wadu-black transition duration-200 ${
+                  selectedCategory === null
+                    ? "bg-wadu-black text-wadu-yellow"
+                    : "bg-white text-wadu-black hover:bg-wadu-black hover:text-wadu-yellow"
                 }`}
               >
-                {category}
+                All
               </button>
-            ))}
-          </div>
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  onClick={() =>
+                    setSelectedCategory(
+                      selectedCategory === category ? null : category
+                    )
+                  }
+                  className={`px-4 py-2 rounded-none font-black uppercase text-xs border-2 border-wadu-black transition duration-200 ${
+                    selectedCategory === category
+                      ? "bg-wadu-black text-wadu-yellow shadow-[2px_2px_0px_0px_rgba(255,255,255,1)]"
+                      : "bg-white text-wadu-black shadow-[3px_3px_0px_0px_rgba(5,5,5,1)] hover:bg-wadu-black hover:text-wadu-yellow hover:shadow-none"
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
       {/* Events Grid */}
-      <section className="py-24 px-4 max-w-7xl mx-auto">
+      <section className="py-12 md:py-20 px-4 max-w-7xl mx-auto">
         {loading ? (
           <div className="text-center py-24">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-wadu-purple mx-auto mb-4"></div>
-            <p className="text-slate-500 font-bold">Loading events...</p>
+            <div className="animate-spin h-14 w-14 border-8 border-wadu-black border-t-wadu-yellow mx-auto mb-6"></div>
+            <p className="text-wadu-black font-black uppercase text-xl">Loading Events...</p>
           </div>
         ) : (
           <>
-            <p className="text-slate-500 dark:text-slate-400 mb-8 font-semibold">
-              Showing {events.length} events
-            </p>
+            <div className="mb-8 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 border-b-4 border-wadu-black pb-4">
+              <p className="text-wadu-black font-black uppercase text-lg md:text-2xl">
+                {events.length} Event{events.length !== 1 ? 's' : ''} Found
+              </p>
+              {selectedCategory && (
+                <button
+                  onClick={() => setSelectedCategory(null)}
+                  className="text-xs font-black uppercase text-wadu-black bg-wadu-yellow border-2 border-wadu-black px-3 py-1.5 hover:bg-wadu-black hover:text-wadu-yellow transition duration-200 self-start sm:self-auto"
+                >
+                  ✕ Clear Filter
+                </button>
+              )}
+            </div>
 
             {events.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                 {events.map((event) => (
                   <EventCard key={event.id} event={event} />
                 ))}
               </div>
             ) : (
-              <div className="text-center py-24 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-2xl mx-auto px-4 shadow-sm">
-                <Search className="text-slate-400 mx-auto mb-4" size={48} />
-                <h3 className="text-lg font-bold text-wadu-navy dark:text-white mb-2">No events found for your search.</h3>
-                <p className="text-slate-500 dark:text-slate-400 text-sm font-semibold mb-6">
-                  Try searching with different keywords or clearing your active filters.
+              <div className="text-center py-16 md:py-24 bg-wadu-yellow border-4 border-wadu-black max-w-lg mx-auto px-6 shadow-[8px_8px_0px_0px_rgba(5,5,5,1)]">
+                <Search className="text-wadu-black mx-auto mb-5" size={48} />
+                <h3 className="text-2xl md:text-3xl font-black uppercase text-wadu-black mb-3">No events found</h3>
+                <p className="text-wadu-black/80 font-bold text-sm mb-8">
+                  Try different keywords or clear your active filters.
                 </p>
                 <button
                   onClick={() => {
@@ -147,9 +169,9 @@ export default function Explore() {
                     setLocationQuery("");
                     setDateQuery("");
                   }}
-                  className="bg-wadu-navy border border-wadu-navy/10 text-white px-6 py-2.5 rounded-lg font-bold hover:bg-wadu-teal hover:text-wadu-navy hover:border-wadu-teal transition duration-200"
+                  className="bg-wadu-black border-2 border-wadu-black text-wadu-yellow px-8 py-4 font-black uppercase hover:bg-white hover:text-wadu-black transition duration-200 shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]"
                 >
-                  Clear Filters
+                  Clear All Filters
                 </button>
               </div>
             )}

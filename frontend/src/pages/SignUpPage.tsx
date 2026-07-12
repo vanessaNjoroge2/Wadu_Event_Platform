@@ -74,50 +74,47 @@ export default function SignUpPage() {
 
   return (
     <Layout>
-      <div className="min-h-[85vh] flex items-center justify-center px-4 py-12">
-        <div className="w-full max-w-lg">
+      <div className="min-h-[85vh] flex items-center justify-center px-4 py-24 bg-wadu-yellow">
+        <div className="w-full max-w-xl">
           {/* Header */}
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-extrabold text-wadu-navy dark:text-white mb-2">
+          <div className="text-center mb-12">
+            <h1 className="text-5xl md:text-6xl font-display font-black text-wadu-black mb-4 uppercase">
               Create your account
             </h1>
-            <p className="text-slate-550 dark:text-slate-400 font-semibold">
+            <p className="text-wadu-black font-bold uppercase text-xl">
               Join WADU to start exploring or hosting events.
             </p>
           </div>
 
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 space-y-7 shadow-md">
+          <div className="bg-white border-8 border-wadu-black p-8 md:p-12 space-y-10 shadow-[16px_16px_0px_0px_rgba(5,5,5,1)]">
             {/* Role Selection */}
             <div>
-              <p className="text-xs font-bold text-slate-500 dark:text-slate-400 mb-3 uppercase tracking-wider">
+              <p className="text-lg font-black text-wadu-black mb-4 uppercase tracking-widest bg-wadu-yellow border-2 border-wadu-black inline-block px-3 py-1">
                 I want to join as an...
               </p>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-6">
                 {/* Attendee Card */}
                 <button
                   type="button"
                   onClick={() => setSelectedRole("attendee")}
-                  className={`relative flex flex-col items-center gap-3 p-5 rounded-xl border-2 transition-all duration-200 ${
+                  className={`relative flex flex-col items-center gap-4 p-6 rounded-none border-4 transition-all duration-200 ${
                     selectedRole === "attendee"
-                      ? "border-wadu-purple bg-wadu-purple/5 dark:bg-wadu-purple/10 shadow-sm"
-                      : "border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 hover:border-wadu-teal dark:hover:border-wadu-teal"
+                      ? "border-wadu-black bg-wadu-yellow shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] translate-y-1 translate-x-1"
+                      : "border-wadu-black bg-white hover:bg-wadu-black hover:text-wadu-yellow shadow-[8px_8px_0px_0px_rgba(5,5,5,1)] hover:-translate-y-1 hover:-translate-x-1"
                   }`}
                 >
                   {selectedRole === "attendee" && (
-                    <CheckCircle2 size={16} className="absolute top-2.5 right-2.5 text-wadu-purple" />
+                    <CheckCircle2 size={24} className="absolute top-4 right-4 text-wadu-black" />
                   )}
                   <div
-                    className={`w-11 h-11 rounded-xl flex items-center justify-center transition-colors duration-200 ${
-                      selectedRole === "attendee" ? "bg-wadu-purple text-white" : "bg-slate-100 dark:bg-slate-800 text-slate-500"
+                    className={`w-16 h-16 rounded-none border-4 border-wadu-black flex items-center justify-center transition-colors duration-200 ${
+                      selectedRole === "attendee" ? "bg-wadu-black text-wadu-yellow" : "bg-white text-wadu-black"
                     }`}
                   >
-                    <User size={20} />
+                    <User size={32} />
                   </div>
                   <div className="text-center">
-                    <p className="text-wadu-navy dark:text-white font-bold text-sm">Attendee</p>
-                    <p className="text-slate-400 dark:text-slate-500 text-xs mt-1 font-semibold">
-                      Buy tickets &amp; explore events
-                    </p>
+                    <p className={`font-black text-xl uppercase ${selectedRole === "attendee" ? "text-wadu-black" : "text-wadu-black group-hover:text-wadu-yellow"}`}>Attendee</p>
                   </div>
                 </button>
 
@@ -125,97 +122,91 @@ export default function SignUpPage() {
                 <button
                   type="button"
                   onClick={() => setSelectedRole("organizer")}
-                  className={`relative flex flex-col items-center gap-3 p-5 rounded-xl border-2 transition-all duration-200 ${
+                  className={`relative flex flex-col items-center gap-4 p-6 rounded-none border-4 transition-all duration-200 ${
                     selectedRole === "organizer"
-                      ? "border-wadu-teal bg-wadu-teal/5 dark:bg-wadu-teal/10 shadow-sm"
-                      : "border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 hover:border-wadu-teal dark:hover:border-wadu-teal"
+                      ? "border-wadu-black bg-wadu-yellow shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] translate-y-1 translate-x-1"
+                      : "border-wadu-black bg-white hover:bg-wadu-black hover:text-wadu-yellow shadow-[8px_8px_0px_0px_rgba(5,5,5,1)] hover:-translate-y-1 hover:-translate-x-1"
                   }`}
                 >
                   {selectedRole === "organizer" && (
-                    <CheckCircle2 size={16} className="absolute top-2.5 right-2.5 text-wadu-teal" />
+                    <CheckCircle2 size={24} className="absolute top-4 right-4 text-wadu-black" />
                   )}
                   <div
-                    className={`w-11 h-11 rounded-xl flex items-center justify-center transition-colors duration-200 ${
-                      selectedRole === "organizer" ? "bg-wadu-teal text-wadu-navy font-bold" : "bg-slate-100 dark:bg-slate-800 text-slate-500"
+                    className={`w-16 h-16 rounded-none border-4 border-wadu-black flex items-center justify-center transition-colors duration-200 ${
+                      selectedRole === "organizer" ? "bg-wadu-black text-wadu-yellow" : "bg-white text-wadu-black"
                     }`}
                   >
-                    <Building2 size={20} />
+                    <Building2 size={32} />
                   </div>
                   <div className="text-center">
-                    <div className="flex items-center justify-center gap-1.5">
-                      <p className="text-wadu-navy dark:text-white font-bold text-sm">Organizer</p>
-                      <span className="text-[10px] bg-wadu-teal/10 text-wadu-teal border border-wadu-teal/30 px-1.5 py-px rounded-full font-bold">Pro</span>
-                    </div>
-                    <p className="text-slate-400 dark:text-slate-500 text-xs mt-1 font-semibold">
-                      Manage events &amp; payouts
-                    </p>
+                    <p className={`font-black text-xl uppercase ${selectedRole === "organizer" ? "text-wadu-black" : "text-wadu-black group-hover:text-wadu-yellow"}`}>Organizer</p>
                   </div>
                 </button>
               </div>
             </div>
 
             {/* Divider */}
-            <div className="border-t border-slate-100 dark:border-slate-800" />
+            <div className="border-t-8 border-wadu-black" />
 
             {/* Registration Form */}
-            <form className="space-y-5" onSubmit={handleSubmit}>
+            <form className="space-y-6" onSubmit={handleSubmit}>
               {error && (
-                <div className="bg-red-500/10 border border-red-500/20 text-red-500 text-sm font-semibold rounded-xl px-4 py-3">
+                <div className="bg-wadu-yellow border-4 border-wadu-black text-wadu-black text-lg font-black uppercase px-6 py-4 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]">
                   {error}
                 </div>
               )}
 
               <div>
-                <label className="block text-slate-550 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
+                <label className="block text-wadu-black text-sm font-black uppercase tracking-wider mb-2">
                   Full Name
                 </label>
                 <input
                   type="text"
-                  placeholder="Your full name"
+                  placeholder="YOUR NAME"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-medium"
+                  className="w-full bg-white border-4 border-wadu-black rounded-none px-4 py-4 text-wadu-black font-black uppercase placeholder-wadu-black/40 focus:outline-none focus:bg-wadu-yellow transition duration-200 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-slate-550 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
+                <label className="block text-wadu-black text-sm font-black uppercase tracking-wider mb-2">
                   Email Address
                 </label>
                 <div className="relative">
-                  <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-wadu-teal" />
+                  <Mail size={24} className="absolute left-4 top-1/2 -translate-y-1/2 text-wadu-black" />
                   <input
                     type="email"
-                    placeholder="you@example.com"
+                    placeholder="YOU@EXAMPLE.COM"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 pl-11 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-medium"
+                    className="w-full bg-white border-4 border-wadu-black rounded-none px-4 py-4 pl-14 text-wadu-black font-black uppercase placeholder-wadu-black/40 focus:outline-none focus:bg-wadu-yellow transition duration-200 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]"
                     required
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-slate-550 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
+                <label className="block text-wadu-black text-sm font-black uppercase tracking-wider mb-2">
                   Password
                 </label>
                 <div className="relative">
-                  <Lock size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-wadu-teal" />
+                  <Lock size={24} className="absolute left-4 top-1/2 -translate-y-1/2 text-wadu-black" />
                   <input
                     type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 pl-11 pr-11 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-medium"
+                    className="w-full bg-white border-4 border-wadu-black rounded-none px-4 py-4 pl-14 pr-14 text-wadu-black font-black uppercase placeholder-wadu-black/40 focus:outline-none focus:bg-wadu-yellow transition duration-200 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]"
                     required
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-wadu-teal transition"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-wadu-black hover:text-wadu-yellow bg-white hover:bg-wadu-black border-2 border-wadu-black p-1 transition"
                   >
-                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>
                 </div>
               </div>
@@ -223,37 +214,37 @@ export default function SignUpPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-wadu-navy border border-wadu-navy/15 text-white hover:bg-wadu-teal hover:text-wadu-navy hover:border-wadu-teal py-3.5 rounded-xl font-bold transition duration-200 flex items-center justify-center gap-2 shadow-sm text-base"
+                className="w-full bg-wadu-black border-4 border-wadu-black text-wadu-yellow hover:bg-white hover:text-wadu-black py-4 font-black uppercase transition duration-200 flex items-center justify-center gap-3 text-xl shadow-[8px_8px_0px_0px_rgba(5,5,5,0.2)] hover:-translate-y-1 hover:-translate-x-1 disabled:opacity-50"
               >
                 {isLoading ? "Creating Account..." : "Create Account"}
-                <ArrowRight size={18} />
+                <ArrowRight size={24} />
               </button>
             </form>
 
-            <div className="relative my-6">
+            <div className="relative my-10">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-slate-100 dark:border-slate-800" />
+                <div className="w-full border-t-4 border-wadu-black" />
               </div>
-              <div className="relative flex justify-center text-xs text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider">
-                <span className="bg-white dark:bg-slate-900 px-3">Already have an account?</span>
+              <div className="relative flex justify-center text-sm text-wadu-black font-black uppercase tracking-widest">
+                <span className="bg-white px-4 border-4 border-wadu-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]">Already have an account?</span>
               </div>
             </div>
 
             <div className="text-center">
               <Link
                 to="/sign-in"
-                className="inline-block w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-wadu-teal dark:hover:border-wadu-teal text-slate-700 dark:text-slate-200 py-3 rounded-xl text-sm font-bold transition duration-200"
+                className="inline-block w-full bg-wadu-yellow border-4 border-wadu-black text-wadu-black py-4 text-xl font-black uppercase hover:bg-wadu-black hover:text-wadu-yellow transition duration-200 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[8px_8px_0px_0px_rgba(5,5,5,1)]"
               >
                 Sign In Instead
               </Link>
             </div>
           </div>
 
-          <p className="text-center text-slate-500 dark:text-slate-400 text-sm mt-6 font-semibold">
+          <p className="text-center text-wadu-black text-sm mt-8 font-black uppercase">
             By continuing, you agree to WADU's{" "}
-            <Link to="/terms" className="text-wadu-purple font-bold hover:text-wadu-teal transition">Terms of Service</Link>{" "}
+            <Link to="/terms" className="text-wadu-black bg-white px-2 border-2 border-wadu-black hover:bg-wadu-black hover:text-wadu-yellow transition">Terms of Service</Link>{" "}
             and{" "}
-            <Link to="/privacy" className="text-wadu-purple font-bold hover:text-wadu-teal transition">Privacy Policy</Link>.
+            <Link to="/privacy" className="text-wadu-black bg-white px-2 border-2 border-wadu-black hover:bg-wadu-black hover:text-wadu-yellow transition">Privacy Policy</Link>.
           </p>
         </div>
       </div>

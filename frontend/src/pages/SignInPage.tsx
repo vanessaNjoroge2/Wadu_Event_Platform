@@ -100,48 +100,47 @@ export default function SignInPage() {
 
   return (
     <Layout>
-      <div className="min-h-[85vh] flex items-center justify-center px-4 py-12">
-        <div className="w-full max-w-lg">
+      <div className="min-h-[85vh] flex items-center justify-center px-4 py-24 bg-wadu-yellow">
+        <div className="w-full max-w-xl">
 
           {/* Header */}
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-extrabold text-wadu-navy dark:text-white mb-2">
+          <div className="text-center mb-12">
+            <h1 className="text-5xl md:text-6xl font-display font-black text-wadu-black mb-4 uppercase">
               {tab === "signin" ? "Welcome back" : "Join WADU"}
             </h1>
-            <p className="text-slate-500 dark:text-slate-400 font-semibold">
+            <p className="text-wadu-black font-bold uppercase text-xl">
               {tab === "signin"
                 ? "Sign in to access your account."
                 : "Create an account to get started."}
             </p>
           </div>
 
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 space-y-7 shadow-md">
+          <div className="bg-white border-8 border-wadu-black p-8 md:p-12 space-y-10 shadow-[16px_16px_0px_0px_rgba(5,5,5,1)]">
 
             {/* ── STEP 1: ROLE SELECTION (always visible) ── */}
             <div>
-              <p className="text-xs font-bold text-slate-500 dark:text-slate-400 mb-3 uppercase tracking-wider">
-                I am signing in as a…
+              <p className="text-lg font-black text-wadu-black mb-4 uppercase tracking-widest bg-wadu-yellow border-2 border-wadu-black inline-block px-3 py-1">
+                I am signing in as...
               </p>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-6">
                 {/* Attendee */}
                 <button
                   type="button"
                   onClick={() => setSelectedRole("attendee")}
-                  className={`relative flex flex-col items-center gap-3 p-5 rounded-xl border-2 transition-all duration-200 ${selectedRole === "attendee"
-                      ? "border-wadu-purple bg-wadu-purple/5 dark:bg-wadu-purple/10 shadow-sm"
-                      : "border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 hover:border-wadu-teal dark:hover:border-wadu-teal"
+                  className={`relative flex flex-col items-center gap-4 p-6 rounded-none border-4 transition-all duration-200 ${selectedRole === "attendee"
+                      ? "border-wadu-black bg-wadu-yellow shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] translate-y-1 translate-x-1"
+                      : "border-wadu-black bg-white hover:bg-wadu-black hover:text-wadu-yellow shadow-[8px_8px_0px_0px_rgba(5,5,5,1)] hover:-translate-y-1 hover:-translate-x-1"
                     }`}
                 >
                   {selectedRole === "attendee" && (
-                    <CheckCircle2 size={16} className="absolute top-2.5 right-2.5 text-wadu-purple" />
+                    <CheckCircle2 size={24} className="absolute top-4 right-4 text-wadu-black" />
                   )}
-                  <div className={`w-11 h-11 rounded-xl flex items-center justify-center transition-colors duration-200 ${selectedRole === "attendee" ? "bg-wadu-purple text-white" : "bg-slate-100 dark:bg-slate-850 text-slate-500"
+                  <div className={`w-16 h-16 rounded-none border-4 border-wadu-black flex items-center justify-center transition-colors duration-200 ${selectedRole === "attendee" ? "bg-wadu-black text-wadu-yellow" : "bg-white text-wadu-black"
                     }`}>
-                    <User size={20} />
+                    <User size={32} />
                   </div>
                   <div className="text-center">
-                    <p className="text-wadu-navy dark:text-white font-bold text-sm">Attendee</p>
-                    <p className="text-slate-400 dark:text-slate-500 text-xs mt-1 font-semibold">Buy tickets & explore events</p>
+                    <p className={`font-black text-xl uppercase ${selectedRole === "attendee" ? "text-wadu-black" : "text-wadu-black group-hover:text-wadu-yellow"}`}>Attendee</p>
                   </div>
                 </button>
 
@@ -149,144 +148,141 @@ export default function SignInPage() {
                 <button
                   type="button"
                   onClick={() => setSelectedRole("organizer")}
-                  className={`relative flex flex-col items-center gap-3 p-5 rounded-xl border-2 transition-all duration-200 ${selectedRole === "organizer"
-                      ? "border-wadu-teal bg-wadu-teal/5 dark:bg-wadu-teal/10 shadow-sm"
-                      : "border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 hover:border-wadu-teal dark:hover:border-wadu-teal"
+                  className={`relative flex flex-col items-center gap-4 p-6 rounded-none border-4 transition-all duration-200 ${selectedRole === "organizer"
+                      ? "border-wadu-black bg-wadu-yellow shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] translate-y-1 translate-x-1"
+                      : "border-wadu-black bg-white hover:bg-wadu-black hover:text-wadu-yellow shadow-[8px_8px_0px_0px_rgba(5,5,5,1)] hover:-translate-y-1 hover:-translate-x-1"
                     }`}
                 >
                   {selectedRole === "organizer" && (
-                    <CheckCircle2 size={16} className="absolute top-2.5 right-2.5 text-wadu-teal" />
+                    <CheckCircle2 size={24} className="absolute top-4 right-4 text-wadu-black" />
                   )}
-                  <div className={`w-11 h-11 rounded-xl flex items-center justify-center transition-colors duration-200 ${selectedRole === "organizer" ? "bg-wadu-teal text-wadu-navy font-bold" : "bg-slate-100 dark:bg-slate-800 text-slate-500"
+                  <div className={`w-16 h-16 rounded-none border-4 border-wadu-black flex items-center justify-center transition-colors duration-200 ${selectedRole === "organizer" ? "bg-wadu-black text-wadu-yellow" : "bg-white text-wadu-black"
                     }`}>
-                    <Building2 size={20} />
+                    <Building2 size={32} />
                   </div>
                   <div className="text-center">
-                    <div className="flex items-center justify-center gap-1.5">
-                      <p className="text-wadu-navy dark:text-white font-bold text-sm">Organizer</p>
-                      <span className="text-[10px] bg-wadu-teal/10 text-wadu-teal border border-wadu-teal/30 px-1.5 py-px rounded-full font-bold">Pro</span>
-                    </div>
-                    <p className="text-slate-400 dark:text-slate-500 text-xs mt-1 font-semibold">Manage events & payouts</p>
+                    <p className={`font-black text-xl uppercase ${selectedRole === "organizer" ? "text-wadu-black" : "text-wadu-black group-hover:text-wadu-yellow"}`}>Organizer</p>
                   </div>
                 </button>
               </div>
             </div>
 
             {/* Divider */}
-            <div className="border-t border-slate-100 dark:border-slate-800" />
+            <div className="border-t-8 border-wadu-black" />
 
             {/* ── STEP 2: AUTH TABS ── */}
             <div>
-              <div className="flex rounded-xl bg-slate-100 dark:bg-slate-950 p-1 mb-6">
+              <div className="flex bg-white border-4 border-wadu-black mb-8">
                 <button
                   type="button"
                   onClick={() => setTab("signin")}
-                  className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition duration-200 ${tab === "signin"
-                      ? "bg-wadu-purple text-white shadow-sm"
-                      : "text-slate-500 dark:text-slate-400 hover:text-wadu-teal dark:hover:text-wadu-teal"
+                  className={`flex-1 py-4 text-xl font-black uppercase transition duration-200 ${tab === "signin"
+                      ? "bg-wadu-black text-wadu-yellow"
+                      : "text-wadu-black hover:bg-wadu-yellow"
                     }`}
                 >
                   Sign In
                 </button>
+                <div className="w-1 bg-wadu-black" />
                 <button
                   type="button"
                   onClick={() => setTab("signup")}
-                  className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition duration-200 ${tab === "signup"
-                      ? "bg-wadu-purple text-white shadow-sm"
-                      : "text-slate-500 dark:text-slate-400 hover:text-wadu-teal dark:hover:text-wadu-teal"
+                  className={`flex-1 py-4 text-xl font-black uppercase transition duration-200 ${tab === "signup"
+                      ? "bg-wadu-black text-wadu-yellow"
+                      : "text-wadu-black hover:bg-wadu-yellow"
                     }`}
                 >
                   Sign Up
                 </button>
               </div>
 
-              <form className="space-y-5" onSubmit={handleSubmit}>
+              <form className="space-y-6" onSubmit={handleSubmit}>
                 {error && (
-                  <div className="bg-red-500/10 border border-red-500/20 text-red-500 text-sm font-semibold rounded-xl px-4 py-3">
+                  <div className="bg-wadu-yellow border-4 border-wadu-black text-wadu-black text-lg font-black uppercase px-6 py-4 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]">
                     {error}
                   </div>
                 )}
 
                 {tab === "signup" && (
                   <div>
-                    <label className="block text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">Full Name</label>
+                    <label className="block text-wadu-black text-sm font-black uppercase tracking-wider mb-2">Full Name</label>
                     <input
                       type="text"
-                      placeholder="Your name"
+                      placeholder="YOUR NAME"
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
-                      className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-medium"
+                      className="w-full bg-white border-4 border-wadu-black rounded-none px-4 py-4 text-wadu-black font-black uppercase placeholder-wadu-black/40 focus:outline-none focus:bg-wadu-yellow transition duration-200 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]"
                     />
                   </div>
                 )}
 
                 <div>
-                  <label className="block text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">Email Address</label>
+                  <label className="block text-wadu-black text-sm font-black uppercase tracking-wider mb-2">Email Address</label>
                   <div className="relative">
-                    <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-wadu-teal" />
+                    <Mail size={24} className="absolute left-4 top-1/2 -translate-y-1/2 text-wadu-black" />
                     <input
                       type="email"
-                      placeholder="you@example.com"
+                      placeholder="YOU@EXAMPLE.COM"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 pl-11 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-medium"
+                      className="w-full bg-white border-4 border-wadu-black rounded-none px-4 py-4 pl-14 text-wadu-black font-black uppercase placeholder-wadu-black/40 focus:outline-none focus:bg-wadu-yellow transition duration-200 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]"
                     />
                   </div>
                 </div>
 
                 <div>
                   <div className="flex justify-between mb-2">
-                    <label className="block text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">Password</label>
+                    <label className="block text-wadu-black text-sm font-black uppercase tracking-wider">Password</label>
                     {tab === "signin" && (
-                      <Link to="/forgot-password" className="text-xs text-wadu-teal hover:underline font-semibold">
+                      <Link to="/forgot-password" className="text-sm text-wadu-black bg-wadu-yellow border-2 border-wadu-black px-2 uppercase hover:bg-wadu-black hover:text-wadu-yellow font-black transition">
                         Forgot password?
                       </Link>
                     )}
                   </div>
                   <div className="relative">
-                    <Lock size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-wadu-teal" />
+                    <Lock size={24} className="absolute left-4 top-1/2 -translate-y-1/2 text-wadu-black" />
                     <input
                       type={showPassword ? "text" : "password"}
                       placeholder="••••••••"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 pl-11 pr-11 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:border-wadu-teal focus:ring-1 focus:ring-wadu-teal transition duration-200 font-medium"
+                      className="w-full bg-white border-4 border-wadu-black rounded-none px-4 py-4 pl-14 pr-14 text-wadu-black font-black uppercase placeholder-wadu-black/40 focus:outline-none focus:bg-wadu-yellow transition duration-200 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-450 hover:text-wadu-teal transition"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-wadu-black hover:text-wadu-yellow bg-white hover:bg-wadu-black border-2 border-wadu-black p-1 transition"
                     >
-                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                     </button>
                   </div>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full bg-wadu-navy border border-wadu-navy/15 text-white hover:bg-wadu-teal hover:text-wadu-navy hover:border-wadu-teal py-3.5 rounded-xl font-bold transition duration-200 flex items-center justify-center gap-2 shadow-sm text-base"
+                  className="w-full bg-wadu-black border-4 border-wadu-black text-wadu-yellow hover:bg-white hover:text-wadu-black py-4 font-black uppercase transition duration-200 flex items-center justify-center gap-3 text-xl shadow-[8px_8px_0px_0px_rgba(5,5,5,0.2)] hover:-translate-y-1 hover:-translate-x-1"
                 >
                   {tab === "signin" ? `Sign In as ${selectedRole === "organizer" ? "Organizer" : "Attendee"}` : "Create Account"}
-                  <ArrowRight size={18} />
+                  <ArrowRight size={24} />
                 </button>
               </form>
 
-              <div className="relative my-6">
+              <div className="relative my-10">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-slate-100 dark:border-slate-800" />
+                  <div className="w-full border-t-4 border-wadu-black" />
                 </div>
-                <div className="relative flex justify-center text-xs text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider">
-                  <span className="bg-white dark:bg-slate-900 px-3">or continue with</span>
+                <div className="relative flex justify-center text-sm text-wadu-black font-black uppercase tracking-widest">
+                  <span className="bg-white px-4 border-4 border-wadu-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]">or continue with</span>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-6">
                 <button
                   type="button"
                   onClick={handleSubmit as any}
-                  className="flex items-center justify-center gap-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-wadu-teal dark:hover:border-wadu-teal text-slate-700 dark:text-slate-200 py-2.5 rounded-xl text-sm font-bold transition duration-200"
+                  className="flex items-center justify-center gap-3 bg-white border-4 border-wadu-black hover:bg-wadu-yellow text-wadu-black py-4 text-lg font-black uppercase transition duration-200 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[8px_8px_0px_0px_rgba(5,5,5,1)]"
                 >
-                  <svg className="w-4 h-4" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6" viewBox="0 0 24 24">
                     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
                     <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
                     <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
@@ -297,9 +293,9 @@ export default function SignInPage() {
                 <button
                   type="button"
                   onClick={handleSubmit as any}
-                  className="flex items-center justify-center gap-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-wadu-teal dark:hover:border-wadu-teal text-slate-700 dark:text-slate-200 py-2.5 rounded-xl text-sm font-bold transition duration-200"
+                  className="flex items-center justify-center gap-3 bg-white border-4 border-wadu-black hover:bg-wadu-yellow text-wadu-black py-4 text-lg font-black uppercase transition duration-200 shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[8px_8px_0px_0px_rgba(5,5,5,1)]"
                 >
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                   </svg>
                   Facebook
@@ -308,11 +304,11 @@ export default function SignInPage() {
             </div>
           </div>
 
-          <p className="text-center text-slate-500 dark:text-slate-400 text-sm mt-6 font-semibold">
+          <p className="text-center text-wadu-black text-sm mt-8 font-black uppercase">
             By continuing, you agree to WADU's{" "}
-            <Link to="/terms" className="text-wadu-purple font-bold hover:text-wadu-teal transition">Terms of Service</Link>{" "}
+            <Link to="/terms" className="text-wadu-black bg-white px-2 border-2 border-wadu-black hover:bg-wadu-black hover:text-wadu-yellow transition">Terms of Service</Link>{" "}
             and{" "}
-            <Link to="/privacy" className="text-wadu-purple font-bold hover:text-wadu-teal transition">Privacy Policy</Link>.
+            <Link to="/privacy" className="text-wadu-black bg-white px-2 border-2 border-wadu-black hover:bg-wadu-black hover:text-wadu-yellow transition">Privacy Policy</Link>.
           </p>
         </div>
       </div>

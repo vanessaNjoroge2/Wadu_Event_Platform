@@ -25,9 +25,9 @@ export function EventCard({ event }: EventCardProps) {
   return (
     <Link
       to={`/event/${event.id}`}
-      className="group bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-250 dark:border-slate-800 hover:border-wadu-teal dark:hover:border-wadu-teal transition-all duration-300 shadow-sm hover:shadow-md hover:shadow-wadu-teal/5"
+      className="group bg-white rounded-none overflow-hidden border-4 border-wadu-black hover:border-wadu-black transition-all duration-300 shadow-[8px_8px_0px_0px_rgba(5,5,5,1)] hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[12px_12px_0px_0px_rgba(5,5,5,1)] flex flex-col"
     >
-      <div className="h-48 relative overflow-hidden bg-slate-100 dark:bg-slate-950">
+      <div className="h-48 relative overflow-hidden bg-slate-100 border-b-4 border-wadu-black">
         <img
           src={event.imageUrl || getEventImage(event.id)}
           onError={(e) => {
@@ -38,34 +38,34 @@ export function EventCard({ event }: EventCardProps) {
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
         <div className="absolute top-4 right-4 flex gap-2 z-10">
-          <span className="bg-wadu-purple text-white px-3 py-1 rounded-full text-xs font-bold shadow-sm">
+          <span className="bg-wadu-black text-wadu-yellow px-3 py-1 rounded-none border-2 border-wadu-black text-xs font-black shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]">
             {event.category.toUpperCase()}
           </span>
           {event.status && (
-            <span className="bg-wadu-navy text-wadu-teal border border-wadu-teal/30 px-3 py-1 rounded-full text-xs font-bold shadow-sm bg-opacity-95">
-              {event.status}
+            <span className="bg-white text-wadu-black border-2 border-wadu-black px-3 py-1 rounded-none text-xs font-black shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]">
+              {event.status.toUpperCase()}
             </span>
           )}
         </div>
       </div>
-      <div className="p-6">
-        <h3 className="text-lg font-bold text-wadu-navy dark:text-white mb-3 group-hover:text-wadu-teal transition line-clamp-2">
+      <div className="p-6 flex flex-col flex-grow bg-wadu-yellow">
+        <h3 className="text-xl font-black text-wadu-black mb-4 uppercase line-clamp-2">
           {event.title}
         </h3>
-        <div className="space-y-2 text-sm text-slate-500 dark:text-slate-400 mb-4">
-          <p className="flex items-center gap-2">
-            <MapPin size={16} className="text-wadu-teal flex-shrink-0" />
+        <div className="space-y-3 text-sm text-wadu-black font-bold mb-6 flex-grow">
+          <p className="flex items-center gap-3">
+            <MapPin size={20} className="text-wadu-black flex-shrink-0" />
             <span className="truncate">{event.location}</span>
           </p>
-          <p className="flex items-center gap-2">
-            <Calendar size={16} className="text-wadu-teal flex-shrink-0" />
-            <span>{event.date}</span>
+          <p className="flex items-center gap-3">
+            <Calendar size={20} className="text-wadu-black flex-shrink-0" />
+            <span className="uppercase">{event.date}</span>
           </p>
         </div>
-        <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
-          <p className="font-extrabold text-wadu-navy dark:text-white text-base">{event.price}</p>
-          <button className="bg-wadu-navy border border-wadu-navy/15 text-white hover:bg-wadu-teal hover:text-wadu-navy hover:border-wadu-teal px-4 py-2 rounded-lg font-bold transition duration-200 text-sm flex items-center gap-2 shadow-sm">
-            Book <ArrowRight size={16} />
+        <div className="flex items-center justify-between pt-4 border-t-4 border-wadu-black">
+          <p className="font-black text-wadu-black text-xl">{event.price}</p>
+          <button className="bg-white border-2 border-wadu-black text-wadu-black hover:bg-wadu-black hover:text-wadu-yellow px-6 py-2 rounded-none font-black transition duration-200 text-sm flex items-center gap-2 uppercase shadow-[4px_4px_0px_0px_rgba(5,5,5,1)] hover:translate-y-0.5 hover:translate-x-0.5 hover:shadow-[2px_2px_0px_0px_rgba(5,5,5,1)]">
+            Book <ArrowRight size={18} />
           </button>
         </div>
       </div>
