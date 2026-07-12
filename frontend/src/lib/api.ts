@@ -64,4 +64,22 @@ export const api = {
   post: <T>(path: string, body?: any) => request<T>('POST', path, body),
   patch: <T>(path: string, body?: any) => request<T>('PATCH', path, body),
   delete: <T>(path: string) => request<T>('DELETE', path),
+
+  // Audience AI Helpers
+  audience: {
+    discoverLeads: (eventId: string, targetCriteria: any) => 
+      request<any>('POST', `/organizer/events/${eventId}/discover-leads`, targetCriteria),
+    getLeads: (eventId: string) => 
+      request<any>('GET', `/organizer/events/${eventId}/leads`),
+  },
+
+  // Campaigns Helpers
+  campaigns: {
+    create: (eventId: string, campaignData: any) =>
+      request<any>('POST', `/organizer/events/${eventId}/campaigns`, campaignData),
+    getAll: (eventId: string) =>
+      request<any>('GET', `/organizer/events/${eventId}/campaigns`),
+    updateStatus: (eventId: string, campaignId: string, status: string) =>
+      request<any>('PATCH', `/organizer/events/${eventId}/campaigns/${campaignId}/status`, { status }),
+  }
 };

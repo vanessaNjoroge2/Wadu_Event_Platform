@@ -47,14 +47,14 @@ export function Layout({ children, showHero = false }: LayoutProps) {
           {/* Hero content */}
           <div className="max-w-6xl mx-auto text-center relative px-4" style={{ zIndex: 2 }}>
             <div className="inline-block bg-wadu-yellow text-wadu-black font-extrabold text-xs md:text-sm uppercase tracking-widest px-4 py-1.5 mb-6 transform -skew-x-12">
-              KENYA'S NEWEST EVENT PLATFORM
+              THE PREMIER GLOBAL EVENT PLATFORM
             </div>
             <h1 className="text-4xl sm:text-6xl md:text-8xl font-display font-black text-white mb-4 leading-[1.05] tracking-tighter uppercase">
               <span className="text-wadu-yellow block">Discover. Book.</span>
               Experience.
             </h1>
             <p className="text-base md:text-xl text-slate-300 font-medium mb-10 max-w-xl mx-auto">
-              The simplest way to find, book, and host events in Kenya and beyond.
+              The simplest way to find, book, and host events worldwide.
             </p>
 
             {/* CTA buttons */}

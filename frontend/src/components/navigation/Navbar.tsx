@@ -88,6 +88,12 @@ export function Navbar() {
             >
               Cities
             </Link>
+            <Link
+              to="/pricing"
+              className="text-wadu-black hover:text-white transition-colors text-sm font-black uppercase duration-200"
+            >
+              Pricing
+            </Link>
             {isLoggedIn && userRole === "ATTENDEE" && (
               <Link
                 to="/dashboard"
@@ -219,6 +225,13 @@ export function Navbar() {
               onClick={() => setMobileMenuOpen(false)}
             >
               Cities
+            </Link>
+            <Link
+              to="/pricing"
+              className="block text-wadu-black hover:bg-wadu-black hover:text-wadu-yellow px-4 py-3 text-sm font-black uppercase transition-colors duration-200"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Pricing
             </Link>
             {isLoggedIn && userRole === "ATTENDEE" && (
               <Link

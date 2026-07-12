@@ -4,6 +4,9 @@ import { useToast } from "@/hooks/use-toast";
 import { CreateEventForm } from "./CreateEventPage";
 import { HelpPageContent } from "./FooterPages";
 import { api } from "@/lib/api";
+import AudienceDiscoveryView from "./organizer/AudienceDiscoveryView";
+import CampaignsView from "./organizer/CampaignsView";
+import OutreachAnalyticsView from "./organizer/OutreachAnalyticsView";
 import {
   LayoutDashboard,
   CalendarDays,
@@ -37,7 +40,10 @@ import {
   Lock,
   Shield,
   ArrowUpRight,
-  X
+  X,
+  Zap,
+  Send,
+  LineChart,
 } from "lucide-react";
 import {
   XAxis,
@@ -144,6 +150,12 @@ const navItems = [
   { icon: Wallet, label: "Payouts", path: "/organizer-dashboard/payouts" },
   { icon: Settings, label: "Settings", path: "/organizer-dashboard/settings" },
   { icon: HelpCircle, label: "Help", path: "/help" },
+];
+
+const aiNavItems = [
+  { icon: Zap, label: "Audience AI", path: "/organizer-dashboard/audience" },
+  { icon: Send, label: "Campaigns", path: "/organizer-dashboard/campaigns" },
+  { icon: LineChart, label: "Outreach Stats", path: "/organizer-dashboard/outreach" },
 ];
 
 function formatKES(val: number) {
@@ -418,6 +430,9 @@ export default function OrganizerDashboardPage() {
     if (currentPath === "/organizer-dashboard/settings") return "Settings";
     if (currentPath === "/post-event") return "Create Event";
     if (currentPath === "/help") return "Help & FAQs";
+    if (currentPath === "/organizer-dashboard/audience") return "Audience Discovery";
+    if (currentPath === "/organizer-dashboard/campaigns") return "Campaign Manager";
+    if (currentPath === "/organizer-dashboard/outreach") return "Outreach Analytics";
     return "Dashboard";
   };
 
@@ -529,6 +544,35 @@ export default function OrganizerDashboardPage() {
               </Link>
             );
           })}
+
+          {/* AI Growth Suite section */}
+          <div className="pt-3 mt-2 border-t border-wadu-black/40">
+            <p className="px-3 py-1.5 text-xs font-black uppercase text-wadu-black/60 flex items-center gap-1.5">
+              <Zap size={10} /> AI Growth Suite
+            </p>
+            {aiNavItems.map((item) => {
+              const isActive = currentPath === item.path;
+              return (
+                <Link
+                  key={item.label}
+                  to={item.path}
+                  className={`flex items-center justify-between px-3 py-2.5 rounded-none text-sm font-black uppercase transition-all group ${
+                    isActive
+                      ? "bg-wadu-black text-white shadow-[4px_4px_0px_0px_rgba(5,5,5,1)]"
+                      : "text-gray-400 hover:text-white hover:bg-white/10"
+                  }`}
+                >
+                  <span className="flex items-center gap-3">
+                    <item.icon size={18} className={isActive ? "text-white" : "text-gray-400 group-hover:text-white"} />
+                    {item.label}
+                  </span>
+                  {item.label === "Audience AI" && (
+                    <span className="text-[9px] font-black uppercase bg-white text-wadu-black px-1.5 py-0.5 rounded-full leading-none">AI</span>
+                  )}
+                </Link>
+              );
+            })}
+          </div>
         </nav>
 
         {/* Footer actions */}
@@ -808,6 +852,27 @@ export default function OrganizerDashboardPage() {
                 </div>
               </div>
             </>
+          )}
+
+          {/* AI. VIEW: AUDIENCE DISCOVERY */}
+          {currentPath === "/organizer-dashboard/audience" && (
+            <AudienceDiscoveryView
+              darkMode={darkMode}
+              events={events.map(e => ({ id: e.id, name: e.name }))}
+            />
+          )}
+
+          {/* AI. VIEW: CAMPAIGNS */}
+          {currentPath === "/organizer-dashboard/campaigns" && (
+            <CampaignsView
+              darkMode={darkMode}
+              events={events.map(e => ({ id: e.id, name: e.name }))}
+            />
+          )}
+
+          {/* AI. VIEW: OUTREACH ANALYTICS */}
+          {currentPath === "/organizer-dashboard/outreach" && (
+            <OutreachAnalyticsView darkMode={darkMode} />
           )}
 
           {/* 2. VIEW: MY EVENTS */}
