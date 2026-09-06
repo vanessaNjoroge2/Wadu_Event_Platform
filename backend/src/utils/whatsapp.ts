@@ -16,10 +16,12 @@ export const sendTicketWhatsApp = async (to: string, orderDetails: any) => {
     formattedTo = `whatsapp:+${cleanNumber}`;
   }
 
+  const ticketNum = orderDetails.ticketNumber || `TKT-${orderDetails.orderId.replace(/[^a-zA-Z0-9]/g, '').slice(-6).toUpperCase()}`;
+
   const messageBody = `Your WADU Tickets for ${orderDetails.eventTitle}\n` +
     `Dear ${orderDetails.firstName} ${orderDetails.lastName},\n` +
     `Thank you for purchasing tickets!\n` +
-    `Order ID: ${orderDetails.orderId}\n` +
+    `Ticket Number: ${ticketNum}\n` +
     `Total Price: KES ${orderDetails.total.toLocaleString()}\n` +
     `We look forward to seeing you at the event!`;
 

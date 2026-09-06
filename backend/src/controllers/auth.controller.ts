@@ -58,6 +58,24 @@ export class AuthController {
     }
   }
 
+  static async forgotPassword(req: Request, res: Response, next: NextFunction) {
+    try {
+      const result = await AuthService.forgotPassword(req.body);
+      return successResponse(res, result, 200);
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  static async resetPassword(req: Request, res: Response, next: NextFunction) {
+    try {
+      const result = await AuthService.resetPassword(req.body);
+      return successResponse(res, result, 200);
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   static async me(req: Request, res: Response, next: NextFunction) {
     try {
       if (!req.user) {

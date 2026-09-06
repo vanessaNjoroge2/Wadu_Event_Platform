@@ -73,7 +73,6 @@ export class AuthService {
         lastName: user.lastName,
         phone: user.phone || undefined,
         role: user.role,
-        ...(process.env.NODE_ENV !== 'production' && { devCode: code })
       },
     };
   }
@@ -212,12 +211,79 @@ export class AuthService {
       throw error;
     }
 
-    const message = process.env.NODE_ENV !== 'production'
-      ? `Please verify your email address before logging in. (Dev Code: ${code})`
-      : 'Please verify your email address before logging in';
-    const error = new Error(message);
+    const error = new Error('Please verify your email address before logging in');
     (error as any).status = 403;
     throw error;
+  }
+
+  static async forgotPassword(data: { email: string }): Promise<{ message: string }> {
+    const user = await prisma.user.findUnique({
+      where: { email: data.email },
+    });
+
+    if (!user) {
+      return { message: 'If an account exists with that email, a password reset code has been sent.' };
+    }
+
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    const expires = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        verificationCode: code,
+        verificationExpires: expires,
+      },
+    });
+
+    try {
+      await sendVerificationEmail(user.email, code);
+    } catch (smtpError: any) {
+      console.error('SMTP Error during forgotPassword:', smtpError);
+      const error = new Error('Failed to send reset email. Please check your SMTP settings.');
+      (error as any).status = 500;
+      throw error;
+    }
+
+    return { message: 'If an account exists with that email, a password reset code has been sent.' };
+  }
+
+  static async resetPassword(data: { email: string; code: string; newPassword: string }): Promise<{ message: string }> {
+    const user = await prisma.user.findUnique({
+      where: { email: data.email },
+    });
+
+    if (!user) {
+      const error = new Error('User not found');
+      (error as any).status = 404;
+      throw error;
+    }
+
+    if (!user.verificationCode || user.verificationCode !== data.code) {
+      const error = new Error('Invalid reset code');
+      (error as any).status = 400;
+      throw error;
+    }
+
+    if (user.verificationExpires && user.verificationExpires < new Date()) {
+      const error = new Error('Reset code has expired');
+      (error as any).status = 400;
+      throw error;
+    }
+
+    const passwordHash = await hashPassword(data.newPassword);
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        password: passwordHash,
+        isVerified: true,
+        verificationCode: null,
+        verificationExpires: null,
+      },
+    });
+
+    return { message: 'Password has been reset successfully. You can now sign in with your new password.' };
   }
 
   static async getMe(userId: string) {

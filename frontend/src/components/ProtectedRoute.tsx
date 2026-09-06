@@ -17,7 +17,10 @@ export function ProtectedRoute({ children, roleRequired }: ProtectedRouteProps) 
     if (userRole === "admin") {
       return <Navigate to="/admin-dashboard" replace />;
     }
-    return <Navigate to={userRole === "organizer" ? "/organizer-dashboard" : "/dashboard"} replace />;
+    if (userRole === "organizer") {
+      return <Navigate to="/organizer-dashboard" replace />;
+    }
+    return <Navigate to="/explore" replace />;
   }
 
   return children;

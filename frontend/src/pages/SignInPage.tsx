@@ -35,7 +35,7 @@ export default function SignInPage() {
       } else if (role === "organizer") {
         navigate("/organizer-dashboard", { replace: true });
       } else {
-        navigate("/dashboard", { replace: true });
+        navigate("/explore", { replace: true });
       }
     }
   }, [navigate]);
@@ -63,6 +63,11 @@ export default function SignInPage() {
       })
         .then((data: any) => {
           localStorage.setItem("verify_email", email);
+          if (data?.user?.devCode) {
+            localStorage.setItem("dev_code", data.user.devCode);
+          } else {
+            localStorage.removeItem("dev_code");
+          }
           navigate("/verify-email");
         })
         .catch((err: any) => {
@@ -85,7 +90,7 @@ export default function SignInPage() {
         } else if (data.user.role === "ORGANIZER") {
           navigate("/organizer-dashboard");
         } else {
-          navigate("/dashboard");
+          navigate("/explore");
         }
       })
       .catch((err: any) => {

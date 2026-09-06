@@ -178,7 +178,7 @@ export default function DashboardPage() {
 
                       <div className="flex flex-col sm:flex-row justify-between items-center mt-6 pt-6 border-t-4 border-wadu-black gap-4">
                         <span className="text-sm text-wadu-black font-black uppercase bg-white border-2 border-wadu-black px-3 py-1">
-                          REF: #WDU-{ticket.id.substring(0, 6).toUpperCase()}
+                          TKT #: TKT-{ticket.id.replace(/[^a-zA-Z0-9]/g, '').slice(-6).toUpperCase()}
                         </span>
                         
                         <div className="flex gap-4 items-center w-full sm:w-auto">

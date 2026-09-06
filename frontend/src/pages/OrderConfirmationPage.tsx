@@ -108,8 +108,8 @@ export default function OrderConfirmationPage() {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
               <div className="space-y-3 flex-1">
                 <div className="flex justify-between md:flex-col md:justify-start">
-                  <span className="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase">Order Reference</span>
-                  <span className="text-wadu-navy dark:text-white font-bold text-sm">#{order.id}</span>
+                  <span className="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase">Ticket Number</span>
+                  <span className="text-wadu-purple font-extrabold text-base tracking-wider">#TKT-{order.id.replace(/[^a-zA-Z0-9]/g, '').slice(-6).toUpperCase()}</span>
                 </div>
                 <div className="flex justify-between md:flex-col md:justify-start">
                   <span className="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase">Payment Status</span>
@@ -124,7 +124,7 @@ export default function OrderConfirmationPage() {
               {/* QR Code Container */}
               <div className="flex flex-col items-center justify-center p-3 border border-slate-100 dark:border-slate-800 rounded-2xl bg-slate-50/50 dark:bg-slate-900/50 flex-shrink-0 mx-auto md:mx-0">
                 <img
-                  src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=WDU-ORDER-${order.id}`}
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=WDU-TKT-${order.id.replace(/[^a-zA-Z0-9]/g, '').slice(-6).toUpperCase()}`}
                   alt="Order QR Code"
                   className="w-32 h-32 border border-slate-200 dark:border-slate-800 rounded-lg p-1 bg-white"
                 />

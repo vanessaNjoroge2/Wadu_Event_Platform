@@ -39,11 +39,23 @@ const resendVerificationSchema = z.object({
   email: z.string().email('Invalid email address').toLowerCase().trim(),
 });
 
+const forgotPasswordSchema = z.object({
+  email: z.string().email('Invalid email address').toLowerCase().trim(),
+});
+
+const resetPasswordSchema = z.object({
+  email: z.string().email('Invalid email address').toLowerCase().trim(),
+  code: z.string().length(6, 'Reset code must be 6 digits'),
+  newPassword: z.string().min(6, 'Password must be at least 6 characters'),
+});
+
 router.post('/register', validate({ body: registerSchema }), AuthController.register);
 router.post('/login', validate({ body: loginSchema }), AuthController.login);
 router.post('/verify', validate({ body: verifySchema }), AuthController.verify);
 router.post('/verify-code', validate({ body: verifySchema }), AuthController.verifyCode);
 router.post('/resend-verification', validate({ body: resendVerificationSchema }), AuthController.resendVerification);
+router.post('/forgot-password', validate({ body: forgotPasswordSchema }), AuthController.forgotPassword);
+router.post('/reset-password', validate({ body: resetPasswordSchema }), AuthController.resetPassword);
 router.post('/logout', requireAuth, AuthController.logout);
 router.get('/me', requireAuth, AuthController.me);
 

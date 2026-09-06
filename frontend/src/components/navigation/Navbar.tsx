@@ -180,7 +180,7 @@ export function Navbar() {
                 </Link>
               </>
             )}
-            {(!isLoggedIn || userRole !== "ATTENDEE") && (
+            {isLoggedIn && userRole === "ORGANIZER" && (
               <Link
                 to="/post-event"
                 className="bg-wadu-black hover:bg-white hover:text-wadu-black text-wadu-yellow border-2 border-wadu-black px-6 py-2.5 rounded-none font-black text-xs uppercase transition-colors shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:translate-y-0.5 hover:translate-x-0.5 hover:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] flex items-center gap-1.5 duration-200"
@@ -288,7 +288,7 @@ export function Navbar() {
                 </Link>
               </>
             )}
-            {(!isLoggedIn || userRole !== "ATTENDEE") && (
+            {isLoggedIn && userRole === "ORGANIZER" && (
               <Link
                 to="/post-event"
                 className="block bg-wadu-black hover:bg-white hover:text-wadu-black text-wadu-yellow border-2 border-wadu-black px-4 py-3 font-black text-center mt-4 transition-colors text-sm uppercase duration-200"

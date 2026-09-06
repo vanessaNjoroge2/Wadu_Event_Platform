@@ -55,6 +55,9 @@ export default function Checkout() {
   };
 
   const handleFillAttendees = () => {
+    if (!mpesaPhone.trim() && phone.trim()) {
+      setMpesaPhone(phone.trim());
+    }
     setStep(3);
     toast({
       title: "Details Verified",
@@ -76,7 +79,10 @@ export default function Checkout() {
           throw new Error("Failed to query transaction status");
         }
         const json = await res.json();
-        const status = json.data.status;
+        const payload = json.data || json;
+        const status = payload.status;
+        const order = payload.order;
+
         if (status === "SUCCESS") {
           clearInterval(interval);
           setPolling(false);
@@ -84,7 +90,7 @@ export default function Checkout() {
             title: "Payment Received",
             description: "Your ticket booking is confirmed.",
           });
-          navigate("/order-confirmation", { state: { order: json.data.order } });
+          navigate("/order-confirmation", { state: { order } });
         } else if (status === "FAILED") {
           clearInterval(interval);
           setPolling(false);
@@ -151,7 +157,7 @@ export default function Checkout() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             orderId: order.id,
-            phone: mpesaPhone,
+            phone: mpesaPhone.trim() || phone.trim(),
             amount: order.total,
           }),
         });

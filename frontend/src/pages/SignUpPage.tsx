@@ -34,7 +34,7 @@ export default function SignUpPage() {
       } else if (role === "organizer") {
         navigate("/organizer-dashboard", { replace: true });
       } else {
-        navigate("/dashboard", { replace: true });
+        navigate("/explore", { replace: true });
       }
     }
   }, [navigate]);

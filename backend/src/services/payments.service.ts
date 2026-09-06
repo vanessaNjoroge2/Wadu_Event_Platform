@@ -248,7 +248,7 @@ export class PaymentsService {
           include: { event: true, items: { include: { ticketType: true } } },
         });
         if (order) {
-          const success = resultCode === 0 || payload.success === true;
+          const success = Number(resultCode) === 0 || payload.success === true;
           return this.completeOrderPayment(order, success, receiptNumber || `MPESA-${Date.now()}`);
         }
       }
@@ -257,12 +257,12 @@ export class PaymentsService {
       throw error;
     }
 
-    const success = resultCode === 0;
+    const success = Number(resultCode) === 0;
     
     await prisma.mpesaTransaction.update({
       where: { checkoutRequestID: checkoutRequestId },
       data: {
-        resultCode,
+        resultCode: Number(resultCode),
         resultDesc,
         transactionId: receiptNumber || null,
         phoneNumber: phoneNumber ? String(phoneNumber) : txRecord.phoneNumber,
@@ -339,43 +339,60 @@ export class PaymentsService {
 
       if (json.ResponseCode === '0') {
         const resultCodeNum = json.ResultCode !== undefined ? Number(json.ResultCode) : null;
-        
-        // If the result code is missing or denotes progress
-        const isPending = 
-          resultCodeNum === null || 
-          resultCodeNum === 103 || 
-          resultCodeNum === 1037 ||
-          json.ResultDesc?.toLowerCase().includes('process') ||
-          json.ResultDesc?.toLowerCase().includes('progress') ||
-          json.ResponseDescription?.toLowerCase().includes('process') ||
-          json.ResponseDescription?.toLowerCase().includes('progress');
 
-        if (isPending) {
-          console.log(`[Mpesa Query] Transaction ${txRecord.checkoutRequestID} is still PENDING. Response:`, json);
-          return { status: 'PENDING', order: txRecord.order };
+        // ResultCode 0 means STK Push Payment Succeeded in Safaricom Daraja API
+        if (resultCodeNum === 0) {
+          console.log(`[Mpesa Query] Transaction ${txRecord.checkoutRequestID} SUCCESSFUL! ResultCode: 0`);
+          
+          await prisma.mpesaTransaction.update({
+            where: { orderId },
+            data: {
+              resultCode: 0,
+              resultDesc: json.ResultDesc || 'The service request is processed successfully.',
+              status: 'SUCCESS',
+            },
+          });
+
+          const completed = await this.completeOrderPayment(
+            txRecord.order,
+            true,
+            `MPESA-${txRecord.checkoutRequestID}`
+          );
+
+          // Fetch full fresh order with event and items
+          const freshOrder = await prisma.order.findUnique({
+            where: { id: orderId },
+            include: { event: true, items: { include: { ticketType: true } } },
+          });
+
+          return { status: 'SUCCESS', order: freshOrder || completed.order };
         }
 
-        const success = resultCodeNum === 0;
-        
-        await prisma.mpesaTransaction.update({
-          where: { orderId },
-          data: {
-            resultCode: resultCodeNum,
-            resultDesc: json.ResultDesc,
-            status: success ? 'SUCCESS' : 'FAILED',
-          },
-        });
+        // ResultCode 1032 or 1031 = Explicitly Cancelled by User on phone
+        if (resultCodeNum === 1032 || resultCodeNum === 1031) {
+          console.log(`[Mpesa Query] Transaction ${txRecord.checkoutRequestID} CANCELLED BY USER (ResultCode: ${resultCodeNum})`);
+          
+          await prisma.mpesaTransaction.update({
+            where: { orderId },
+            data: {
+              resultCode: resultCodeNum,
+              resultDesc: json.ResultDesc,
+              status: 'FAILED',
+            },
+          });
 
-        const result = await this.completeOrderPayment(
-          txRecord.order,
-          success,
-          json.ResultDesc?.includes('Receipt') ? json.ResultDesc : `MPESA-${txRecord.checkoutRequestID}`
-        );
-        return { status: success ? 'SUCCESS' : 'FAILED', order: result.order };
-      }
+          const completed = await this.completeOrderPayment(txRecord.order, false, `MPESA-${txRecord.checkoutRequestID}`);
+          
+          const freshOrder = await prisma.order.findUnique({
+            where: { id: orderId },
+            include: { event: true, items: { include: { ticketType: true } } },
+          });
 
-      if (json.errorCode || json.errorMessage?.toLowerCase().includes('process') || json.errorMessage?.toLowerCase().includes('progress')) {
-        console.log(`[Mpesa Query] Safaricom returned progress error code: ${json.errorCode}`);
+          return { status: 'FAILED', order: freshOrder || completed.order };
+        }
+
+        // For all other codes (1, 103, 1037, etc.), transaction is still PENDING waiting for user PIN input
+        console.log(`[Mpesa Query] Transaction ${txRecord.checkoutRequestID} still PENDING. ResultCode: ${resultCodeNum}`);
         return { status: 'PENDING', order: txRecord.order };
       }
 

@@ -28,10 +28,12 @@ export default function VerifyEmailPage() {
         title: "Account Activated",
         description: "Your email has been verified successfully.",
       });
-      if (data.user.role === "ORGANIZER" || data.user.role === "ADMIN") {
+      if (data.user.role === "ORGANIZER") {
         navigate("/organizer-dashboard");
+      } else if (data.user.role === "ADMIN") {
+        navigate("/admin-dashboard");
       } else {
-        navigate("/dashboard");
+        navigate("/explore");
       }
     },
     onError: (err: any) => {
@@ -42,12 +44,12 @@ export default function VerifyEmailPage() {
   // React Query mutation for resending code
   const resendMutation = useMutation({
     mutationFn: (variables: { email: string }) => {
-      return api.post("/auth/resend-verification", variables);
+      return api.post<{ message: string }>("/auth/resend-verification", variables);
     },
     onSuccess: () => {
       toast({
-        title: "Verification Email Sent",
-        description: "We have resent the code to your inbox.",
+        title: "Verification Code Sent",
+        description: "We have sent a new verification code to your email.",
       });
     },
     onError: (err: any) => {
